@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\Net">
+      <UniqueIdentifier>{9819d917-2a79-4fd3-8709-7792ec6366b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Util">
+      <UniqueIdentifier>{505c48df-53ef-47a1-a273-5a069609e2dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\DataBase">
+      <UniqueIdentifier>{8be83083-9cd3-4a59-9f1a-eab6e2d630d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\DataBase\BlackList">
+      <UniqueIdentifier>{a2043931-5d4c-48ab-b37a-cc33f7b2a30d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\DataBase\Common">
+      <UniqueIdentifier>{fd0d00f6-f228-40de-a7c0-c68491c17ae4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Server">
+      <UniqueIdentifier>{67214841-ed6c-4c61-97e2-0a1b8505fd90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Server\Control">
+      <UniqueIdentifier>{489aab5b-95b6-4224-a768-8ed7970d33c6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="NetPacket.h">
+      <Filter>소스 파일\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="NetSocket_Bsd.h">
+      <Filter>소스 파일\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="NetSocket_Windows.h">
+      <Filter>소스 파일\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="log.h">
+      <Filter>소스 파일\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="blacklist.h">
+      <Filter>소스 파일\DataBase\BlackList</Filter>
+    </ClInclude>
+    <ClInclude Include="database.h">
+      <Filter>소스 파일\DataBase\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Server.h">
+      <Filter>소스 파일\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerController.h">
+      <Filter>소스 파일\Server\Control</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketPacker.cpp">
+      <Filter>소스 파일\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="log.cpp">
+      <Filter>소스 파일\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="blacklist.cpp">
+      <Filter>소스 파일\DataBase\BlackList</Filter>
+    </ClCompile>
+    <ClCompile Include="database.cpp">
+      <Filter>소스 파일\DataBase\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerMain.cpp">
+      <Filter>소스 파일\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="ControlShell.cpp">
+      <Filter>소스 파일\Server\Control</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
