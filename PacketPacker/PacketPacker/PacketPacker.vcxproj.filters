@@ -81,6 +81,9 @@
     <ClInclude Include="User.h">
       <Filter>소스 파일\User</Filter>
     </ClInclude>
+    <ClInclude Include="StrUtil.h">
+      <Filter>소스 파일\Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

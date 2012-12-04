@@ -51,8 +51,8 @@ bool DbExecute(int qid){
 		return false;
 }
 
-bool DbCursor(int qid){
-	int ret = cci_cursor(qid, 1, CCI_CURSOR_CURRENT, &cciErr);
+bool DbCursor(int qid,int n){
+	int ret = cci_cursor(qid, n, CCI_CURSOR_CURRENT, &cciErr);
 
 	if(ret == CCI_ER_NO_MORE_DATA)
 		return false;
@@ -65,7 +65,15 @@ bool DbFetch(int qid){
 		return true;
 	return false;
 }
-int DbGetString(int qid,int col,char *buf){
+bool DbNext(int qid){
+	bool ret = true;
+	ret = DbCursor(qid,1);
+	if(ret == false)
+		return false;
+	ret = DbFetch(qid);
+	return ret;
+}
+int DbGetString(int qid,int col,char **buf){
 	int len, ret;
 	ret = cci_get_data(qid, col, CCI_A_TYPE_STR, buf, &len);
 	if(ret >= 0)

@@ -20,10 +20,12 @@ void DbDisconnect();
 int DbPrepare(char *query);
 void DbCloseQuery(int qid);
 bool DbExecute(int qid);
-bool DbCursor(int qid);
+bool DbCursor(int qid,int n);
 bool DbFetch(int qid);
-int DbGetString(int qid,int col,char *buf);
+int DbGetString(int qid,int col,char **buf);
 int DbGetNumber(int qid,int col);
+bool DbNext(int qid);
+
 int CubTest();
 
 class Database{

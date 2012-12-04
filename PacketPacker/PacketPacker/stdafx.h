@@ -11,6 +11,7 @@
 #include <tchar.h>
 
 #include "log.h"
+#include "StrUtil.h"
 
 
 

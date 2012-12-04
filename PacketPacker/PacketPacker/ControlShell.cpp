@@ -3,6 +3,7 @@
 #include "Server.h"
 
 #include "blacklist.h"
+#include "User.h"
 
 #include <conio.h>
 
@@ -86,6 +87,10 @@ void ControlShell(){
 							tick % 60);
 			}
 			
+		}
+		else if(!strcmp(cmd,"user")){
+			char *p1;
+			p1 = strtok(NULL," ");
 		}
 	}
 }
