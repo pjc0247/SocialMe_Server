@@ -17,6 +17,13 @@ using namespace std;
 bool DbConnect();
 void DbDisconnect();
 
+int DbPrepare(char *query);
+void DbCloseQuery(int qid);
+bool DbExecute(int qid);
+bool DbCursor(int qid);
+bool DbFetch(int qid);
+int DbGetString(int qid,int col,char *buf);
+int DbGetNumber(int qid,int col);
 int CubTest();
 
 class Database{

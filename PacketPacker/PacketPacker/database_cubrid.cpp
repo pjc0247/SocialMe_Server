@@ -10,15 +10,22 @@
 
 
 int nDB;
+T_CCI_ERROR cciErr;
 
-bool DbConnect(){
+bool DbConnect(){	
 	nDB = cci_connect(DB_SERVER, DB_PORT, DB_NAME, DB_USER_ID, DB_USER_PW);
 	if(nDB >= 0){
-		output("DB Connected");
+		output("DB Connected\n");
+
+		char buf[128];
+		cci_get_db_version(nDB,buf,128);
+
+		output("DB Version : Cubrid %s\n", buf);
+
 		return true;
 	}
 	else{
-		output("DB Connect failed (%d)", nDB);
+		output("DB Connect failed (%d)\n", nDB);
 		return false;
 	}
 }
@@ -26,12 +33,62 @@ void DbDisconnect(){
 	cci_disconnect(nDB, NULL);
 }
 
+int DbPrepare(char *query){
+	int qid;
+	qid = cci_prepare(nDB, query, 0, &cciErr);
+	return qid;
+}
+void DbCloseQuery(int qid){
+	cci_close_req_handle(qid);
+}
+
+bool DbExecute(int qid){
+	int ret = cci_execute(qid, 0, 0, &cciErr);
+
+	if(ret >= 0)
+		return true;
+	else
+		return false;
+}
+
+bool DbCursor(int qid){
+	int ret = cci_cursor(qid, 1, CCI_CURSOR_CURRENT, &cciErr);
+
+	if(ret == CCI_ER_NO_MORE_DATA)
+		return false;
+	return true;
+}
+bool DbFetch(int qid){
+	int ret = cci_fetch(qid, &cciErr);
+	
+	if(ret >= 0)
+		return true;
+	return false;
+}
+int DbGetString(int qid,int col,char *buf){
+	int len, ret;
+	ret = cci_get_data(qid, col, CCI_A_TYPE_STR, buf, &len);
+	if(ret >= 0)
+		return len;
+	else return -1;
+}
+int DbGetNumber(int qid,int col){
+	int len, ret;
+	int num;
+	ret = cci_get_data(qid, col, CCI_A_TYPE_INT, &num, &len);
+	if(ret >= 0)
+		return num;
+	else return -1;
+}
+
+
+
 int CubTest(){
 	 int nColCount = 0, nLen = 0;
     int i = 0, nDB = 0, nRet = 0, nReq = 0; 
     char *pszBuff = NULL;
     
-    T_CCI_ERROR cciErr;
+    
     T_CCI_COL_INFO *pcciCol;
     T_CCI_SQLX_CMD cciCmdType;
     
