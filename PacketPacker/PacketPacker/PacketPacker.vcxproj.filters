@@ -34,6 +34,12 @@
     <Filter Include="소스 파일\Server\Control">
       <UniqueIdentifier>{489aab5b-95b6-4224-a768-8ed7970d33c6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\User">
+      <UniqueIdentifier>{1ad69c63-aeb8-438e-abbb-07cf1d565301}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Server\Protocol">
+      <UniqueIdentifier>{d1411d54-e638-4f7f-b578-f18a22f9287b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -69,6 +75,12 @@
     <ClInclude Include="ServerController.h">
       <Filter>소스 파일\Server\Control</Filter>
     </ClInclude>
+    <ClInclude Include="Protocol.h">
+      <Filter>소스 파일\Server\Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="User.h">
+      <Filter>소스 파일\User</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -94,6 +106,12 @@
     </ClCompile>
     <ClCompile Include="ControlShell.cpp">
       <Filter>소스 파일\Server\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="User.cpp">
+      <Filter>소스 파일\User</Filter>
+    </ClCompile>
+    <ClCompile Include="database_cubrid.cpp">
+      <Filter>소스 파일\DataBase\Common</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
