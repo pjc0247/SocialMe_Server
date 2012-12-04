@@ -5,6 +5,20 @@
 #include <string>
 using namespace std;
 
+
+#define DB_SERVER "localhost"
+#define DB_PORT 33000
+
+#define DB_NAME "demodb"
+#define DB_USER_ID "sma"
+#define DB_USER_PW "040404"
+
+
+bool DbConnect();
+void DbDisconnect();
+
+int CubTest();
+
 class Database{
 public:
 	Database();
