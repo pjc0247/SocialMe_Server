@@ -22,7 +22,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	SET(u->nick,"Anz");
 	SET(u->pw,"Anz");
 
-	RegistUser("anz4176",u);
+//	RegistUser("anz4176",u);
 	
 
 	RunServer(SERVER_PORT);
