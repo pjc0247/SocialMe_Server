@@ -191,8 +191,6 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 				
 				p->data[PerIoData->dataIndex].data = malloc(p->data[PerIoData->dataIndex].size);
 
-				printf("%d \n", p->data[PerIoData->dataIndex].size);
-
 				PerIoData->recvState = NET_RECV_DATA;
 				NetRecv(PerHandleData,PerIoData, p->data[PerIoData->dataIndex].size);
 				break;

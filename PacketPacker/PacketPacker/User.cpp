@@ -64,22 +64,23 @@ bool QueryUser(char *id,User *u){
 		goto CleanUp;
 	}
 
-	// ID
-	len = DbGetString(q, USER_INDEX_ID, &sp);
-	memcpy(u->id,sp,len + 1);
+	if(u != NULL){
+		// ID
+		len = DbGetString(q, USER_INDEX_ID, &sp);
+		memcpy(u->id,sp,len + 1);
 
-	// PW
-	len = DbGetString(q, USER_INDEX_PW, &sp);
-	memcpy(u->pw,sp,len + 1);
+		// PW
+		len = DbGetString(q, USER_INDEX_PW, &sp);
+		memcpy(u->pw,sp,len + 1);
 
-	// NICK
-	len = DbGetString(q, USER_INDEX_NICK, &sp);
-	memcpy(u->nick,sp,len + 1);
+		// NICK
+		len = DbGetString(q, USER_INDEX_NICK, &sp);
+		memcpy(u->nick,sp,len + 1);
 
-	// AGE
-	len = DbGetNumber(q, USER_INDEX_AGE);
-	u->age = len;
-
+		// AGE
+		len = DbGetNumber(q, USER_INDEX_AGE);
+		u->age = len;
+	}
 
 CleanUp:;
 

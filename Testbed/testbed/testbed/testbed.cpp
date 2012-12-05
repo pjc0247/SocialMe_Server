@@ -93,7 +93,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	
 	
-		NetSendPacket(hSocket,p);
+	NetSendPacket(hSocket,p);
 		//Sleep(10);
 
 
