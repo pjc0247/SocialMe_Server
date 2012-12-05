@@ -15,6 +15,7 @@ User *CreateUser(){
 }
 void DisposeUser(User *u){
 	free(u);
+	u = NULL;
 }
 
 
@@ -129,3 +130,5 @@ bool UpdateUser(char *id,User *u){
 
 	return ret;
 }
+
+

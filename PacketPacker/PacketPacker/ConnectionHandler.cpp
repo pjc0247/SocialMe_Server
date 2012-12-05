@@ -15,6 +15,6 @@ bool OnDisconnected(PacketHandlerData d){
 	// TODO : 로그인 중이면 로그아웃 처리
 
 	if(d.handle->user != NULL){
-		DisposeUser(d.handle->user);
+		Logout(d);
 	}
 }

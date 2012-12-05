@@ -50,3 +50,19 @@ bool LoginTry(PacketHandlerData d){
 
 	return true;
 }
+bool LogoutTry(PacketHandlerData d){
+
+	if(d.handle->user != NULL){
+		DisposeUser(d.handle->user);
+		d.handle->user = NULL;
+	}
+	else{
+		NetPacket *p;
+		p = NetCreatePacket();
+		NetAddStringData(p,"reason", "user not logged in");
+		NetSendPacket(d.handle,d.io,p);
+		NetDisposePacket(p,true);
+	}
+
+	return true;
+}
