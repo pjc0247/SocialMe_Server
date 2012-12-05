@@ -46,7 +46,16 @@ int NetRecv(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData,int size){
 	return read;
 }
 int NetSend(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData,void *data,int size){
-	int written = 0;
+	DWORD written = 0;
+	DWORD Flags = 0;
+	WSABUF buf;
+
+	buf.buf = (char *)data;
+	buf.len = size;
+
+	WSASend(PerHandleData->hClntSock,
+		&buf, 1,&written,
+		Flags,NULL,NULL);
 	//written = send();
 	return written;
 }
@@ -129,9 +138,7 @@ bool NetSendPacketData(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData,Net
 
 	return true;
 }
-bool NetSendPacket(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData){
-	NetPacket *packet = (NetPacket*)PerHandleData->packet;
-
+bool NetSendPacket(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData, NetPacket *packet){
 	// 타임 스탬프 기입
 	packet->header.timestamp = NetGetTimestamp();
 

@@ -1,10 +1,19 @@
 #ifndef HANDLER_H
 #define HANDLER_H
 
+#include "Server.h"
 #include "NetPacket.h"
 
-bool RegistTry(NetPacket *p);
+struct PacketHandlerData{
+	NetPacket *pkt;
+	PER_IO_DATA *io;
+	PER_HANDLE_DATA *handle;
+};
 
-bool ProcessPacket(NetPacket *p);
+bool RegistTry(PacketHandlerData d);
+
+bool LoginTry(PacketHandlerData d);
+
+bool ProcessPacket(PacketHandlerData d);
 
 #endif //HANDLER_H

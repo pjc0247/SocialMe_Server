@@ -202,7 +202,11 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 
 				// Recieve Complete
 				if(PerIoData->dataIndex >= p->header.count){
-					ProcessPacket(p);
+					PacketHandlerData d;
+					d.handle = PerHandleData;
+					d.io = PerIoData;
+					d.pkt = p;
+					ProcessPacket(d);
 
 					// fix : memory leak
 					//NetDisposePacket(p,false);

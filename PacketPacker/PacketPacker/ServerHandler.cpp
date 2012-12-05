@@ -4,11 +4,11 @@
 
 #include "Protocol.h"
 
-bool ProcessPacket(NetPacket *p){
+bool ProcessPacket(PacketHandlerData d){
 
-	switch(p->header.type){
+	switch(d.pkt->header.type){
 	case REGIST_TRY:
-		RegistTry(p);
+		RegistTry(d);
 		break;
 	default:
 		output("unknown packet\n");

@@ -3,9 +3,10 @@
 #include "NetPacket.h"
 #include "User.h"
 #include "Protocol.h"
+#include "ServerHandler.h"
 
-bool RegistTry(NetPacket *p){
-
+bool RegistTry(PacketHandlerData d){
+	NetPacket *p = d.pkt;
 	bool exist = false;
 	User *user; 
 
@@ -22,6 +23,7 @@ bool RegistTry(NetPacket *p){
 		pkt = NetCreatePacket();
 		pkt->header.type = REGIST_EXIST_ID;
 		NetAddStringData(pkt,"reason", "id already exist");
+		NetSendPacket(d.handle,d.io,pkt);
 		NetDisposePacket(pkt,true);
 	}
 	else{
