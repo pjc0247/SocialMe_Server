@@ -1,6 +1,5 @@
 #include "stdafx.h"
 
-#include "NetPacket.h"
 #include "blacklist.h"
 #include "database.h"
 #include "User.h"

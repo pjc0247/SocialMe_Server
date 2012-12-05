@@ -7,30 +7,8 @@
 #include <memory.h>
 #include <string.h>
 
+#include "NetPacket.h"
 
-
-
-// 패킷 서브 데이터 이름의 최대 길이
-#define MAX_NAME_LENGTH 16
-
-struct NetPacketHeader{
-	int type;
-
-	unsigned long timestamp;
-
-	unsigned char count;
-};
-
-struct NetPacketData{
-	char name[MAX_NAME_LENGTH];
-	int size;
-	void *data;
-};
-
-struct NetPacket{
-	NetPacketHeader header;
-	NetPacketData *data;
-};
 
 
 int NetIntialize(){
@@ -42,12 +20,32 @@ void NetQuit(){
 // NetSerialize
 // NetUnserialize
 
-int NetRecv(void *data,int size){
-	int read = 0;
+int NetRecv(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData,int size){
+	DWORD read;
+	DWORD Flags;
+
+	PerIoData->wsaBuf.len = size;
+	PerIoData->wsaBuf.buf = PerIoData->buffer;
+	PerIoData->size = PerIoData->bytesToRecv = size;
+	Flags=0;
+
+	//printf("recv %d\n", size);
+
+	WSARecv(PerHandleData->hClntSock,
+		&(PerIoData->wsaBuf),
+		1,                
+		&read,                                 
+		&Flags,
+		&(PerIoData->overlapped),
+		NULL
+		);
+
+	//WaitForSingleObject(PerIoData->overlapped.hEvent,INFINITE);
+//	int read = 0;
 	//read = recv();
 	return read;
 }
-int NetSend(void *data,int size){
+int NetSend(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData,void *data,int size){
 	int written = 0;
 	//written = send();
 	return written;
@@ -59,30 +57,44 @@ unsigned long NetGetTimestamp(){
 }
 
 
-bool NetRecvPacketData(NetPacketData *data){
+bool NetRecvPacketData(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData,NetPacketData *data){
 
-	NetRecv((void *)data->name, MAX_NAME_LENGTH);
-	NetRecv((void *)data->size, sizeof(int));
+	/*PerIoData->bytesToRecv = sizeof(char) * 16;
+	PerIoData->recvState = NET_RECV_DATANAME;
+	NetRecv(PerHandleData,PerIoData,(void *)data->name, MAX_NAME_LENGTH);
+
+	Sleep(10);
+
+	PerIoData->bytesToRecv = sizeof(int);
+	PerIoData->recvState = NET_RECV_DATASIZE;
+	NetRecv(PerHandleData,PerIoData,(void *)data->size, sizeof(int));
 
 	data->data = malloc(data->size);
 	if(data->data == NULL)
 		return false;
 
-	NetRecv(data->data, data->size);
-
+	PerIoData->bytesToRecv = data->size;
+	PerIoData->recvState = NET_RECV_DATA;
+	NetRecv(PerHandleData,PerIoData,data->data, data->size);
+	*/
 	return true;
 }
-bool NetRecvPacket(NetPacket *packet){
+bool NetRecvPacket(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData){
+	NetPacket *packet = (NetPacket*)PerHandleData->packet;
 
+	PerIoData->recvState = NET_RECV_HEADER;
+	PerIoData->bytesToRecv = sizeof(NetPacketHeader);
+	PerIoData->dataIndex = 0;
 	// 헤더 정보 수신
 	bool headerRet = true;
-	if(NetRecv((void *)&packet->header, sizeof(NetPacketHeader)) !=
+	if(NetRecv(PerHandleData,PerIoData, sizeof(NetPacketHeader)) !=
 		sizeof(NetPacketHeader)){
 			headerRet = false;
 
 			return false;
 	}
 
+	/*
 	// 메모리 할당
 	bool allocRet = true;
 	packet->data = (NetPacketData*)malloc(
@@ -92,36 +104,40 @@ bool NetRecvPacket(NetPacket *packet){
 
 		return false;
 	}
+	*/
 
 	// 데이터 수신
-	bool dataRet  = true;
+	/*bool dataRet  = true;
 	for(int i=0;i<packet->header.count;i++){
-		dataRet = dataRet & NetRecvPacketData(&packet->data[i]);
+		dataRet = dataRet & 
+					NetRecvPacketData(PerHandleData,PerIoData,&packet->data[i]);
+		PerIoData->dataIndex ++;
 		if(dataRet == false)
 			return false;
-	}
+	}*/
 
 	//return headerRet & allocRet & dataRet;
 	return true;
 }
 
-bool NetSendPacketData(NetPacketData *data){
+bool NetSendPacketData(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData,NetPacketData *data){
 
-	NetSend((void *)data->name, MAX_NAME_LENGTH);
-	NetSend((void *)data->size, sizeof(int));
+	NetSend(PerHandleData,PerIoData,(void *)data->name, MAX_NAME_LENGTH);
+	NetSend(PerHandleData,PerIoData,(void *)data->size, sizeof(int));
 
-	NetSend(data->data, data->size);
+	NetSend(PerHandleData,PerIoData,data->data, data->size);
 
 	return true;
 }
-bool NetSendPacket(NetPacket *packet){
+bool NetSendPacket(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData){
+	NetPacket *packet = (NetPacket*)PerHandleData->packet;
 
 	// 타임 스탬프 기입
 	packet->header.timestamp = NetGetTimestamp();
 
 	// 헤더 정보 전송
 	bool headerRet = true;
-	if(NetSend((void *)&packet->header,sizeof(NetPacketHeader)) != 
+	if(NetSend(PerHandleData,PerIoData,(void *)&packet->header,sizeof(NetPacketHeader)) != 
 		sizeof(NetPacketHeader)){
 			headerRet = false;
 
@@ -131,7 +147,8 @@ bool NetSendPacket(NetPacket *packet){
 	// 서브 데이터 전송
 	bool dataRet = true;
 	for(int i=0;i<packet->header.count;i++){
-		dataRet = dataRet & NetSendPacketData(&packet->data[i]);
+		dataRet = dataRet &
+					NetSendPacketData(PerHandleData,PerIoData,&packet->data[i]);
 
 		if(dataRet == false)
 			return false;
@@ -151,13 +168,13 @@ NetPacket *NetCreatePacket(){
 
 void NetDisposeData(NetPacketData *data){
 	free(data->data);
-	free(data);
 }
 void NetDisposePacket(NetPacket *packet,bool disposeData){
 
 	if(disposeData == true){
 		for(int i=0;i<packet->header.count;i++)
 			NetDisposeData(&packet->data[i]);
+		free(packet->data);
 	}
 	free(packet);
 }
@@ -166,7 +183,10 @@ void NetAddData(NetPacket *packet,NetPacketData *data){
 	packet->data = (NetPacketData*)realloc(packet->data,
 		sizeof(NetPacketData) * (packet->header.count + 1));
 
-	packet->data[packet->header.count] = *data;
+	packet->data[packet->header.count].data = malloc(data->size);
+	sprintf(packet->data[packet->header.count].name, data->name);
+	packet->data[packet->header.count].size = data->size;
+	memcpy(packet->data[packet->header.count].data,data->data,data->size);
 
 	packet->header.count ++;
 }
@@ -199,7 +219,7 @@ void NetAddCharacterData(NetPacket *packet, const char *name, char c){
 }
 void NetAddStringData(NetPacket *packet, const char *name, const char *msg){
 	NetPacketData data;
-	data.size = strlen(msg);
+	data.size = strlen(msg) + 1;
 	data.data = (void*)msg;
 	sprintf(data.name, name);
 	NetAddData(packet,&data);

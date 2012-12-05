@@ -7,6 +7,8 @@
 	#include "NetSocket_Bsd.h"
 #endif 
 
+#include "Server.h"
+
 // 패킷 서브 데이터 이름의 최대 길이
 #define MAX_NAME_LENGTH 16
 
@@ -27,6 +29,14 @@ struct NetPacket{
 	NetPacketData *data;
 };
 
+enum NetRecvState 
+{
+	NET_RECV_HEADER,
+	NET_RECV_DATANAME,
+	NET_RECV_DATASIZE,
+	NET_RECV_DATA
+};
+
 
 int NetIntialize();
 void NetQuit();
@@ -34,17 +44,17 @@ void NetQuit();
 // NetSerialize
 // NetUnserialize
 
-int NetRecv(void *data,int size);
-int NetSend(void *data,int size);
+int NetRecv(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData,int size);
+int NetSend(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData,void *data,int size);
 
 unsigned long NetGetTimestamp();
 
 
-bool NetRecvPacketData(NetPacketData *data);
-bool NetRecvPacket(NetPacket *packet);
+bool NetRecvPacketData(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData,NetPacketData *data);
+bool NetRecvPacket(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData);
 
-bool NetSendPacketData(NetPacketData *data);
-bool NetSendPacket(NetPacket *packet);
+bool NetSendPacketData(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData,NetPacketData *data);
+bool NetSendPacket(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData);
 
 NetPacket *NetCreatePacket();
 

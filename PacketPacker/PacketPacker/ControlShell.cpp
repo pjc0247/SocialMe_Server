@@ -6,6 +6,7 @@
 #include "User.h"
 
 #include <conio.h>
+#include <process.h>
 
 extern unsigned long uptime_st;
 
@@ -87,10 +88,6 @@ void ControlShell(){
 							tick % 60);
 			}
 			
-		}
-		else if(!strcmp(cmd,"user")){
-			char *p1;
-			p1 = strtok(NULL," ");
 		}
 	}
 }

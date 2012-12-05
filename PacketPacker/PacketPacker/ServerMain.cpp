@@ -3,6 +3,8 @@
 #include "Server.h"
 #include "blacklist.h"
 
+#include "NetPacket.h"
+
 unsigned long uptime_st;
 
 unsigned int __stdcall CompletionThread(void* pComPort);
@@ -33,7 +35,7 @@ int RunServer(int port){
 	dwProcessor = SystemInfo.dwNumberOfProcessors;
 	hCompletionPort = CreateIoCompletionPort(INVALID_HANDLE_VALUE, NULL, 0, (dwProcessor * 2));
 
-	for(i=0; i < (dwProcessor * 2); i++) {
+	for(i=0; i < 1; i++) {
 		//CreateThread(NULL, 0, CompletionThread, (LPVOID)hCompletionPort, 0, NULL);
 		_beginthreadex(NULL, 0, CompletionThread, (LPVOID)hCompletionPort, 0, NULL);
 	}
@@ -87,24 +89,17 @@ int RunServer(int port){
 		PerHandleData=(LPPER_HANDLE_DATA)malloc(sizeof(PER_HANDLE_DATA));          
 		PerHandleData->hClntSock=hClntSock;
 		PerHandleData->n = N;
+		PerHandleData->packet = (NetPacket*)malloc(sizeof(NetPacket));
 		memcpy(&(PerHandleData->clntAddr), &clntAddr, addrLen);
+		memset(PerHandleData->packet,0,sizeof(NetPacket));
 
 		CreateIoCompletionPort((HANDLE)hClntSock,hCompletionPort,(DWORD)PerHandleData,0);
 
 		PerIoData = (LPPER_IO_DATA)malloc(sizeof(PER_IO_DATA));
 		memset(&(PerIoData->overlapped), 0, sizeof(OVERLAPPED));           
-		PerIoData->wsaBuf.len = BUFSIZE;
-		PerIoData->wsaBuf.buf = PerIoData->buffer;
-		Flags=0;
 
-		WSARecv(PerHandleData->hClntSock,
-			&(PerIoData->wsaBuf),
-			1,                
-			&RecvBytes,                                 
-			&Flags,
-			&(PerIoData->overlapped),
-			NULL
-			);        
+
+		NetRecvPacket(PerHandleData,PerIoData);
 	}while(++N);
 
 
@@ -112,6 +107,7 @@ int RunServer(int port){
 
 	return 0;
 }
+
 unsigned int __stdcall CompletionThread(void* pComPort)
 {
 	HANDLE hCompletionPort =(HANDLE)pComPort;
@@ -139,24 +135,82 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 			free(PerHandleData);
 			free(PerIoData);
 			continue;             
-		}             
-		PerIoData->wsaBuf.len = BytesTransferred;
-		PerIoData->wsaBuf.buf[BytesTransferred] = '\0';
+		} 
+		//printf("Recv %d bytes\n", BytesTransferred);
+		//printf("Recv State : %d, %d\n", PerIoData->recvState,PerIoData->bytesToRecv);
+		if(BytesTransferred < PerIoData->bytesToRecv){
+			DWORD read;
+			DWORD Flags;
 
-		memset(&(PerIoData->overlapped), 0, sizeof(OVERLAPPED));
-		PerIoData->wsaBuf.len=BUFSIZE;
-		PerIoData->wsaBuf.buf=PerIoData->buffer;
+			PerIoData->wsaBuf.len = PerIoData->bytesToRecv - BytesTransferred;
+			PerIoData->wsaBuf.buf = PerIoData->buffer + BytesTransferred;
+			PerIoData->bytesToRecv -= BytesTransferred;
+			Flags=0;
 
-		flags=0;
-		WSARecv(PerHandleData->hClntSock,
-			&(PerIoData->wsaBuf),
-			1,
-			NULL,
-			&flags,
-			&(PerIoData->overlapped),
-			NULL
-			);      
+			WSARecv(PerHandleData->hClntSock,
+				&(PerIoData->wsaBuf),
+				1,                
+				&read,                                 
+				&Flags,
+				&(PerIoData->overlapped),
+				NULL
+				);
 
+			continue;
+		}
+
+		NetPacket *p = (NetPacket *)PerHandleData->packet;
+		switch(PerIoData->recvState){
+			case NET_RECV_HEADER:
+				memcpy(&p->header,PerIoData->buffer,PerIoData->size);
+
+				// 메모리 할당
+				p->data = (NetPacketData*)malloc(
+					sizeof(NetPacketData) * p->header.count);
+				if(p->data == NULL){
+					output("malloc failed\n");
+				}
+
+				PerIoData->recvState = NET_RECV_DATANAME;
+				NetRecv(PerHandleData,PerIoData, MAX_NAME_LENGTH);
+				break;
+			case NET_RECV_DATANAME:
+				//printf("%s %d\n", PerIoData->buffer, BytesTransferred);
+				memcpy(&p->data[PerIoData->dataIndex].name,PerIoData->buffer,MAX_NAME_LENGTH);
+				PerIoData->recvState = NET_RECV_DATASIZE;
+				NetRecv(PerHandleData,PerIoData, sizeof(int));
+				break;
+			case NET_RECV_DATASIZE:
+				memcpy(&p->data[PerIoData->dataIndex].size,PerIoData->buffer,sizeof(int));
+				
+				PerIoData->recvState = NET_RECV_DATA;
+				NetRecv(PerHandleData,PerIoData, p->data[PerIoData->dataIndex].size);
+				break;
+			case NET_RECV_DATA:
+				memcpy(&p->data[PerIoData->dataIndex].data,PerIoData->buffer,PerIoData->size);
+				
+				PerIoData->dataIndex ++;
+
+				// Recieve Complete
+				if(PerIoData->dataIndex >= p->header.count){
+					NetRecvPacket(PerHandleData,PerIoData);
+				}
+				else{
+					PerIoData->recvState = NET_RECV_DATANAME;
+					NetRecv(PerHandleData,PerIoData, MAX_NAME_LENGTH);
+				}
+				break;
+			default:
+				printf("unknown packet\n");
+				break;
+		}
+		//printf("B");
+		//PerIoData->wsaBuf.len = BytesTransferred;
+		//PerIoData->wsaBuf.buf[BytesTransferred] = '\0';
+
+		
+
+		//NetRecvPacket(PerHandleData,PerIoData);
 	}
 	return 0;
 }
