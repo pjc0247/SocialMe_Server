@@ -4,7 +4,7 @@
 #include "stdafx.h"
 
 #include "NetPacket.h"
-#include "protocol.h"
+#include "../../../PacketPacker/PacketPacker/Protocol.h"
 
 #pragma comment (lib, "ws2_32")
 
