@@ -26,6 +26,9 @@ bool LoginTry(PacketHandlerData d){
 		if(!strcmp(user->pw, NetGetStringData(p,"pw"))){
 			pkt->header.type = LOGIN_OK;
 			NetAddStringData(pkt,"id", user->id);
+
+			d.handle->user = CreateUser();
+			memcpy(d.handle->user, user, sizeof(User));
 		}
 		// ºÒÀÏÄ¡
 		else{

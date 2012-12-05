@@ -4,6 +4,8 @@
 #include <WinSock2.h>
 #include "ServerController.h"
 
+#include "User.h"
+
 #define BUFSIZE 1024
 
 typedef struct
@@ -11,6 +13,8 @@ typedef struct
 	SOCKET      hClntSock;
 	SOCKADDR_IN clntAddr;
 	int n;
+
+	User *user;
 
 	void *packet;
 
