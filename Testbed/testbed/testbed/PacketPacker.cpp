@@ -120,14 +120,14 @@ NetPacketData *NetGetData(NetPacket *packet, const char *name){
 void NetAddNumberData(NetPacket *packet, const char *name, int i){
 	NetPacketData data;
 	data.size = sizeof(int);
-	data.data = (void*)i;
+	data.data = (void*)&i;
 	sprintf(data.name, name);
 	NetAddData(packet,&data);
 }
 void NetAddCharacterData(NetPacket *packet, const char *name, char c){
 	NetPacketData data;
 	data.size = sizeof(char);
-	data.data = (void*)c;
+	data.data = (void*)&c;
 	sprintf(data.name, name);
 	NetAddData(packet,&data);
 }

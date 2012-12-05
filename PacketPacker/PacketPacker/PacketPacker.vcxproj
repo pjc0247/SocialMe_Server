@@ -88,6 +88,7 @@
     <ClInclude Include="Protocol.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="ServerController.h" />
+    <ClInclude Include="ServerHandler.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="StrUtil.h" />
     <ClInclude Include="targetver.h" />
@@ -95,12 +96,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="blacklist.cpp" />
+    <ClCompile Include="ConnectionHandler.cpp" />
     <ClCompile Include="ControlShell.cpp" />
     <ClCompile Include="database.cpp" />
     <ClCompile Include="database_cubrid.cpp" />
     <ClCompile Include="log.cpp" />
+    <ClCompile Include="LoginHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PacketPacker.cpp" />
+    <ClCompile Include="RegistHandler.cpp" />
+    <ClCompile Include="ServerHandler.cpp" />
     <ClCompile Include="ServerMain.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

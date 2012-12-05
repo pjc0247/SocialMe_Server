@@ -4,6 +4,7 @@
 #include "blacklist.h"
 
 #include "NetPacket.h"
+#include "ServerHandler.h"
 
 unsigned long uptime_st;
 
@@ -73,6 +74,7 @@ int RunServer(int port){
 		// 새 클라이언트 연결을 수립한다.
 		hClntSock=accept(hServSock, (SOCKADDR*)&clntAddr, &addrLen);  
 
+		
 		//char t = TRUE;
 		//setsockopt(hClntSock, IPPROTO_TCP, TCP_NODELAY, &t, sizeof(t));
 
@@ -89,7 +91,7 @@ int RunServer(int port){
 		PerHandleData=(LPPER_HANDLE_DATA)malloc(sizeof(PER_HANDLE_DATA));          
 		PerHandleData->hClntSock=hClntSock;
 		PerHandleData->n = N;
-		PerHandleData->packet = (NetPacket*)malloc(sizeof(NetPacket));
+		PerHandleData->packet = NetCreatePacket();
 		memcpy(&(PerHandleData->clntAddr), &clntAddr, addrLen);
 		memset(PerHandleData->packet,0,sizeof(NetPacket));
 
@@ -131,6 +133,7 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 		{
 			output("closed %d\n",PerHandleData->n);
 
+			// 소켓 종료
 			closesocket(PerHandleData->hClntSock);
 			free(PerHandleData);
 			free(PerIoData);
@@ -138,10 +141,14 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 		} 
 		//printf("Recv %d bytes\n", BytesTransferred);
 		//printf("Recv State : %d, %d\n", PerIoData->recvState,PerIoData->bytesToRecv);
+
+
+		// 패킷을 목표량만큼 전부 받지 못하면
 		if(BytesTransferred < PerIoData->bytesToRecv){
 			DWORD read;
 			DWORD Flags;
 
+			// 현재 받은걸 제외하고 재수신을 요청
 			PerIoData->wsaBuf.len = PerIoData->bytesToRecv - BytesTransferred;
 			PerIoData->wsaBuf.buf = PerIoData->buffer + BytesTransferred;
 			PerIoData->bytesToRecv -= BytesTransferred;
@@ -175,7 +182,6 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 				NetRecv(PerHandleData,PerIoData, MAX_NAME_LENGTH);
 				break;
 			case NET_RECV_DATANAME:
-				//printf("%s %d\n", PerIoData->buffer, BytesTransferred);
 				memcpy(&p->data[PerIoData->dataIndex].name,PerIoData->buffer,MAX_NAME_LENGTH);
 				PerIoData->recvState = NET_RECV_DATASIZE;
 				NetRecv(PerHandleData,PerIoData, sizeof(int));
@@ -183,16 +189,26 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 			case NET_RECV_DATASIZE:
 				memcpy(&p->data[PerIoData->dataIndex].size,PerIoData->buffer,sizeof(int));
 				
+				p->data[PerIoData->dataIndex].data = malloc(p->data[PerIoData->dataIndex].size);
+
+				printf("%d \n", p->data[PerIoData->dataIndex].size);
+
 				PerIoData->recvState = NET_RECV_DATA;
 				NetRecv(PerHandleData,PerIoData, p->data[PerIoData->dataIndex].size);
 				break;
 			case NET_RECV_DATA:
-				memcpy(&p->data[PerIoData->dataIndex].data,PerIoData->buffer,PerIoData->size);
+				
+				memcpy(p->data[PerIoData->dataIndex].data,PerIoData->buffer,PerIoData->size);
 				
 				PerIoData->dataIndex ++;
 
 				// Recieve Complete
 				if(PerIoData->dataIndex >= p->header.count){
+					ProcessPacket(p);
+
+					// fix : memory leak
+					//NetDisposePacket(p,false);
+					//p = NetCreatePacket();
 					NetRecvPacket(PerHandleData,PerIoData);
 				}
 				else{
@@ -200,17 +216,13 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 					NetRecv(PerHandleData,PerIoData, MAX_NAME_LENGTH);
 				}
 				break;
+
+			// 알 수 없는 패킷, 다시 패킷 헤더를 수신한다.
 			default:
 				printf("unknown packet\n");
+				NetRecvPacket(PerHandleData,PerIoData);
 				break;
 		}
-		//printf("B");
-		//PerIoData->wsaBuf.len = BytesTransferred;
-		//PerIoData->wsaBuf.buf[BytesTransferred] = '\0';
-
-		
-
-		//NetRecvPacket(PerHandleData,PerIoData);
 	}
 	return 0;
 }

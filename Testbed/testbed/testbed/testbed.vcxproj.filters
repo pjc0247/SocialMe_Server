@@ -36,6 +36,9 @@
     <ClInclude Include="NetSocket_Windows.h">
       <Filter>소스 파일\Net</Filter>
     </ClInclude>
+    <ClInclude Include="protocol.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

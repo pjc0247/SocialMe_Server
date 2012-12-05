@@ -228,7 +228,7 @@ void NetAddStringData(NetPacket *packet, const char *name, const char *msg){
 int NetGetNumberData(NetPacket *packet, const char *name){
 	NetPacketData *data;
 	data = NetGetData(packet,name);
-	return (int)data->data;
+	return *(int*)data->data;
 }
 char NetGetCharacterData(NetPacket *packet, const char *name){
 	NetPacketData *data;

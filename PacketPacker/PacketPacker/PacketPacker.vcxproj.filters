@@ -40,6 +40,9 @@
     <Filter Include="소스 파일\Server\Protocol">
       <UniqueIdentifier>{d1411d54-e638-4f7f-b578-f18a22f9287b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Server\Handling">
+      <UniqueIdentifier>{8237b415-101d-4fff-9024-8cae8428dd67}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -84,6 +87,9 @@
     <ClInclude Include="StrUtil.h">
       <Filter>소스 파일\Util</Filter>
     </ClInclude>
+    <ClInclude Include="ServerHandler.h">
+      <Filter>소스 파일\Server\Handling</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -115,6 +121,18 @@
     </ClCompile>
     <ClCompile Include="database_cubrid.cpp">
       <Filter>소스 파일\DataBase\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginHandler.cpp">
+      <Filter>소스 파일\Server\Handling</Filter>
+    </ClCompile>
+    <ClCompile Include="RegistHandler.cpp">
+      <Filter>소스 파일\Server\Handling</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerHandler.cpp">
+      <Filter>소스 파일\Server\Handling</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectionHandler.cpp">
+      <Filter>소스 파일\Server\Handling</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

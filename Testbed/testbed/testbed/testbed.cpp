@@ -4,6 +4,7 @@
 #include "stdafx.h"
 
 #include "NetPacket.h"
+#include "protocol.h"
 
 #pragma comment (lib, "ws2_32")
 
@@ -84,16 +85,17 @@ int _tmain(int argc, _TCHAR* argv[])
 	char a[32];
 	sprintf(a,"QWER");
 
-	NetAddStringData(p,"test",a);
-	NetAddStringData(p,"asdf","hogu");
-	sprintf(a,"ASDF");
+	p->header.type = REGIST_TRY;
+	NetAddStringData(p,"id", "anz4176");
+	NetAddStringData(p,"pw","hogu");
+	NetAddStringData(p,"nick","¹ÚÁØÃ¶");
+	NetAddNumberData(p, "age", 18);
 
-	printf("sss %d \n", p->data[0].size);
-
-	for(int i=0;i<10000;i++){
+	
+	
 		NetSendPacket(hSocket,p);
 		//Sleep(10);
-	}
+
 
 	printf("%d \n", p->header.count);
 
