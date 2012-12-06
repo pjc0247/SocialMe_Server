@@ -1,3 +1,10 @@
+/*
+ *  SocialMe Server Project
+ *				written by pjc0247
+ *	
+ *	Protocol definations
+ */
+
 #ifndef PROTOCOL_H
 #define PROTOCOL_H
 

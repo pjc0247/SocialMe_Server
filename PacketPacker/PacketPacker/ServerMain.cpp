@@ -93,7 +93,6 @@ int RunServer(int port){
 		PerHandleData->n = N;
 		PerHandleData->packet = NetCreatePacket();
 		PerHandleData->user = NULL;
-		PerHandleData->disposecnt = 2;
 		memcpy(&(PerHandleData->clntAddr), &clntAddr, addrLen);
 		memset(PerHandleData->packet,0,sizeof(NetPacket));
 
@@ -136,14 +135,12 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 		// 0 바이트 수신함 -> 연결 종료됨
 		if(BytesTransferred == 0)
 		{
-		//	PerHandleData->disposecnt --;
-			//if(PerHandleData->disposecnt == 0){
-				output("close %d\n", PerHandleData->n);
-				// 소켓 종료
-				closesocket(PerHandleData->hClntSock);
-				free(PerHandleData);
-				free(PerIoData);
-			//}
+			output("close %d\n", PerHandleData->n);
+			// 소켓 종료
+			closesocket(PerHandleData->hClntSock);
+			free(PerHandleData);
+			free(PerIoData);
+
 			continue;             
 		} 
 		//printf("Recv %d bytes\n", BytesTransferred);

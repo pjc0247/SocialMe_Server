@@ -1,3 +1,10 @@
+/*
+ *  SocialMe Server Project
+ *				written by pjc0247
+ *	
+ *	Packet Handler
+ */
+
 #ifndef HANDLER_H
 #define HANDLER_H
 
