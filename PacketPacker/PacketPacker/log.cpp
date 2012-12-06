@@ -12,6 +12,37 @@ using namespace std;
 
 list<string> logs;
 
+FILE *fp = NULL;
+
+
+void StartLog();
+void EndLog();
+
+class LogStarter {
+public:
+	LogStarter(){
+		StartLog();
+	}
+	~LogStarter(){
+		EndLog();
+	}
+} _logstarter;
+
+void StartLog(){
+	SYSTEMTIME time;
+
+	GetLocalTime(&time);
+
+	char msg[256];
+	sprintf(msg,"log\\%d_%d_%d_%d_%d.log",
+		time.wYear,time.wMonth,time.wDay,time.wHour,time.wMinute);
+
+	fp = fopen(msg,"w");
+}
+void EndLog(){
+	fclose(fp);
+}
+
 void ClearLog(){
 	logs.clear();
 }
@@ -22,7 +53,7 @@ void output(const char *fmt, ...)
 	va_list ap;
 	int len;
 	SYSTEMTIME time;
-	
+
 	va_start(ap, fmt);
 	len = vsprintf(buffer, fmt, ap);
 	va_end(ap);
@@ -34,6 +65,7 @@ void output(const char *fmt, ...)
 		buffer);
 					
 	printf(buffer2);
+	fprintf(fp,buffer2);
 
 	logs.push_back(string(buffer2));
 }
