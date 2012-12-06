@@ -1,3 +1,10 @@
+/*
+ *  SocialMe Server Project
+ *				written by pjc0247
+ *	
+ *	Data structs, Server Main
+ */
+
 #ifndef SERVER_H
 #define SERVER_H
 
@@ -22,7 +29,6 @@ typedef struct
 {
 	SOCKET      hClntSock;
 	SOCKADDR_IN clntAddr;
-	int disposecnt;
 	int n;
 
 	User *user;
