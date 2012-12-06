@@ -27,6 +27,7 @@ int NetRecv(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData,int size){
 	PerIoData->wsaBuf.len = size;
 	PerIoData->wsaBuf.buf = PerIoData->buffer;
 	PerIoData->size = PerIoData->bytesToRecv = size;
+	PerIoData->overlapped.flag = ASYNC_RECV;
 	Flags=0;
 
 	//printf("recv %d\n", size);
@@ -45,6 +46,10 @@ int NetRecv(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData,int size){
 	//read = recv();
 	return read;
 }
+
+void CALLBACK SendCallback(DWORD err,DWORD sent,LPWSAOVERLAPPED overlapped,DWORD flags){
+
+}
 int NetSend(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData,void *data,int size){
 	DWORD written = 0;
 	DWORD Flags = 0;
@@ -52,10 +57,14 @@ int NetSend(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData,void *data,int
 
 	buf.buf = (char *)data;
 	buf.len = size;
+	PerIoData->overlapped.flag = ASYNC_SEND;
+
+	printf("%d \n", buf.len);
 
 	WSASend(PerHandleData->hClntSock,
 		&buf, 1,&written,
-		Flags,NULL,NULL);
+		Flags,
+		NULL,SendCallback);
 	//written = send();
 	return written;
 }
@@ -213,7 +222,7 @@ NetPacketData *NetGetData(NetPacket *packet, const char *name){
 void NetAddNumberData(NetPacket *packet, const char *name, int i){
 	NetPacketData data;
 	data.size = sizeof(int);
-	data.data = (void*)i;
+	data.data = (void*)&i;
 	sprintf(data.name, name);
 	NetAddData(packet,&data);
 }

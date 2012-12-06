@@ -92,6 +92,8 @@ int RunServer(int port){
 		PerHandleData->hClntSock=hClntSock;
 		PerHandleData->n = N;
 		PerHandleData->packet = NetCreatePacket();
+		PerHandleData->user = NULL;
+		PerHandleData->disposecnt = 2;
 		memcpy(&(PerHandleData->clntAddr), &clntAddr, addrLen);
 		memset(PerHandleData->packet,0,sizeof(NetPacket));
 
@@ -99,7 +101,6 @@ int RunServer(int port){
 
 		PerIoData = (LPPER_IO_DATA)malloc(sizeof(PER_IO_DATA));
 		memset(&(PerIoData->overlapped), 0, sizeof(OVERLAPPED));           
-
 
 		NetRecvPacket(PerHandleData,PerIoData);
 	}while(++N);
@@ -122,21 +123,27 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 
 	while(1)
 	{
-		GetQueuedCompletionStatus(hCompletionPort,
+		bool ret = GetQueuedCompletionStatus(hCompletionPort,
 			&BytesTransferred,
 			(LPDWORD)&PerHandleData,
 			(LPOVERLAPPED*)&PerIoData,
 			INFINITE);
 
+		printf("recv %d %d %d \n",ret ,  BytesTransferred, PerIoData->overlapped.flag);
+		if(PerIoData->overlapped.flag != ASYNC_RECV)
+			continue;
+
 		// 0 바이트 수신함 -> 연결 종료됨
 		if(BytesTransferred == 0)
 		{
-			output("closed %d\n",PerHandleData->n);
-
-			// 소켓 종료
-			closesocket(PerHandleData->hClntSock);
-			free(PerHandleData);
-			free(PerIoData);
+		//	PerHandleData->disposecnt --;
+			//if(PerHandleData->disposecnt == 0){
+				output("close %d\n", PerHandleData->n);
+				// 소켓 종료
+				closesocket(PerHandleData->hClntSock);
+				free(PerHandleData);
+				free(PerIoData);
+			//}
 			continue;             
 		} 
 		//printf("Recv %d bytes\n", BytesTransferred);
@@ -225,6 +232,8 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 				NetRecvPacket(PerHandleData,PerIoData);
 				break;
 		}
+
+		memset(&PerIoData->overlapped, 0, sizeof(OVERLAPPED));
 	}
 	return 0;
 }

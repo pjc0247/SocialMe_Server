@@ -8,10 +8,21 @@
 
 #define BUFSIZE 1024
 
+enum OverlappedFlags{
+	ASYNC_SEND = 10,
+	ASYNC_RECV
+};
+
+typedef struct OVERLAPPEDEX : OVERLAPPED
+{
+	DWORD flag;
+} OVERLAPPEDEX;
+
 typedef struct
 {
 	SOCKET      hClntSock;
 	SOCKADDR_IN clntAddr;
+	int disposecnt;
 	int n;
 
 	User *user;
@@ -22,7 +33,7 @@ typedef struct
 
 typedef struct
 {
-	OVERLAPPED overlapped;
+	OVERLAPPEDEX overlapped;
 	char buffer[BUFSIZE];
 	WSABUF wsaBuf;
 

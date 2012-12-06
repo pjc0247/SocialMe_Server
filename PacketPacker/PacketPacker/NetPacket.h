@@ -1,3 +1,10 @@
+/*
+ *  SocialMe Server Project
+ *				written by pjc0247
+ *	
+ *	Network, Packet packing Module
+ */
+
 #ifndef NETPACKET_H
 #define NETPACKET_H
 
