@@ -18,18 +18,29 @@ bool RegistTry(PacketHandlerData d){
 	user->age = NetGetNumberData(p,"age");
 
 	exist = QueryUser(user->id, NULL);
+
+	NetPacket *pkt;
+	pkt = NetCreatePacket();
+
 	if(exist){
-		NetPacket *pkt;
-		pkt = NetCreatePacket();
 		pkt->header.type = REGIST_EXIST_ID;
 		NetAddStringData(pkt,"reason", "id already exist");
-		NetSendPacket(d.handle,d.io,pkt);
-		NetDisposePacket(pkt,true);
 	}
 	else{
-		RegistUser(NetGetStringData(p,"id"),
+		bool ret;
+		ret = RegistUser(NetGetStringData(p,"id"),
 					user);
+
+		if(ret){
+			pkt->header.type = REGIST_OK;
+		}
+		else{
+			pkt->header.type = REGIST_DENIED;
+			NetAddStringData(pkt,"reason", "unknown error");
+		}
 	}
+	NetSendPacket(d.handle,d.io,pkt);
+	NetDisposePacket(pkt,true);
 
 	DisposeUser(user);
 

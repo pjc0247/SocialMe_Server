@@ -13,7 +13,7 @@ struct PacketHandlerData{
 bool RegistTry(PacketHandlerData d);
 
 bool LoginTry(PacketHandlerData d);
-bool Logout(PacketHandlerData d);
+bool LogoutTry(PacketHandlerData d);
 
 bool ProcessPacket(PacketHandlerData d);
 

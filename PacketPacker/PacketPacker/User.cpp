@@ -15,7 +15,6 @@ User *CreateUser(){
 }
 void DisposeUser(User *u){
 	free(u);
-	u = NULL;
 }
 
 

@@ -17,6 +17,7 @@ enum SocialMeProtocol {
 
 	REGIST_TRY,
 	REGIST_EXIST_ID,
+	REGIST_OK,
 	REGIST_DENIED,
 
 	USER_QUERY,

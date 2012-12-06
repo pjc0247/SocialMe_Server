@@ -26,6 +26,11 @@ bool DbConnect(){
 	}
 	else{
 		output("DB Connect failed (%d)\n", nDB);
+
+		char msg[256];
+		cci_get_error_msg(nDB,NULL,msg,256);
+		output(msg);
+
 		return false;
 	}
 }
