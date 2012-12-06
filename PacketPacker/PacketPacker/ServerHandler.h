@@ -15,6 +15,10 @@ bool RegistTry(PacketHandlerData d);
 bool LoginTry(PacketHandlerData d);
 bool LogoutTry(PacketHandlerData d);
 
+bool UserUpdate(PacketHandlerData d);
+bool UserQuery(PacketHandlerData d);
+bool UserQueryImage(PacketHandlerData d);
+
 bool ProcessPacket(PacketHandlerData d);
 
 #endif //HANDLER_H

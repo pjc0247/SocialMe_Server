@@ -53,7 +53,7 @@ bool LoginTry(PacketHandlerData d){
 bool LogoutTry(PacketHandlerData d){
 
 	if(d.handle->user != NULL){
-		DisposeUser(d.handle->user);
+		Logout(d.handle);
 		d.handle->user = NULL;
 	}
 	else{

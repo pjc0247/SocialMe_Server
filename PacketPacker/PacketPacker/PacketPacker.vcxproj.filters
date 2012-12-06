@@ -43,6 +43,9 @@
     <Filter Include="소스 파일\Server\Handling">
       <UniqueIdentifier>{8237b415-101d-4fff-9024-8cae8428dd67}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Server\Handling\Handler">
+      <UniqueIdentifier>{7e156869-34bb-452c-94ff-883f50ea20ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -122,16 +125,22 @@
     <ClCompile Include="database_cubrid.cpp">
       <Filter>소스 파일\DataBase\Common</Filter>
     </ClCompile>
-    <ClCompile Include="LoginHandler.cpp">
-      <Filter>소스 파일\Server\Handling</Filter>
-    </ClCompile>
-    <ClCompile Include="RegistHandler.cpp">
-      <Filter>소스 파일\Server\Handling</Filter>
-    </ClCompile>
-    <ClCompile Include="ServerHandler.cpp">
-      <Filter>소스 파일\Server\Handling</Filter>
+    <ClCompile Include="Session.cpp">
+      <Filter>소스 파일\User</Filter>
     </ClCompile>
     <ClCompile Include="ConnectionHandler.cpp">
+      <Filter>소스 파일\Server\Handling\Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginHandler.cpp">
+      <Filter>소스 파일\Server\Handling\Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="RegistHandler.cpp">
+      <Filter>소스 파일\Server\Handling\Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="UserHandler.cpp">
+      <Filter>소스 파일\Server\Handling\Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerHandler.cpp">
       <Filter>소스 파일\Server\Handling</Filter>
     </ClCompile>
   </ItemGroup>

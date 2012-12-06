@@ -9,6 +9,8 @@
 bool OnConnected(PacketHandlerData d){
 
 	// TODO : 블랙 리스트와 대조하여 연결 허용,. 거부
+
+	return true;
 }
 bool OnDisconnected(PacketHandlerData d){
 
@@ -17,4 +19,5 @@ bool OnDisconnected(PacketHandlerData d){
 	if(d.handle->user != NULL){
 		LogoutTry(d);
 	}
+	return true;
 }

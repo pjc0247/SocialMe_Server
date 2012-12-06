@@ -85,11 +85,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	char a[32];
 	sprintf(a,"QWER");
 
-	p->header.type = LOGIN_TRY;
+	p->header.type = USER_UPDATE;
 	NetAddStringData(p,"id", "pjc0247");
-	NetAddStringData(p,"pw","hogu");
-	NetAddStringData(p,"nick","ÇØ¹Ì¤¿»ç¤Ó");
-	NetAddNumberData(p, "age", 18);
+	//NetAddNumberData(p, "age", 18);
 
 	
 	

@@ -28,4 +28,10 @@ bool RegistUser(char *id,User *u);
 bool QueryUser(char *id,User *u);
 bool UpdateUser(char *id,User *u);
 
+/*
+ * Session API
+ */
+bool Logout(void *handle);
+bool IsLoggedIn(void *handle);
+
 #endif // USER_H

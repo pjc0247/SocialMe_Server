@@ -19,6 +19,16 @@ bool ProcessPacket(PacketHandlerData d){
 		LogoutTry(d);
 		break;
 
+	case USER_UPDATE:
+		UserUpdate(d);
+		break;
+	case USER_QUERY:
+		UserQuery(d);
+		break;
+	case USER_QUERY_IMG:
+		UserQueryImage(d);
+		break;
+
 	default:
 		output("unknown packet\n");
 		break;

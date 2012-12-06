@@ -68,7 +68,7 @@ void ControlShell(){
 			p1 = strtok(NULL," ");
 
 			if(p1 == NULL){
-				unsigned long tick = GetTickCount64();
+				ULONGLONG tick = GetTickCount64();
 				tick = tick - uptime_st;
 				tick /= 1000;
 				printf("%d\n", tick);
@@ -79,7 +79,7 @@ void ControlShell(){
 							tick % 60);
 			}
 			else if(!strcmp(p1,"system")){
-				unsigned long tick = GetTickCount64();
+				ULONGLONG tick = GetTickCount64();
 				tick /= 1000;
 				output(">> system uptime : %dday %dhour %dminute %dsecond\n",
 							tick / 60 / 60 / 24,
