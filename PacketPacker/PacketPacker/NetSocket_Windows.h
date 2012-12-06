@@ -1,3 +1,10 @@
+/*
+ *  SocialMe Server Project
+ *				written by pjc0247
+ *	
+ *	Network Module for Windows platform
+ */
+
 #ifndef NETSOCKET_H
 #define NETSOCKET_H
 
