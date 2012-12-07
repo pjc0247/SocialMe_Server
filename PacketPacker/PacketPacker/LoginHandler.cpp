@@ -52,7 +52,7 @@ bool LoginTry(PacketHandlerData d){
 }
 bool LogoutTry(PacketHandlerData d){
 
-	if(d.handle->user != NULL){
+	if(IsLoggedIn(d.handle)){
 		Logout(d.handle);
 		d.handle->user = NULL;
 	}
