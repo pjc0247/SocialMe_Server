@@ -6,25 +6,25 @@
 
 
 int QueryMessage(char *receiver,Message *m){
-	bool ret = true;
+	int ret = RESULT_NEXT;
 	int q;
 	char qm[512];
 	char *sp;
 	int len;
 
-	sprintf(qm,"select * from \"message\" where id = \'%s\';", receiver); 
+	sprintf(qm,"select * from \"message\" where receiver_id = \'%s\';", receiver)                       ; 
 
 	q = DbPrepare(qm);
 	
 	if(!DbExecute(q)){
 		printf("Execute failed\n");
 
-		ret = false;
+		ret = RESULT_FAILED;
 		goto CleanUp;
 	}
 
 	if(!DbNext(q)){
-		ret = false;
+		ret = RESULT_FAILED;
 		goto CleanUp;
 	}
 
@@ -34,8 +34,8 @@ int QueryMessage(char *receiver,Message *m){
 		m->id = len;
 
 		// TIME
-		len = DbGetString(q, MESSAGE_INDEX_TIME, &sp);
-		memcpy(m->time,sp,len + 1);
+		len = DbGetNumber(q, MESSAGE_INDEX_TIME);
+		m->time = len;
 
 		// SENDER
 		len = DbGetString(q, MESSAGE_INDEX_SENDER, &sp);
@@ -51,8 +51,16 @@ int QueryMessage(char *receiver,Message *m){
 
 		// CONTENT
 		len = DbGetString(q, MESSAGE_INDEX_CONTENT, &sp);
-		memcpy(m->content,sp,len + 1);
+		memcpy(m->msg,sp,len + 1);
 	}
+
+	DbCloseQuery(q);
+
+	sprintf(qm, "delete from message where \"message_id\" = %d",
+			m->id);
+	q = DbPrepare(qm);
+	ret = DbExecute(q);
+	
 
 CleanUp:;
 

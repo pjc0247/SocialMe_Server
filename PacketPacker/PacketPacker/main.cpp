@@ -17,12 +17,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	
 	Message m;
 	
-	SET(m.msg, "HelloMessage!");
-	SET(m.sender,"pjc0247");
-	SET(m.receiver,"anz4187");
-	m.time = 0;
-	m.type = 0;
-	PushMessage(&m);
+	QueryMessage("anz4187", &m);
+
+	printf("%s \n", m.msg);
 
 	RunServer(SERVER_PORT);
 	
