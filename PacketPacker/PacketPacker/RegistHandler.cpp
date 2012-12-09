@@ -22,6 +22,7 @@ bool RegistTry(PacketHandlerData d){
 	NetPacket *pkt;
 	pkt = NetCreatePacket();
 
+	// 이미 존재하는 아이디일경우
 	if(exist){
 		pkt->header.type = REGIST_EXIST_ID;
 		NetAddStringData(pkt,"reason", "id already exist");

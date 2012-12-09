@@ -2,7 +2,7 @@
 
 #include "blacklist.h"
 #include "database.h"
-#include "User.h"
+#include "Message.h"
 
 #include "Server.h"
 
@@ -14,16 +14,15 @@ int _tmain(int argc, _TCHAR* argv[])
 	LoadBlacklist();
 
 	DbConnect();
-
-	User *u = CreateUser();
-	bool ret;
-
-	u->age = 13;
-	SET(u->nick,"Anz");
-	SET(u->pw,"Anz");
-
-//	RegistUser("anz4176",u);
 	
+	Message m;
+	
+	SET(m.msg, "HelloMessage!");
+	SET(m.sender,"pjc0247");
+	SET(m.receiver,"anz4187");
+	m.time = 0;
+	m.type = 0;
+	PushMessage(&m);
 
 	RunServer(SERVER_PORT);
 	

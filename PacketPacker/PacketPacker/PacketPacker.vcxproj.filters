@@ -34,9 +34,6 @@
     <Filter Include="소스 파일\Server\Control">
       <UniqueIdentifier>{489aab5b-95b6-4224-a768-8ed7970d33c6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\User">
-      <UniqueIdentifier>{1ad69c63-aeb8-438e-abbb-07cf1d565301}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Server\Protocol">
       <UniqueIdentifier>{d1411d54-e638-4f7f-b578-f18a22f9287b}</UniqueIdentifier>
     </Filter>
@@ -45,6 +42,15 @@
     </Filter>
     <Filter Include="소스 파일\Server\Handling\Handler">
       <UniqueIdentifier>{7e156869-34bb-452c-94ff-883f50ea20ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Interface">
+      <UniqueIdentifier>{992590d3-2b7b-4c99-8f34-68cbe11f17d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Interface\Message">
+      <UniqueIdentifier>{fc107c64-2914-48d0-87f7-c51dba7697bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Interface\User">
+      <UniqueIdentifier>{1ad69c63-aeb8-438e-abbb-07cf1d565301}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -85,13 +91,16 @@
       <Filter>소스 파일\Server\Protocol</Filter>
     </ClInclude>
     <ClInclude Include="User.h">
-      <Filter>소스 파일\User</Filter>
+      <Filter>소스 파일\Interface\User</Filter>
     </ClInclude>
     <ClInclude Include="StrUtil.h">
       <Filter>소스 파일\Util</Filter>
     </ClInclude>
     <ClInclude Include="ServerHandler.h">
       <Filter>소스 파일\Server\Handling</Filter>
+    </ClInclude>
+    <ClInclude Include="Message.h">
+      <Filter>소스 파일\Interface\Message</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -120,13 +129,13 @@
       <Filter>소스 파일\Server\Control</Filter>
     </ClCompile>
     <ClCompile Include="User.cpp">
-      <Filter>소스 파일\User</Filter>
+      <Filter>소스 파일\Interface\User</Filter>
     </ClCompile>
     <ClCompile Include="database_cubrid.cpp">
       <Filter>소스 파일\DataBase\Common</Filter>
     </ClCompile>
     <ClCompile Include="Session.cpp">
-      <Filter>소스 파일\User</Filter>
+      <Filter>소스 파일\Interface\User</Filter>
     </ClCompile>
     <ClCompile Include="ConnectionHandler.cpp">
       <Filter>소스 파일\Server\Handling\Handler</Filter>
@@ -142,6 +151,9 @@
     </ClCompile>
     <ClCompile Include="ServerHandler.cpp">
       <Filter>소스 파일\Server\Handling</Filter>
+    </ClCompile>
+    <ClCompile Include="Message.cpp">
+      <Filter>소스 파일\Interface\Message</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
