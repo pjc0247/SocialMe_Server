@@ -30,8 +30,17 @@ bool ProcessPacket(PacketHandlerData d){
 		break;
 
 	case MESSAGE_PUSH:
+		MessagePush(d);
 		break;
 	case MESSAGE_QUERY:
+		MessageQuery(d);
+		break;
+
+	case PAYMENT_QUERY:
+		PaymentQuery(d);
+		break;
+	case PAYMENT_PUSH:
+		PaymentPush(d);
 		break;
 
 	default:

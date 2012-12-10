@@ -26,7 +26,11 @@ bool UserUpdate(PacketHandlerData d);
 bool UserQuery(PacketHandlerData d);
 bool UserQueryImage(PacketHandlerData d);
 
+bool MessageQuery(PacketHandlerData d);
 bool MessagePush(PacketHandlerData d);
+
+bool PaymentQuery(PacketHandlerData d);
+bool PaymentPush(PacketHandlerData d);
 
 bool ProcessPacket(PacketHandlerData d);
 
