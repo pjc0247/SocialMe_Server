@@ -86,6 +86,7 @@
     <ClInclude Include="NetPacket.h" />
     <ClInclude Include="NetSocket_Bsd.h" />
     <ClInclude Include="NetSocket_Windows.h" />
+    <ClInclude Include="Payment.h" />
     <ClInclude Include="Protocol.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="ServerController.h" />
@@ -105,7 +106,9 @@
     <ClCompile Include="LoginHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Message.cpp" />
+    <ClCompile Include="MessageHandler.cpp" />
     <ClCompile Include="PacketPacker.cpp" />
+    <ClCompile Include="Payment.cpp" />
     <ClCompile Include="RegistHandler.cpp" />
     <ClCompile Include="ServerHandler.cpp" />
     <ClCompile Include="ServerMain.cpp" />

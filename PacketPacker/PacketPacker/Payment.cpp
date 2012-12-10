@@ -5,15 +5,16 @@
 
 
 
-bool QueryPayment(char *receiver,Payment **_p,int min, int max){
+int QueryPayment(char *receiver,Payment *_p,int min, int max){
 	int ret = true;
-	int q;
+	int q, i;
 	char qm[512];
 	char *sp;
 	int len;
 
-	sprintf(qm,	"select * from \"payment\" where receiver_id = \'%s\' and"
+	sprintf(qm,	"select * from \"payment\" where \"id\" = \'%s\' and "
 				"rownum between %d and %d;", receiver, min, max); 
+	printf("%s\n", qm);
 
 	q = DbPrepare(qm);
 	
@@ -24,15 +25,15 @@ bool QueryPayment(char *receiver,Payment **_p,int min, int max){
 		goto CleanUp;
 	}
 
-	for(int i=0;;i++)
+	for(i=0;;i++)
     {
-        if ( DbCursor(q,1) )
+        if ( !DbCursor(q,1) )
             break;
-       
-        DbFetch(q);
+        if(!DbFetch(q))
+			break;
        
 		Payment *p;
-		p = _p[i];
+		p = &_p[i];
 
         // ID
 		len = DbGetString(q, PAYMENT_INDEX_ID, &sp);
@@ -51,22 +52,11 @@ bool QueryPayment(char *receiver,Payment **_p,int min, int max){
 		p->value = len;
     }
 
-	if(!DbNext(q)){
-		ret = false;
-		goto CleanUp;
-	}
-
-	if(p != NULL){
-		
-	}
-
 CleanUp:;
 
 	DbCloseQuery(q);
 
-	return ret;
-	
-	return true;
+	return i;
 }
 bool PushPayment(Payment *p){
 	bool ret = true;

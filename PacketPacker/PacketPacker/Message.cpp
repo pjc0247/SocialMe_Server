@@ -83,8 +83,6 @@ bool PushMessage(Message *msg){
 		msg->time, msg->sender, msg->receiver,
 		msg->type, msg->msg);
 
-	printf("%s\n", qm);
-
 	q = DbPrepare(qm);
 
 	ret = DbExecute(q);

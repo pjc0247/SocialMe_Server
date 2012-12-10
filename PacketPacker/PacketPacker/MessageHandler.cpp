@@ -24,9 +24,6 @@ bool MessageQuery(PacketHandlerData p){
 		NetAddNumberData(p, "type", m.type);
 		NetDisposePacket(p,true);
 	}
-	
-
-	
 
 	return  ret;
 }

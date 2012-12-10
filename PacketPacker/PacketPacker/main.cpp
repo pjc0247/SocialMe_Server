@@ -2,7 +2,7 @@
 
 #include "blacklist.h"
 #include "database.h"
-#include "Message.h"
+#include "payment.h"
 
 #include "Server.h"
 
@@ -15,11 +15,14 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	DbConnect();
 	
-	Message m;
-	
-	QueryMessage("anz4187", &m);
+	Payment *p;
 
-	printf("%s \n", m.msg);
+	p = (Payment *)malloc(sizeof(Payment) * 5);
+
+	int len = QueryPayment("pjc0247", p, 1, 5);
+	printf("%d \n", len);
+
+	printf("%d\n", p[3].value);
 
 	RunServer(SERVER_PORT);
 	

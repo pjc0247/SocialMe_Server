@@ -15,7 +15,7 @@ enum PaymentColumnIndex{
 	PAYMENT_INDEX_VALUE
 };
 
-bool QueryPayment(char *receiver,Payment **_p,int min, int max);
+int QueryPayment(char *receiver,Payment *_p,int min, int max);
 bool PushPayment(Payment *p);
 
 #endif //PAYMENT_H

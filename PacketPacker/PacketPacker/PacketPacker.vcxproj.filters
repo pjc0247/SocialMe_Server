@@ -52,6 +52,9 @@
     <Filter Include="소스 파일\Interface\User">
       <UniqueIdentifier>{1ad69c63-aeb8-438e-abbb-07cf1d565301}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Interface\Payment">
+      <UniqueIdentifier>{a88ee589-1a45-4d2f-a742-0acb059de93f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -101,6 +104,9 @@
     </ClInclude>
     <ClInclude Include="Message.h">
       <Filter>소스 파일\Interface\Message</Filter>
+    </ClInclude>
+    <ClInclude Include="Payment.h">
+      <Filter>소스 파일\Interface\Payment</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +160,12 @@
     </ClCompile>
     <ClCompile Include="Message.cpp">
       <Filter>소스 파일\Interface\Message</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageHandler.cpp">
+      <Filter>소스 파일\Server\Handling\Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="Payment.cpp">
+      <Filter>소스 파일\Interface\Payment</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
