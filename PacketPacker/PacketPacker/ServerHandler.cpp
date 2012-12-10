@@ -29,6 +29,11 @@ bool ProcessPacket(PacketHandlerData d){
 		UserQueryImage(d);
 		break;
 
+	case MESSAGE_PUSH:
+		break;
+	case MESSAGE_QUERY:
+		break;
+
 	default:
 		output("unknown packet\n");
 		break;

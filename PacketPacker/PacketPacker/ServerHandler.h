@@ -26,6 +26,8 @@ bool UserUpdate(PacketHandlerData d);
 bool UserQuery(PacketHandlerData d);
 bool UserQueryImage(PacketHandlerData d);
 
+bool MessagePush(PacketHandlerData d);
+
 bool ProcessPacket(PacketHandlerData d);
 
 #endif //HANDLER_H
