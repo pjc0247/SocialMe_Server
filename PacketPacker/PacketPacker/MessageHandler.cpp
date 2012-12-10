@@ -6,12 +6,12 @@
 
 #include <time.h>
 
-bool MessageQuery(PacketHandlerData p){
+bool MessageQuery(PacketHandlerData d){
 	bool ret = true;
 
 	while(true){
 		Message m;
-		if(QueryMessage(p.handle->user->id, &m) == RESULT_FAILED)
+		if(QueryMessage(d.handle->user->id, &m) == RESULT_FAILED)
 			break;
 
 		NetPacket *p;
@@ -22,6 +22,7 @@ bool MessageQuery(PacketHandlerData p){
 		NetAddNumberData(p, "time", m.time);
 		NetAddNumberData(p, "id", m.id);
 		NetAddNumberData(p, "type", m.type);
+		NetSendPacket(d.handle,d.io, p);
 		NetDisposePacket(p,true);
 	}
 

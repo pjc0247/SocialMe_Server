@@ -15,15 +15,6 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	DbConnect();
 	
-	Payment *p;
-
-	p = (Payment *)malloc(sizeof(Payment) * 5);
-
-	int len = QueryPayment("pjc0247", p, 1, 5);
-	printf("%d \n", len);
-
-	printf("%d\n", p[3].value);
-
 	RunServer(SERVER_PORT);
 	
 	DbDisconnect();
