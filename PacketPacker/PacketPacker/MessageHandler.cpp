@@ -2,6 +2,7 @@
 #include "Message.h"
 #include "ServerHandler.h"
 #include "Protocol.h"
+#include "reason.h"
 
 #include <time.h>
 

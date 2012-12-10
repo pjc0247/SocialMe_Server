@@ -4,6 +4,7 @@
 #include "ServerHandler.h"
 
 #include "Protocol.h"
+#include "reason.h"
 
 void UserDeny(PacketHandlerData d,int type, const char *reason){
 	NetPacket *p;

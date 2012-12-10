@@ -83,11 +83,13 @@
     <ClInclude Include="database.h" />
     <ClInclude Include="log.h" />
     <ClInclude Include="Message.h" />
+    <ClInclude Include="monitor.h" />
     <ClInclude Include="NetPacket.h" />
     <ClInclude Include="NetSocket_Bsd.h" />
     <ClInclude Include="NetSocket_Windows.h" />
     <ClInclude Include="Payment.h" />
     <ClInclude Include="Protocol.h" />
+    <ClInclude Include="reason.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="ServerController.h" />
     <ClInclude Include="ServerHandler.h" />
@@ -107,6 +109,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Message.cpp" />
     <ClCompile Include="MessageHandler.cpp" />
+    <ClCompile Include="Monitor.cpp" />
     <ClCompile Include="PacketPacker.cpp" />
     <ClCompile Include="Payment.cpp" />
     <ClCompile Include="PaymentHandler.cpp" />

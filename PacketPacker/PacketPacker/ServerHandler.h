@@ -10,7 +10,6 @@
 
 #include "Server.h"
 #include "NetPacket.h"
-#include "reason.h"
 
 struct PacketHandlerData{
 	NetPacket *pkt;

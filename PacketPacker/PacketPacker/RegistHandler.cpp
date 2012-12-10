@@ -4,6 +4,7 @@
 #include "User.h"
 #include "Protocol.h"
 #include "ServerHandler.h"
+#include "reason.h"
 
 bool RegistTry(PacketHandlerData d){
 	NetPacket *p = d.pkt;

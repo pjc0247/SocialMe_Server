@@ -18,11 +18,8 @@ int RunServer(int port){
 	LPPER_IO_DATA PerIoData;
 	LPPER_HANDLE_DATA PerHandleData;
 
-
 	SOCKET hServSock;
-	DWORD RecvBytes;
 	int i;
-	DWORD Flags;
 
 	SetConsoleTitleA("SocialMe Server");
 

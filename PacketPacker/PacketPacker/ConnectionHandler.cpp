@@ -3,7 +3,7 @@
 #include "User.h"
 #include "Protocol.h"
 #include "NetPacket.h"
-
+#include "reason.h"
 #include "ServerHandler.h"
 
 bool OnConnected(PacketHandlerData d){
