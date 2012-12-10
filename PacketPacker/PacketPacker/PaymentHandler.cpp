@@ -19,6 +19,17 @@ bool PaymentQuery(PacketHandlerData d){
 	max = NetGetNumberData(p, "max");
 
 	pay = (Payment*)malloc(sizeof(Payment) * (max-min+1));
+	if(pay == NULL){
+		ret = false;
+
+		NetPacket *pkt;
+		pkt = NetCreatePacket();
+		pkt->header.type = PAYMENT_QUERY_FAILED;
+		NetAddStringData(pkt, "reason", REASON_UNKNOWN);
+		NetDisposePacket(pkt,true);
+
+		return false;
+	}
 
 	int len = QueryPayment(d.handle->user->id, pay, min, max);
 
@@ -67,6 +78,7 @@ bool PaymentPush(PacketHandlerData d){
 	}
 	else{
 		pkt->header.type = PAYMENT_PUSH_FAILED;
+		NetAddStringData(pkt, "reason", REASON_UNKNOWN);
 	}
 	NetSendPacket(d.handle,d.io, pkt);
 	NetDisposePacket(pkt, true);

@@ -34,14 +34,14 @@ bool LoginTry(PacketHandlerData d){
 		else{
 			pkt->header.type = LOGIN_INCORRECT;
 			NetAddStringData(pkt,"id", user->id);
-			NetAddStringData(pkt,"reason", "pw incorrect");
+			NetAddStringData(pkt,"reason", REASON_PASSWORD_INCORRECT);
 		}
 	}
 	// ¾ÆÀÌµð ¾÷½Â¤±
 	else{
 		pkt->header.type = LOGIN_INCORRECT;
 		NetAddStringData(pkt,"id", user->id);
-		NetAddStringData(pkt,"reason", "id not exist");
+		NetAddStringData(pkt,"reason", REASON_ID_NOT_EXIST);
 	}
 	NetSendPacket(d.handle,d.io,pkt);
 	NetDisposePacket(pkt,true);
@@ -59,7 +59,7 @@ bool LogoutTry(PacketHandlerData d){
 	else{
 		NetPacket *p;
 		p = NetCreatePacket();
-		NetAddStringData(p,"reason", "user not logged in");
+		NetAddStringData(p,"reason", REASON_NOT_LOGGED_IN);
 		NetSendPacket(d.handle,d.io,p);
 		NetDisposePacket(p,true);
 	}

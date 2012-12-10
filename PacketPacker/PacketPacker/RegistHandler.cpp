@@ -25,7 +25,7 @@ bool RegistTry(PacketHandlerData d){
 	// 이미 존재하는 아이디일경우
 	if(exist){
 		pkt->header.type = REGIST_EXIST_ID;
-		NetAddStringData(pkt,"reason", "id already exist");
+		NetAddStringData(pkt,"reason", REASON_ID_ALREADY_EXISTED);
 	}
 	else{
 		bool ret;
@@ -37,7 +37,7 @@ bool RegistTry(PacketHandlerData d){
 		}
 		else{
 			pkt->header.type = REGIST_DENIED;
-			NetAddStringData(pkt,"reason", "unknown error");
+			NetAddStringData(pkt,"reason", REASON_UNKNOWN);
 		}
 	}
 	NetSendPacket(d.handle,d.io,pkt);

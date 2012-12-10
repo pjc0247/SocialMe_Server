@@ -48,6 +48,7 @@ bool MessagePush(PacketHandlerData d){
 	}
 	else{
 		pkt->header.type = MESSAGE_PUSH_FAILED;
+		NetAddStringData(pkt, "reason", REASON_UNKNOWN);
 	}
 	NetSendPacket(d.handle,d.io, pkt);
 	NetDisposePacket(pkt, true);

@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include <stdio.h>
 
+#include "blacklist.h"
+
 #include <string>
 #include <map>
 using namespace std;
@@ -9,7 +11,7 @@ map<string,bool> blacklist;
 
 void LoadBlacklist(){
 	FILE*fp;
-	fp = fopen("data\\blacklist.txt","r");
+	fp = fopen(BLACKLIST_PATH,"r");
 	if(fp == NULL) return;
 
 	while(1){

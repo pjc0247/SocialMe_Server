@@ -24,7 +24,7 @@ bool UserQuery(PacketHandlerData d){
 	user = CreateUser();
 	if(user == NULL){
 		UserDeny(d, USER_QUERY_DENIED,
-			"cannot allocate memory \'user\'");
+			REASON_MEMORY_ERROR);
 		return false;
 	}
 	ret = QueryUser(NetGetStringData(p,"id"), user);
@@ -55,7 +55,7 @@ bool UserQueryImage(PacketHandlerData d){
 	user = CreateUser();
 	if(user == NULL){
 		UserDeny(d, USER_QUERY_DENIED,
-			"cannot allocate memory \'user\'");
+			REASON_MEMORY_ERROR);
 		return false;
 	}
 	ret = QueryUser(NetGetStringData(p,"id"), user);
@@ -77,14 +77,14 @@ bool UserUpdate(PacketHandlerData d){
 
 	if(!IsLoggedIn(d.handle)){
 		UserDeny(d, USER_UPDATE_DENIED,
-			"you are not logged in");
+			REASON_NOT_LOGGED_IN);
 		return false;
 	}
 
 	user = CreateUser();
 	if(user == NULL){
 		UserDeny(d, USER_UPDATE_DENIED,
-			"cannot allocate memory \'user\'");
+			REASON_MEMORY_ERROR);
 		return false;
 	}
 
