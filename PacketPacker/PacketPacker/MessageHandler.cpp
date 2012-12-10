@@ -1,8 +1,7 @@
 #include "stdafx.h"
-
 #include "Message.h"
-
 #include "ServerHandler.h"
+#include "Protocol.h"
 
 #include <time.h>
 
@@ -41,6 +40,17 @@ bool MessagePush(PacketHandlerData d){
 	SET(m.msg, NetGetStringData(p,"msg"));
 	m.type = NetGetNumberData(p,"type");
 	ret = PushMessage(&m);
+
+	NetPacket *pkt;
+	pkt = NetCreatePacket();
+	if(ret){
+		pkt->header.type = MESSAGE_PUSH_OK;
+	}
+	else{
+		pkt->header.type = MESSAGE_PUSH_FAILED;
+	}
+	NetSendPacket(d.handle,d.io, pkt);
+	NetDisposePacket(pkt, true);
 
 	return ret;
 }

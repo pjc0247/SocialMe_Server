@@ -68,6 +68,7 @@ bool PaymentPush(PacketHandlerData d){
 	else{
 		pkt->header.type = PAYMENT_PUSH_FAILED;
 	}
+	NetSendPacket(d.handle,d.io, pkt);
 	NetDisposePacket(pkt, true);
 
 	return ret;
