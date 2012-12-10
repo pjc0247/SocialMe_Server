@@ -167,5 +167,8 @@
     <ClCompile Include="Payment.cpp">
       <Filter>소스 파일\Interface\Payment</Filter>
     </ClCompile>
+    <ClCompile Include="PaymentHandler.cpp">
+      <Filter>소스 파일\Server\Handling\Handler</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -109,6 +109,7 @@
     <ClCompile Include="MessageHandler.cpp" />
     <ClCompile Include="PacketPacker.cpp" />
     <ClCompile Include="Payment.cpp" />
+    <ClCompile Include="PaymentHandler.cpp" />
     <ClCompile Include="RegistHandler.cpp" />
     <ClCompile Include="ServerHandler.cpp" />
     <ClCompile Include="ServerMain.cpp" />

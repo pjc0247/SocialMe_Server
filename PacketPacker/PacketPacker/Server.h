@@ -13,6 +13,7 @@
 
 #include "User.h"
 
+#define SERVER_PORT 9919
 #define BUFSIZE 1024
 
 enum OverlappedFlags{
