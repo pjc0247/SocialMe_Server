@@ -16,6 +16,15 @@ bool PaymentQuery(PacketHandlerData d){
 	int min,max;
 	Payment *pay;
 
+	if(!IsLoggedIn(d.handle)){
+		NetPacket *p;
+		p = NetCreatePacket();
+		p->header.type = PAYMENT_QUERY_FAILED;
+		NetAddStringData(p, "reason", REASON_NOT_LOGGED_IN);
+		NetDisposePacket(p,true);
+		return false;
+	}
+
 	min = NetGetNumberData(p, "min");
 	max = NetGetNumberData(p, "max");
 
@@ -65,6 +74,15 @@ bool PaymentPush(PacketHandlerData d){
 
 	Payment pay;
 	bool ret = true;
+
+	if(!IsLoggedIn(d.handle)){
+		NetPacket *p;
+		p = NetCreatePacket();
+		p->header.type = PAYMENT_PUSH_FAILED;
+		NetAddStringData(p, "reason", REASON_NOT_LOGGED_IN);
+		NetDisposePacket(p,true);
+		return false;
+	}
 
 	pay.time = time(NULL);
 	SET(pay.id, d.handle->user->id);

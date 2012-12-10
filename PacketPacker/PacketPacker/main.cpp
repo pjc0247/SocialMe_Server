@@ -9,7 +9,6 @@
 
 #define SERVER_PORT 9919
 
-
 int _tmain(int argc, _TCHAR* argv[])
 {
 	LoadBlacklist();

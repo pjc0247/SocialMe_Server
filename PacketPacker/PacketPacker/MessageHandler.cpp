@@ -9,6 +9,15 @@
 bool MessageQuery(PacketHandlerData d){
 	bool ret = true;
 
+	if(!IsLoggedIn(d.handle)){
+		NetPacket *p;
+		p = NetCreatePacket();
+		p->header.type = MESSAGE_QUERY_FAILED;
+		NetAddStringData(p, "reason", REASON_NOT_LOGGED_IN);
+		NetDisposePacket(p,true);
+		return false;
+	}
+
 	while(true){
 		Message m;
 		if(QueryMessage(d.handle->user->id, &m) == RESULT_FAILED)
@@ -34,6 +43,16 @@ bool MessagePush(PacketHandlerData d){
 
 	Message m;
 	bool ret = true;
+
+
+	if(!IsLoggedIn(d.handle)){
+		NetPacket *p;
+		p = NetCreatePacket();
+		p->header.type = MESSAGE_PUSH_FAILED;
+		NetAddStringData(p, "reason", REASON_NOT_LOGGED_IN);
+		NetDisposePacket(p,true);
+		return false;
+	}
 
 	m.time = time(NULL);
 	SET(m.sender, d.handle->user->id);
