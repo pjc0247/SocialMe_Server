@@ -61,6 +61,9 @@
     <Filter Include="소스 파일\Monitor">
       <UniqueIdentifier>{0dfab465-0f0b-41f9-a246-c1761b0e48d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Interface\Following">
+      <UniqueIdentifier>{d97b023c-5ea2-4b5c-ab9b-9847abbeac2b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -119,6 +122,9 @@
     </ClInclude>
     <ClInclude Include="monitor.h">
       <Filter>소스 파일\Monitor</Filter>
+    </ClInclude>
+    <ClInclude Include="follow.h">
+      <Filter>소스 파일\Interface\Following</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +190,9 @@
     </ClCompile>
     <ClCompile Include="Monitor.cpp">
       <Filter>소스 파일\Monitor</Filter>
+    </ClCompile>
+    <ClCompile Include="follow.cpp">
+      <Filter>소스 파일\Interface\Following</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -81,6 +81,7 @@
   <ItemGroup>
     <ClInclude Include="blacklist.h" />
     <ClInclude Include="database.h" />
+    <ClInclude Include="follow.h" />
     <ClInclude Include="log.h" />
     <ClInclude Include="Message.h" />
     <ClInclude Include="monitor.h" />
@@ -104,6 +105,7 @@
     <ClCompile Include="ControlShell.cpp" />
     <ClCompile Include="database.cpp" />
     <ClCompile Include="database_cubrid.cpp" />
+    <ClCompile Include="follow.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="LoginHandler.cpp" />
     <ClCompile Include="main.cpp" />
