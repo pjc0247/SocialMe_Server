@@ -6,8 +6,8 @@
 using namespace std;
 
 // facebook.wo.tc : 33000
-#define DB_SERVER "facebook.wo.tc"
-#define DB_PORT 8001
+#define DB_SERVER "localhost"
+#define DB_PORT 33000
 
 #define DB_NAME "demodb"
 #define DB_USER_ID "sma"
@@ -19,6 +19,7 @@ void DbDisconnect();
 int DbPrepare(char *query);
 void DbCloseQuery(int qid);
 bool DbExecute(int qid);
+int DbResultCount(int qid);
 bool DbCursor(int qid,int n);
 bool DbFetch(int qid);
 int DbGetString(int qid,int col,char **buf);

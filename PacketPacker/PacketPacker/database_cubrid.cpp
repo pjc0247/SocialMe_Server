@@ -55,6 +55,24 @@ bool DbExecute(int qid){
 	else
 		return false;
 }
+int DbResultCount(int qid){
+	int len = 1;
+	
+	cci_cursor(qid, 1, CCI_CURSOR_FIRST, &cciErr);
+
+	while(true){
+		if (!DbCursor(qid,1) )
+            break;
+        if(!DbFetch(qid))
+			break;
+		
+		len ++;
+	}
+
+	cci_cursor(qid, 1, CCI_CURSOR_FIRST, &cciErr);
+
+	return len;
+}
 
 bool DbCursor(int qid,int n){
 	int ret = cci_cursor(qid, n, CCI_CURSOR_CURRENT, &cciErr);
