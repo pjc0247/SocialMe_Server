@@ -58,7 +58,7 @@ bool DbExecute(int qid){
 int DbResultCount(int qid){
 	int len = 1;
 	
-	cci_cursor(qid, 1, CCI_CURSOR_FIRST, &cciErr);
+	cci_cursor(qid, 0, CCI_CURSOR_FIRST, &cciErr);
 
 	while(true){
 		if (!DbCursor(qid,1) )
@@ -71,7 +71,7 @@ int DbResultCount(int qid){
 
 	cci_cursor(qid, 1, CCI_CURSOR_FIRST, &cciErr);
 
-	return len;
+	return len-1;
 }
 
 bool DbCursor(int qid,int n){
