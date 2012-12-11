@@ -155,3 +155,42 @@ CleanUp:
 	return len;
 }
 
+bool GetFollowingList(char *id,FollowList *list,int min, int max){
+	int ret = true;
+	int q, i;
+	char qm[256];
+	char *sp;
+	int len = 0;
+
+	sprintf(qm,	"select \"followed\" from \"follow\" where \"follower\" = \'%s\' and "
+				"rownum between %d and %d;", id, min, max); 
+
+	q = DbPrepare(qm);
+	
+	if(!DbExecute(q)){
+		printf("Execute failed\n");
+
+		ret = false;
+		goto CleanUp;
+	}
+	
+	len = max-min+1;
+	list->id = (char*)malloc(sizeof(char) * 16 * len);
+
+	for(i=0;;i++)
+    {
+        if ( !DbCursor(q,1) )
+            break;
+        if(!DbFetch(q))
+			break;
+		
+       
+		len = DbGetString(q, 1, &sp);
+		memcpy(list->id + i*16, sp, len + 1);
+    }
+	list->count = i;
+
+CleanUp:
+	DbCloseQuery(q);
+	return true;
+}
