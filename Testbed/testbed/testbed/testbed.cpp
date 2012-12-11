@@ -95,9 +95,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	NetDisposePacket(p,true);
 
 	p = NetCreatePacket();
-	p->header.type = FOLLOW_UNFOLLOW;
-	NetAddStringData(p,"follower", "pjc0247");
-	NetAddStringData(p,"followed", "anz4176");
+	p->header.type = FOLLOW_QUERY_FOLLOWING_LIST;
+	NetAddStringData(p,"id", "pjc0247");
+	NetAddNumberData(p, "min", 1);
+	NetAddNumberData(p, "max", 5);
 	NetSendPacket(hSocket,p);
 	NetDisposePacket(p,true);
 
