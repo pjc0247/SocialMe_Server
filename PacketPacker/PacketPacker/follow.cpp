@@ -4,6 +4,8 @@
 
 #include "database.h"
 
+
+
 bool IsFollowing(char *src,char *dst){
 	int ret = true;
 	int q, i;
@@ -102,7 +104,7 @@ CleanUp:
 
 	return ret;
 }
-int FollowCount(char *id){
+int FollowingCount(char *id){
 	int ret = true;
 	int q, i;
 	char qm[128];
@@ -127,3 +129,29 @@ CleanUp:
 
 	return len;
 }
+int FollowedCount(char *id){
+	int ret = true;
+	int q, i;
+	char qm[128];
+	char *sp;
+	int len;
+
+	sprintf(qm,	"select * from \"follow\" where \"followed\" = \'%s\'", id); 
+
+	q = DbPrepare(qm);
+	
+	if(!DbExecute(q)){
+		printf("Execute failed\n");
+
+		ret = false;
+		goto CleanUp;
+	}
+
+	len = DbResultCount(q);
+
+CleanUp:
+	DbCloseQuery(q);
+
+	return len;
+}
+
