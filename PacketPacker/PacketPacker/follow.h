@@ -13,6 +13,7 @@ bool Unfollow(char *src,char *dst);
 int FollowingCount(char *id);
 int FollowedCount(char *id);
 
-bool GetFollowingList(char *id,FollowList *list,int min, int max);
+bool QueryFollowerList(char *id,FollowList *list,int min, int max);
+bool QueryFollowingList(char *id,FollowList *list,int min, int max);
 
 #endif // FOLLOW_H
