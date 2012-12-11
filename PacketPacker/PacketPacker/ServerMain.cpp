@@ -6,6 +6,10 @@
 #include "NetPacket.h"
 #include "ServerHandler.h"
 
+#include <map>
+#include <string>
+using namespace std;
+
 unsigned long uptime_st;
 
 unsigned int __stdcall CompletionThread(void* pComPort);
@@ -119,7 +123,7 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 
 	while(1)
 	{
-		bool ret = GetQueuedCompletionStatus(hCompletionPort,
+		BOOL ret = GetQueuedCompletionStatus(hCompletionPort,
 			&BytesTransferred,
 			(LPDWORD)&PerHandleData,
 			(LPOVERLAPPED*)&PerIoData,

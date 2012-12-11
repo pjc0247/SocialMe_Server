@@ -30,6 +30,8 @@ bool LoginTry(PacketHandlerData d){
 
 			d.handle->user = CreateUser();
 			memcpy(d.handle->user, user, sizeof(User));
+
+			PushSession((void*)d.handle);
 		}
 		// ºÒÀÏÄ¡
 		else{
