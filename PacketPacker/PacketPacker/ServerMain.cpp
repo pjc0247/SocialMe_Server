@@ -129,15 +129,20 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 			(LPOVERLAPPED*)&PerIoData,
 			INFINITE);
 
+		
 		//printf("recv %d %d %d \n",ret ,  BytesTransferred, PerIoData->overlapped.flag);
 		if(PerIoData->overlapped.flag != ASYNC_RECV)
 			continue;
 
 		// 0 바이트 수신함 -> 연결 종료됨
-		if(BytesTransferred == 0 || !ret)
+		if((BytesTransferred == 0 || !ret)
+			&&
+			PerHandleData->disconnected == false)
 		{
-			output("close %d\n", PerHandleData->n);
+			output("close a %d\n", PerHandleData->n);
 			// 소켓 종료
+
+			Logout(PerHandleData);
 			closesocket(PerHandleData->hClntSock);
 			free(PerHandleData);
 			free(PerIoData);
@@ -236,10 +241,10 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 		if(PerHandleData->disconnected){
 			output("close %d\n", PerHandleData->n);
 			// 소켓 종료
+			Logout(PerHandleData);
 			closesocket(PerHandleData->hClntSock);
 			free(PerHandleData);
 			free(PerIoData);
-
 			continue;
 		}
 	}
