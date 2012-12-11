@@ -59,7 +59,7 @@ int NetSend(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData,void *data,int
 	buf.len = size;
 	PerIoData->overlapped.flag = ASYNC_SEND;
 
-	printf("%d \n", buf.len);
+	//printf("%d \n", buf.len);
 
 	WSASend(PerHandleData->hClntSock,
 		&buf, 1,&written,

@@ -125,7 +125,7 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 			(LPOVERLAPPED*)&PerIoData,
 			INFINITE);
 
-		printf("recv %d %d %d \n",ret ,  BytesTransferred, PerIoData->overlapped.flag);
+		//printf("recv %d %d %d \n",ret ,  BytesTransferred, PerIoData->overlapped.flag);
 		if(PerIoData->overlapped.flag != ASYNC_RECV)
 			continue;
 
@@ -210,8 +210,8 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 					ProcessPacket(d);
 
 					// fix : memory leak
-					//NetDisposePacket(p,false);
-					//p = NetCreatePacket();
+					NetDisposePacket(p,false);
+					p = NetCreatePacket();
 					NetRecvPacket(PerHandleData,PerIoData);
 				}
 				else{
