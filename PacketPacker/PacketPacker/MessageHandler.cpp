@@ -39,6 +39,15 @@ bool MessageQuery(PacketHandlerData d){
 	return  ret;
 }
 bool MessageNotifyOk(PacketHandlerData d){
+	NetPacket *p;
+	p = d.pkt;
+
+	bool ret;
+	int mid = NetGetNumberData(p, "id");
+
+	ret = DeleteMessage(d.handle->user->id, mid);
+
+	return true;
 }
 bool MessagePush(PacketHandlerData d){
 	NetPacket *p;

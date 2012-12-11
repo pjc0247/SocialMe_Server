@@ -35,6 +35,7 @@ bool FollowQueryFollowedList(PacketHandlerData d);
 
 bool MessageQuery(PacketHandlerData d);
 bool MessagePush(PacketHandlerData d);
+bool MessageNotifyOk(PacketHandlerData d);
 
 bool PaymentQuery(PacketHandlerData d);
 bool PaymentPush(PacketHandlerData d);

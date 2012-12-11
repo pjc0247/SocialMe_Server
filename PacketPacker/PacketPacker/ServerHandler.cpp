@@ -54,6 +54,9 @@ bool ProcessPacket(PacketHandlerData d){
 	case MESSAGE_QUERY:
 		MessageQuery(d);
 		break;
+	case MESSAGE_NOTIFY_OK:
+		MessageNotifyOk(d);
+		break;
 
 	case PAYMENT_QUERY:
 		PaymentQuery(d);
