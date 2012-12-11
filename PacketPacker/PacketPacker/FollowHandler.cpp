@@ -145,7 +145,6 @@ bool FollowQueryFollowingList(PacketHandlerData d){
 	NetPacket *p;
 	p = d.pkt;
 	
-	int count;
 	bool ret;
 	NetPacket *pkt;
 	pkt = NetCreatePacket();
@@ -191,7 +190,6 @@ bool FollowQueryFollowedList(PacketHandlerData d){
 	NetPacket *p;
 	p = d.pkt;
 	
-	int count;
 	bool ret;
 	NetPacket *pkt;
 	pkt = NetCreatePacket();

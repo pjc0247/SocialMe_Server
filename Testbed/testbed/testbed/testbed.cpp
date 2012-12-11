@@ -94,6 +94,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	NetSendPacket(hSocket,p);
 	NetDisposePacket(p,true);
 
+	while(1){
+
 	p = NetCreatePacket();
 	p->header.type = FOLLOW_QUERY_FOLLOWING_LIST;
 	NetAddStringData(p,"id", "pjc0247");
@@ -101,7 +103,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	NetAddNumberData(p, "max", 5);
 	NetSendPacket(hSocket,p);
 	NetDisposePacket(p,true);
-
+	}
 	
 	while(1){
 		;

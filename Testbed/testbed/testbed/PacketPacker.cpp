@@ -22,7 +22,7 @@ void NetQuit(){
 
 int NetSend(SOCKET hSocket,void *data,int size){
 	int written = 0;
-		printf("send %d bytes\n", size);
+	//	printf("send %d bytes\n", size);
 	written = send(hSocket,(char *)data,size,0);
 	return written;
 }

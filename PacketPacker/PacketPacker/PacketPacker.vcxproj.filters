@@ -64,9 +64,15 @@
     <Filter Include="소스 파일\Interface\Following">
       <UniqueIdentifier>{d97b023c-5ea2-4b5c-ab9b-9847abbeac2b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="note">
+      <UniqueIdentifier>{b43b0a1c-7efd-4cc9-9b77-e3fd19570344}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
+    <Text Include="note\note.txt">
+      <Filter>note</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">

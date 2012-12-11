@@ -108,7 +108,7 @@ unsigned int __stdcall ControlThread(void *arg){
 			break;
 		case 'i':
 			{
-				output("TankOnline Server, %s\n", __DATE__);
+				output("SocialMe Server, %s\n", __DATE__);
 			}
 			break;
 		case 's':
