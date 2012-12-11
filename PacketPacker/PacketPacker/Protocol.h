@@ -14,6 +14,8 @@ enum SocialMeProtocol {
 	HELLO = 1,
 	SERVER_BUSY,
 
+	PING,
+
 	LOGIN_TRY,
 	LOGIN_INCORRECT,
 	LOGIN_DENIED,
