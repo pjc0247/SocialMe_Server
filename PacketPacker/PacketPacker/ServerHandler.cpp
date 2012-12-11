@@ -29,6 +29,25 @@ bool ProcessPacket(PacketHandlerData d){
 		UserQueryImage(d);
 		break;
 
+	case FOLLOW_FOLLOW:
+		FollowFollow(d);
+		break;
+	case FOLLOW_UNFOLLOW:
+		FollowUnfollow(d);
+		break;
+	case FOLLOW_QUERY_FOLLOWER_COUNT:
+		FollowQueryFollowedCount(d);
+		break;
+	case FOLLOW_QUERY_FOLLOWING_COUNT:
+		FollowQueryFollowingCount(d);
+		break;
+	case FOLLOW_QUERY_FOLLOWER_LIST:
+		FollowQueryFollowedList(d);
+		break;
+	case FOLLOW_QUERY_FOLLOWING_LIST:
+		FollowQueryFollowingList(d);
+		break;
+
 	case MESSAGE_PUSH:
 		MessagePush(d);
 		break;

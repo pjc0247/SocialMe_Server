@@ -106,6 +106,7 @@
     <ClCompile Include="database.cpp" />
     <ClCompile Include="database_cubrid.cpp" />
     <ClCompile Include="follow.cpp" />
+    <ClCompile Include="FollowHandler.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="LoginHandler.cpp" />
     <ClCompile Include="main.cpp" />

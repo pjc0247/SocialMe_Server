@@ -13,7 +13,7 @@ bool IsFollowing(char *src,char *dst){
 	char *sp;
 	int len;
 
-	sprintf(qm,	"select * from \"follow\" where \"follower\" = \'%s\' and \"followed\" = \'%s\'", src,dst); 
+	sprintf(qm,	"select * from \"follow\" where \"follower\" = \'%s\' and \"followed\" = \'%s\';", src,dst); 
 
 	q = DbPrepare(qm);
 	
@@ -25,10 +25,11 @@ bool IsFollowing(char *src,char *dst){
 	}
 
 	len = DbResultCount(q);
+	printf("%d\n", len);
 
 CleanUp:
 	DbCloseQuery(q);
-	return len-1;
+	return len;
 }
 bool IsFollowed(char *src,char *dst){
 	int ret = true;
@@ -94,7 +95,6 @@ bool Unfollow(char *src,char *dst){
 			src, dst);
 	q = DbPrepare(qm);
 	ret = DbExecute(q);
-
 	if(ret == false){
 		goto CleanUp;
 	}
@@ -136,7 +136,7 @@ int FollowedCount(char *id){
 	char *sp;
 	int len;
 
-	sprintf(qm,	"select * from \"follow\" where \"followed\" = \'%s\'", id); 
+sprintf(qm,	"select * from \"follow\" where \"followed\" = \'%s\'", id); 
 
 	q = DbPrepare(qm);
 	
@@ -220,7 +220,7 @@ bool QueryFollowingList(char *id,FollowList *list,int min, int max){
 
 	for(i=0;;i++)
     {
-        if ( !DbCursor(q,1) )
+        if( !DbCursor(q,1) )
             break;
         if(!DbFetch(q))
 			break;

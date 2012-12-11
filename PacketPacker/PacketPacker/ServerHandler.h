@@ -26,6 +26,13 @@ bool UserUpdate(PacketHandlerData d);
 bool UserQuery(PacketHandlerData d);
 bool UserQueryImage(PacketHandlerData d);
 
+bool FollowFollow(PacketHandlerData d);
+bool FollowUnfollow(PacketHandlerData d);
+bool FollowQueryFollowingCount(PacketHandlerData d);
+bool FollowQueryFollowedCount(PacketHandlerData d);
+bool FollowQueryFollowingList(PacketHandlerData d);
+bool FollowQueryFollowedList(PacketHandlerData d);
+
 bool MessageQuery(PacketHandlerData d);
 bool MessagePush(PacketHandlerData d);
 
