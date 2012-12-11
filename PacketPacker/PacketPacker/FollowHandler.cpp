@@ -173,8 +173,10 @@ bool FollowQueryFollowingList(PacketHandlerData d){
 		NetAddNumberData(pkt, "count", list.count);
 		for(int i=0;i<list.count;i++){
 			char m[8];
-			sprintf(m,"i%d", i);
+			sprintf(m,"i%d", i+1);
 			NetAddStringData(pkt, m, list.id + i*16);
+
+			//printf(" %d : %s\n", i, list.id + i*16); 
 		}
 		free(list.id);
 	}
@@ -217,7 +219,7 @@ bool FollowQueryFollowedList(PacketHandlerData d){
 		NetAddNumberData(pkt, "count", list.count);
 		for(int i=0;i<list.count;i++){
 			char m[8];
-			sprintf(m,"i%d", i);
+			sprintf(m,"i%d", i+1);
 			NetAddStringData(pkt, m, list.id + i*16);
 		}
 		free(list.id);
