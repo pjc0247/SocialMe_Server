@@ -32,5 +32,6 @@ enum MessageQueryResult{
 
 int QueryMessage(char *receiver,Message *m);
 bool PushMessage(Message *msg);
+bool DeleteMessage(char *id,int mid);
 
 #endif //MESSAGE_H

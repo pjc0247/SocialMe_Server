@@ -2,6 +2,7 @@
 
 #include "database.h"
 
+#include "User.h"
 #include "Message.h"
 
 
@@ -67,10 +68,23 @@ CleanUp:;
 	DbCloseQuery(q);
 
 	return ret;
-	
-	return true;
 }
 
+bool DeleteMessage(char *id,int mid){
+	int q;
+	char qm[256];
+	bool ret;
+
+	sprintf(qm, "delete from message where \"message_id\" = %d and \"receiver\" = \'%s\'",
+			mid,id);
+	q = DbPrepare(qm);
+	ret = DbExecute(q);
+
+	DbCloseQuery(q);
+
+	return ret;
+}
+#include "../../Cubrid/include/cas_cci.h"
 bool PushMessage(Message *msg){
 	bool ret = true;
 	int q;
@@ -90,7 +104,17 @@ bool PushMessage(Message *msg){
 	if(ret == false){
 		return false;
 	}
+	
+	DbCloseQuery(q);
+
+	sprintf(qm, "select LAST_INSERT_ID();");
+	q = DbPrepare(qm);
+
+	ret = DbExecute(q);
+
+	msg->id = DbGetNumber(q,1));
 
 	DbCloseQuery(q);
+
 	return ret;
 }
