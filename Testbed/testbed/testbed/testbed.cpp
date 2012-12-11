@@ -81,25 +81,27 @@ int _tmain(int argc, _TCHAR* argv[])
 	hThread = CreateThread(NULL,NULL,ReceiveThread,NULL,NULL,NULL);
 
 	
-	NetPacket *p = NetCreatePacket();
+	
 	char a[32];
 	sprintf(a,"QWER");
 
-	p->header.type = USER_UPDATE;
+	NetPacket *p;
+
+	p = NetCreatePacket();
+	p->header.type = LOGIN_TRY;
 	NetAddStringData(p,"id", "pjc0247");
-	//NetAddNumberData(p, "age", 18);
-
-	
-	
+	NetAddStringData(p,"pw", "040404");
 	NetSendPacket(hSocket,p);
-		//Sleep(10);
-
-
-	printf("%d \n", p->header.count);
-
 	NetDisposePacket(p,true);
-	
 
+	p = NetCreatePacket();
+	p->header.type = FOLLOW_UNFOLLOW;
+	NetAddStringData(p,"follower", "pjc0247");
+	NetAddStringData(p,"followed", "anz4176");
+	NetSendPacket(hSocket,p);
+	NetDisposePacket(p,true);
+
+	
 	while(1){
 		;
 	};
