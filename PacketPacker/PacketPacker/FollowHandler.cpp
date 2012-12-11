@@ -22,7 +22,7 @@ bool FollowFollow(PacketHandlerData d){
 	}
 
 	ret = Follow(
-		NetGetStringData(p, "follower"),
+		d.handle->user->id,
 		NetGetStringData(p, "followed"));
 
 	if(ret == false){
@@ -55,7 +55,7 @@ bool FollowUnfollow(PacketHandlerData d){
 	}
 
 	ret = Unfollow(
-		NetGetStringData(p, "follower"),
+		d.handle->user->id,
 		NetGetStringData(p, "followed"));
 
 	if(ret == false){
