@@ -52,6 +52,11 @@ typedef struct
 	int bytesToRecv;
 } PER_IO_DATA, *LPPER_IO_DATA;
 
+typedef struct {
+	PER_HANDLE_DATA *handle;
+	PER_IO_DATA *io;
+}Session;
+
 int RunServer(int port);
 
 #endif //SERVER_H

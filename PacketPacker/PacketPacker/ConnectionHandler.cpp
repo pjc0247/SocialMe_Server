@@ -21,3 +21,7 @@ bool OnDisconnected(PacketHandlerData d){
 	}
 	return true;
 }
+
+bool OnPing(PacketHandlerData d){
+	return true;
+}

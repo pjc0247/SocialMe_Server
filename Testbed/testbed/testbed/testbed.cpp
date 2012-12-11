@@ -94,16 +94,16 @@ int _tmain(int argc, _TCHAR* argv[])
 	NetSendPacket(hSocket,p);
 	NetDisposePacket(p,true);
 
-	while(1){
+//	while(1){
 
 	p = NetCreatePacket();
-	p->header.type = FOLLOW_QUERY_FOLLOWING_LIST;
-	NetAddStringData(p,"id", "pjc0247");
-	NetAddNumberData(p, "min", 1);
-	NetAddNumberData(p, "max", 5);
+	p->header.type = MESSAGE_PUSH;
+	NetAddStringData(p,"id", "anz4176");
+	NetAddNumberData(p, "type", 1);
+	NetAddStringData(p, "msg", "hello world"); 
 	NetSendPacket(hSocket,p);
 	NetDisposePacket(p,true);
-	}
+	//}
 	
 	while(1){
 		;

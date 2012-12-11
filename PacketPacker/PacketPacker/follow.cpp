@@ -8,9 +8,8 @@
 
 bool IsFollowing(char *src,char *dst){
 	int ret = true;
-	int q, i;
+	int q;
 	char qm[256];
-	char *sp;
 	int len;
 
 	sprintf(qm,	"select * from \"follow\" where \"follower\" = \'%s\' and \"followed\" = \'%s\';", src,dst); 
@@ -33,9 +32,8 @@ CleanUp:
 }
 bool IsFollowed(char *src,char *dst){
 	int ret = true;
-	int q, i;
+	int q;
 	char qm[256];
-	char *sp;
 	int len;
 
 	sprintf(qm,	"select * from \"follow\" where \"follower\" = \'%s\' and \"followed\" = \'%s\'", dst,src); 
@@ -106,9 +104,8 @@ CleanUp:
 }
 int FollowingCount(char *id){
 	int ret = true;
-	int q, i;
+	int q;
 	char qm[128];
-	char *sp;
 	int len;
 
 	sprintf(qm,	"select * from \"follow\" where \"follower\" = \'%s\'", id); 
@@ -131,9 +128,8 @@ CleanUp:
 }
 int FollowedCount(char *id){
 	int ret = true;
-	int q, i;
+	int q;
 	char qm[128];
-	char *sp;
 	int len;
 
 sprintf(qm,	"select * from \"follow\" where \"followed\" = \'%s\'", id); 
@@ -160,8 +156,8 @@ bool QueryFollowerList(char *id,FollowList *list,int min, int max){
 	int ret = true;
 	int q, i;
 	char qm[256];
-	char *sp;
 	int len = 0;
+	char *sp;
 
 	sprintf(qm,	"select \"follower\" from \"follow\" where \"followed\" = \'%s\' and "
 				"rownum between %d and %d;", id, min, max); 

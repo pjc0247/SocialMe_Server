@@ -33,6 +33,7 @@ bool UpdateUser(char *id,User *u);
  */
 bool Logout(void *handle);
 bool IsLoggedIn(void *handle);
-bool PushSession(void *handle);
+bool PushSession(void *handle, void *_io);
+void *GetConnectionFromID(char *id);
 
 #endif // USER_H

@@ -22,7 +22,6 @@ bool RegistUser(char *id,User *u){
 	int q;
 	char qm[512];
 	char *sp = NULL;
-	int len;
 	bool ret = true;
 
 
@@ -93,7 +92,6 @@ bool UpdateUser(char *id,User *u){
 	int q;
 	char qm[128];
 	char *sp = NULL;
-	int len;
 
 	char updateItem[128] = {'\0'};
 

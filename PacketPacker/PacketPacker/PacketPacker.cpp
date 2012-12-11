@@ -41,8 +41,9 @@ int NetRecv(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData,int size){
 		NULL
 		);
 
+	//printf("%d %d\n", read, PerIoData->wsaBuf.len);	
 	if(read == -1){
-		PerHandleData->disconnected = true;
+		//PerHandleData->disconnected = true;
 	}
 
 	//WaitForSingleObject(PerIoData->overlapped.hEvent,INFINITE);

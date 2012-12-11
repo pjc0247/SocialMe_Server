@@ -92,15 +92,20 @@ bool UserUpdate(PacketHandlerData d){
 	SET(user->nick, NetGetStringData(d.pkt, "nick"));
 	user->age = NetGetNumberData(d.pkt, "age");
 
-	UpdateUser(d.handle->user->id, user);
+	ret = UpdateUser(d.handle->user->id, user);
 
 	NetPacket *pkt;
 	pkt = NetCreatePacket();
-	pkt->header.type = USER_UPDATE_OK;
-	NetAddStringData(pkt, "id", NetGetStringData(p,"id"));
+	if(ret == true){
+		pkt->header.type = USER_UPDATE_OK;
+		NetAddStringData(pkt, "id", NetGetStringData(p,"id"));	
+	}
+	else{
+		pkt->header.type = USER_UPDATE_DENIED;
+		NetAddStringData(pkt, "id", NetGetStringData(p,"id"));
+	}
 	NetSendPacket(d.handle,d.io,pkt);
 	NetDisposePacket(pkt,true);
-
 Cleanup:
 	DisposeUser(user);
 	return ret;
