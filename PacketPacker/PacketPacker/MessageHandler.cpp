@@ -3,6 +3,7 @@
 #include "ServerHandler.h"
 #include "Protocol.h"
 #include "reason.h"
+#include "User.h"
 
 #include <time.h>
 
@@ -36,6 +37,8 @@ bool MessageQuery(PacketHandlerData d){
 	}
 
 	return  ret;
+}
+bool MessageNotifyOk(PacketHandlerData d){
 }
 bool MessagePush(PacketHandlerData d){
 	NetPacket *p;
@@ -72,6 +75,25 @@ bool MessagePush(PacketHandlerData d){
 	}
 	NetSendPacket(d.handle,d.io, pkt);
 	NetDisposePacket(pkt, true);
+
+	// 수신자의 연결 정보를 가져와서
+	Session *s;
+	s = (Session*)GetConnectionFromID(m.receiver);
+
+	if(s == NULL)
+		ret = false;
+	else{
+		// 메세지가 왔음을 알려준다.
+		NetPacket *pkt;
+		pkt = NetCreatePacket();
+		pkt->header.type = MESSAGE_NOTIFY;
+		NetAddStringData(pkt, "sender", m.sender);
+		NetAddStringData(pkt, "msg", m.msg);
+		NetAddNumberData(pkt, "type", m.type);
+		NetAddNumberData(pkt, "id", m.id);
+		NetSendPacket(s->handle,s->io,pkt);
+		NetDisposePacket(pkt, true);	
+	}
 
 	return ret;
 }
