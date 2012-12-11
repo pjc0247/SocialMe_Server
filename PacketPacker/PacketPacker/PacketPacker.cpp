@@ -21,7 +21,7 @@ void NetQuit(){
 // NetUnserialize
 
 int NetRecv(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData,int size){
-	DWORD read;
+	DWORD read = -1;
 	DWORD Flags;
 
 	PerIoData->wsaBuf.len = size;
@@ -40,6 +40,10 @@ int NetRecv(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData,int size){
 		&(PerIoData->overlapped),
 		NULL
 		);
+
+	if(read == -1){
+		PerHandleData->disconnected = true;
+	}
 
 	//WaitForSingleObject(PerIoData->overlapped.hEvent,INFINITE);
 //	int read = 0;

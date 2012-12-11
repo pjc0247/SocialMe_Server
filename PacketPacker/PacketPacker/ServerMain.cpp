@@ -33,7 +33,7 @@ int RunServer(int port){
 	dwProcessor = SystemInfo.dwNumberOfProcessors;
 	hCompletionPort = CreateIoCompletionPort(INVALID_HANDLE_VALUE, NULL, 0, (dwProcessor * 2));
 
-	for(i=0; i < 1; i++) {
+	for(i=0; i < 8; i++) {
 		//CreateThread(NULL, 0, CompletionThread, (LPVOID)hCompletionPort, 0, NULL);
 		_beginthreadex(NULL, 0, CompletionThread, (LPVOID)hCompletionPort, 0, NULL);
 	}
@@ -70,7 +70,6 @@ int RunServer(int port){
 
 		// 새 클라이언트 연결을 수립한다.
 		hClntSock=accept(hServSock, (SOCKADDR*)&clntAddr, &addrLen);  
-
 		
 		//char t = TRUE;
 		//setsockopt(hClntSock, IPPROTO_TCP, TCP_NODELAY, &t, sizeof(t));
@@ -90,6 +89,7 @@ int RunServer(int port){
 		PerHandleData->n = N;
 		PerHandleData->packet = NetCreatePacket();
 		PerHandleData->user = NULL;
+		PerHandleData->disconnected = false;
 		memcpy(&(PerHandleData->clntAddr), &clntAddr, addrLen);
 		memset(PerHandleData->packet,0,sizeof(NetPacket));
 
@@ -130,7 +130,7 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 			continue;
 
 		// 0 바이트 수신함 -> 연결 종료됨
-		if(BytesTransferred == 0)
+		if(BytesTransferred == 0 || !ret)
 		{
 			output("close %d\n", PerHandleData->n);
 			// 소켓 종료
@@ -228,6 +228,16 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 		}
 
 		memset(&PerIoData->overlapped, 0, sizeof(OVERLAPPED));
+
+		if(PerHandleData->disconnected){
+			output("close %d\n", PerHandleData->n);
+			// 소켓 종료
+			closesocket(PerHandleData->hClntSock);
+			free(PerHandleData);
+			free(PerIoData);
+
+			continue;
+		}
 	}
 	return 0;
 }

@@ -31,6 +31,7 @@ typedef struct
 	SOCKET      hClntSock;
 	SOCKADDR_IN clntAddr;
 	int n;
+	bool disconnected;
 
 	User *user;
 
