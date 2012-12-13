@@ -112,7 +112,7 @@ bool PushMessage(Message *msg){
 
 	ret = DbExecute(q);
 
-	msg->id = DbGetNumber(q,1));
+	msg->id = DbGetNumber(q,1);
 
 	DbCloseQuery(q);
 
