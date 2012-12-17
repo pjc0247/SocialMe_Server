@@ -24,7 +24,7 @@ bool UserQuery(PacketHandlerData d){
 
 	user = CreateUser();
 	if(user == NULL){
-		UserDeny(d, USER_QUERY_DENIED,
+		UserDeny(d, USER_QUERY_FAILED,
 			REASON_MEMORY_ERROR);
 		return false;
 	}
@@ -55,7 +55,7 @@ bool UserQueryImage(PacketHandlerData d){
 
 	user = CreateUser();
 	if(user == NULL){
-		UserDeny(d, USER_QUERY_DENIED,
+		UserDeny(d, USER_QUERY_FAILED,
 			REASON_MEMORY_ERROR);
 		return false;
 	}
@@ -77,14 +77,14 @@ bool UserUpdate(PacketHandlerData d){
 	p = d.pkt;
 
 	if(!IsLoggedIn(d.handle)){
-		UserDeny(d, USER_UPDATE_DENIED,
+		UserDeny(d, USER_UPDATE_FAILED,
 			REASON_NOT_LOGGED_IN);
 		return false;
 	}
 
 	user = CreateUser();
 	if(user == NULL){
-		UserDeny(d, USER_UPDATE_DENIED,
+		UserDeny(d, USER_UPDATE_FAILED,
 			REASON_MEMORY_ERROR);
 		return false;
 	}
@@ -101,7 +101,7 @@ bool UserUpdate(PacketHandlerData d){
 		NetAddStringData(pkt, "id", NetGetStringData(p,"id"));	
 	}
 	else{
-		pkt->header.type = USER_UPDATE_DENIED;
+		pkt->header.type = USER_UPDATE_FAILED;
 		NetAddStringData(pkt, "id", NetGetStringData(p,"id"));
 	}
 	NetSendPacket(d.handle,d.io,pkt);

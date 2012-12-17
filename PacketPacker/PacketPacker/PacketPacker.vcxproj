@@ -122,6 +122,7 @@
     <ClCompile Include="Payment.cpp" />
     <ClCompile Include="PaymentHandler.cpp" />
     <ClCompile Include="Photo.cpp" />
+    <ClCompile Include="PhotoHandler.cpp" />
     <ClCompile Include="RegistHandler.cpp" />
     <ClCompile Include="ServerHandler.cpp" />
     <ClCompile Include="ServerMain.cpp" />

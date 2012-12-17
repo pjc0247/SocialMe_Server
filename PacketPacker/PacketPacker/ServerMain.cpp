@@ -102,7 +102,7 @@ int RunServer(int port){
 		ret = isBlockedIP(inet_ntoa(clntAddr.sin_addr));
 		if(ret == true){
 			// ¿¬°á °ÅºÎµÊ
-			output("connection denied\n");
+			output("connection FAILED\n");
 			continue;
 		}
 

@@ -37,7 +37,7 @@ bool RegistTry(PacketHandlerData d){
 			pkt->header.type = REGIST_OK;
 		}
 		else{
-			pkt->header.type = REGIST_DENIED;
+			pkt->header.type = REGIST_FAILED;
 			NetAddStringData(pkt,"reason", REASON_UNKNOWN);
 		}
 	}
