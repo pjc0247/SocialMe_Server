@@ -49,7 +49,7 @@ unsigned long NetGetTimestamp();
 
 
 bool NetRecvPacketData(SOCKET hSock,NetPacketData *data);
-bool NetRecvPacket(SOCKET hSock);
+bool NetRecvPacket(SOCKET hSock, NetPacket *p);
 
 bool NetSendPacketData(SOCKET hSocket,NetPacketData *data);
 bool NetSendPacket(SOCKET hSocket, NetPacket *p);

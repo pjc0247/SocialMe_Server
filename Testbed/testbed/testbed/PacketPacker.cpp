@@ -85,6 +85,11 @@ bool NetRecvPacketData(SOCKET hSocket,NetPacketData *data){
 	data->data = malloc(data->size);
 	NetRecv(hSocket,data->data, data->size);
 
+	printf("DATA\n"
+		"name : %s\n"
+		"size : %d\n\n",
+		data->name, data->size);
+
 	return true;
 }
 bool NetRecvPacket(SOCKET hSocket,NetPacket *packet){

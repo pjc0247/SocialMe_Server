@@ -3,6 +3,8 @@
 
 #include "stdafx.h"
 
+#include <locale.h>
+
 #include "NetPacket.h"
 #include "../../../PacketPacker/PacketPacker/Protocol.h"
 
@@ -39,7 +41,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	HANDLE hThread;
 	hostent *host;
 
-	//setlocale(LC_ALL,"kor");
+	setlocale(LC_ALL,"kor");
 
 	
 
@@ -78,7 +80,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	setsockopt(hSocket, IPPROTO_TCP, TCP_NODELAY, &t, sizeof(t));
 
 
-	hThread = CreateThread(NULL,NULL,ReceiveThread,NULL,NULL,NULL);
+	//hThread = CreateThread(NULL,NULL,ReceiveThread,NULL,NULL,NULL);
 
 	
 	
@@ -97,14 +99,23 @@ int _tmain(int argc, _TCHAR* argv[])
 //	while(1){
 
 	p = NetCreatePacket();
-	p->header.type = MESSAGE_PUSH;
-	NetAddStringData(p,"id", "anz4176");
-	NetAddNumberData(p, "type", 1);
-	NetAddStringData(p, "msg", "hello world"); 
+	p->header.type = PHOTO_QUERY;
+	NetAddStringData(p,"id", "pjc0247");
+	NetAddNumberData(p, "min", 1);
+	NetAddNumberData(p, "max", 5);
 	NetSendPacket(hSocket,p);
 	NetDisposePacket(p,true);
 	//}
 	
+	NetPacket *pkt;
+
+	pkt = NetCreatePacket();
+
+	NetRecvPacket(hSocket,pkt);
+	NetRecvPacket(hSocket,pkt);
+
+	printf("%d\n", pkt->header.type);
+
 	while(1){
 		;
 	};
