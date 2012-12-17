@@ -27,6 +27,11 @@ int NetSend(SOCKET hSocket,void *data,int size){
 	return written;
 }
 
+int NetRecv(SOCKET hSocket, void *data,int size){
+	int read;
+	read = recv(hSocket, (char*)data, size, 0);
+	return read;
+}
 
 unsigned long NetGetTimestamp(){
 	return 0;
@@ -62,6 +67,49 @@ bool NetSendPacket(SOCKET hSocket,NetPacket *packet){
 	for(int i=0;i<packet->header.count;i++){
 		dataRet = dataRet &
 					NetSendPacketData(hSocket,&packet->data[i]);
+
+		if(dataRet == false)
+			return false;
+	}
+
+	//return headerRet & dataRet;
+	return true;
+}
+
+bool NetRecvPacketData(SOCKET hSocket,NetPacketData *data){
+
+	NetRecv(hSocket,(void *)data->name, MAX_NAME_LENGTH);
+	//printf("ss %d\n", data->size);
+	NetRecv(hSocket,(void *)&data->size, sizeof(int));
+
+	data->data = malloc(data->size);
+	NetRecv(hSocket,data->data, data->size);
+
+	return true;
+}
+bool NetRecvPacket(SOCKET hSocket,NetPacket *packet){
+
+	// 헤더 정보 전송
+	bool headerRet = true;
+	if(NetRecv(hSocket,(void *)&packet->header,sizeof(NetPacketHeader)) != 
+		sizeof(NetPacketHeader)){
+			headerRet = false;
+
+			return false;
+	}
+
+	printf(	"HEADER\n"
+		"type : %d\n"
+		"count : %d\n"
+		"timestamp %d\n\n", packet->header.type,packet->header.count,packet->header.timestamp);
+
+	packet->data = (NetPacketData*)malloc(sizeof(NetPacketData) * packet->header.count);
+
+	// 서브 데이터 전송
+	bool dataRet = true;
+	for(int i=0;i<packet->header.count;i++){
+		dataRet = dataRet &
+					NetRecvPacketData(hSocket,&packet->data[i]);
 
 		if(dataRet == false)
 			return false;
