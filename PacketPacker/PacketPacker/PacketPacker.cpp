@@ -146,7 +146,7 @@ bool NetRecvPacket(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData){
 bool NetSendPacketData(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData,NetPacketData *data){
 
 	NetSend(PerHandleData,PerIoData,(void *)data->name, MAX_NAME_LENGTH);
-	NetSend(PerHandleData,PerIoData,(void *)data->size, sizeof(int));
+	NetSend(PerHandleData,PerIoData,(void *)&data->size, sizeof(int));
 
 	NetSend(PerHandleData,PerIoData,data->data, data->size);
 
@@ -207,6 +207,7 @@ void NetAddData(NetPacket *packet,NetPacketData *data){
 	packet->data[packet->header.count].data = malloc(data->size);
 	sprintf(packet->data[packet->header.count].name, data->name);
 	packet->data[packet->header.count].size = data->size;
+	//printf("%d\n", data->size);
 	memcpy(packet->data[packet->header.count].data,data->data,data->size);
 
 	packet->header.count ++;
@@ -241,6 +242,7 @@ void NetAddCharacterData(NetPacket *packet, const char *name, char c){
 void NetAddStringData(NetPacket *packet, const char *name, const char *msg){
 	NetPacketData data;
 	data.size = strlen(msg) + 1;
+	//printf("%d\n", data.size);
 	data.data = (void*)msg;
 	sprintf(data.name, name);
 	NetAddData(packet,&data);

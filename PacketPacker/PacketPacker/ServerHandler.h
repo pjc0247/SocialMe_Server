@@ -37,6 +37,10 @@ bool MessageQuery(PacketHandlerData d);
 bool MessagePush(PacketHandlerData d);
 bool MessageNotifyOk(PacketHandlerData d);
 
+bool PhotoPush(PacketHandlerData d);
+bool PhotoDelete(PacketHandlerData d);
+bool PhotoQuery(PacketHandlerData d);
+
 bool PaymentQuery(PacketHandlerData d);
 bool PaymentPush(PacketHandlerData d);
 

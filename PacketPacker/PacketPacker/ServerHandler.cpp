@@ -58,6 +58,16 @@ bool ProcessPacket(PacketHandlerData d){
 		MessageNotifyOk(d);
 		break;
 
+	case PHOTO_PUSH:
+		PhotoPush(d);
+		break;
+	case PHOTO_DELETE:
+		PhotoDelete(d);
+		break;
+	case PHOTO_QUERY:
+		PhotoQuery(d);
+		break;
+
 	case PAYMENT_QUERY:
 		PaymentQuery(d);
 		break;

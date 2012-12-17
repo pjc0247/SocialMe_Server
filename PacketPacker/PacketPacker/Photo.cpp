@@ -93,8 +93,6 @@ int QueryPhotoList(char *id,PhotoPost *_list,int min, int max){
 
 		SET(list->id, id);
 
-		printf("%s\n", list->id);
-
 		len = DbGetNumber(q, PHOTO_INDEX_PHOTOID);
 		list->photo_id = len;
 
