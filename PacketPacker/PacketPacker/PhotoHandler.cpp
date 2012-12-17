@@ -77,8 +77,13 @@ bool PhotoQuery(PacketHandlerData d){
 	plist = QueryPhotoList(NetGetStringData(p, "id")
 							, min, max, &len);
 
-
-	pkt->header.type = PHOTO_INFO;
+	if(plist == NULL){
+		pkt->header.type = PHOTO_QUERY_FAILED;
+		NetAddStringData(pkt, "reason", REASON_MEMORY_ERROR);
+		goto CleanUp;
+	}
+	else
+		pkt->header.type = PHOTO_INFO;
 
 	NetAddNumberData(pkt, "count", len);
 	for(int i=0;i<len;i++){
@@ -102,6 +107,7 @@ bool PhotoQuery(PacketHandlerData d){
 		NetAddNumberData(pkt, msg, plist[i].lon);
 	}
 
+CleanUp:
 	NetSendPacket(d.handle,d.io,pkt);
 	NetDisposePacket(pkt, true);
 
