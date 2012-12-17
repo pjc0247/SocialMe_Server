@@ -26,7 +26,7 @@ public:
 	~LogStarter(){
 		EndLog();
 	}
-} _logstarter;
+} ;//_logstarter;
 
 void StartLog(){
 	SYSTEMTIME time;
@@ -65,7 +65,8 @@ void output(const char *fmt, ...)
 		buffer);
 					
 	printf(buffer2);
-	fprintf(fp,buffer2);
+	if(fp != NULL)
+		fprintf(fp,buffer2);
 
 	logs.push_back(string(buffer2));
 }

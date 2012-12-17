@@ -32,6 +32,8 @@ typedef struct
 	SOCKADDR_IN clntAddr;
 	int n;
 	bool disconnected;
+	int pingtime;
+	int lastResp;
 
 	User *user;
 

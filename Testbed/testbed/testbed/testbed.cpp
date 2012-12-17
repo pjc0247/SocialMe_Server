@@ -10,7 +10,7 @@
 
 #define SERVER_ADDR "127.0.0.1"
 #define SERVER_PORT 9919
-
+	
 SOCKET hSocket;
 
 DWORD WINAPI ReceiveThread(LPVOID arg){

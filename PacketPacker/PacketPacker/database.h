@@ -6,10 +6,10 @@
 using namespace std;
 
 // facebook.wo.tc : 33000
-#define DB_SERVER "localhost"
+#define DB_SERVER "facebook.wo.tc"
 #define DB_PORT 33000
 
-#define DB_NAME "demodb"
+#define DB_NAME "some"
 #define DB_USER_ID "sma"
 #define DB_USER_PW "040404"
 

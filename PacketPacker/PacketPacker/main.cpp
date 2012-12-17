@@ -11,9 +11,9 @@
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	LoadBlacklist();
+	//LoadBlacklist();
 
-	DbConnect();
+	//DbConnect();
 	
 	StartMonitoring();
 	RunServer(SERVER_PORT);

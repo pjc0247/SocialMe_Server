@@ -6,13 +6,30 @@
 #include "NetPacket.h"
 #include "ServerHandler.h"
 
+#include "Protocol.h"
+
 #include <map>
+#include <list>
 #include <string>
 using namespace std;
 
 unsigned long uptime_st;
+list<Session> conn;
 
 unsigned int __stdcall CompletionThread(void* pComPort);
+unsigned int __stdcall PingThread(void* pComPort);
+
+list<Session>::iterator DeleteConn(Session s){
+	list<Session>::iterator itor;
+
+	for(itor=conn.begin();itor!=conn.end();++itor){
+		if(itor->handle == s.handle){
+			printf("delete at %x\n", itor->handle);
+			
+			return conn.erase(itor);
+		}
+	}
+}
 
 int RunServer(int port){
 	WSADATA wsaData;
@@ -31,6 +48,7 @@ int RunServer(int port){
 	if(WSAStartup(MAKEWORD(2, 2), &wsaData) != 0)
 		output("startup error\n");
 
+	_beginthreadex(NULL, 0, PingThread, NULL, 0, NULL);
 
 	DWORD dwProcessor;
 	GetSystemInfo(&SystemInfo);
@@ -94,6 +112,8 @@ int RunServer(int port){
 		PerHandleData->packet = NetCreatePacket();
 		PerHandleData->user = NULL;
 		PerHandleData->disconnected = false;
+		PerHandleData->pingtime = 0;
+		PerHandleData->lastResp = 0;
 		memcpy(&(PerHandleData->clntAddr), &clntAddr, addrLen);
 		memset(PerHandleData->packet,0,sizeof(NetPacket));
 
@@ -101,6 +121,11 @@ int RunServer(int port){
 
 		PerIoData = (LPPER_IO_DATA)malloc(sizeof(PER_IO_DATA));
 		memset(&(PerIoData->overlapped), 0, sizeof(OVERLAPPED));           
+
+		Session ses;
+		ses.io = PerIoData;
+		ses.handle = PerHandleData;
+		conn.push_back(ses);
 
 		NetRecvPacket(PerHandleData,PerIoData);
 	}while(++N);
@@ -121,8 +146,7 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 
 	DWORD flags;
 
-	while(1)
-	{
+	while(1){
 		BOOL ret = GetQueuedCompletionStatus(hCompletionPort,
 			&BytesTransferred,
 			(LPDWORD)&PerHandleData,
@@ -143,6 +167,8 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 			// 소켓 종료
 
 			Logout(PerHandleData);
+			Session s = {PerHandleData, PerIoData};
+			DeleteConn(s);
 			closesocket(PerHandleData->hClntSock);
 			free(PerHandleData);
 			free(PerIoData);
@@ -152,6 +178,9 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 		//printf("Recv %d bytes\n", BytesTransferred);
 		//printf("Recv State : %d, %d\n", PerIoData->recvState,PerIoData->bytesToRecv);
 
+
+		// 마지막 응답 시간 갱신
+		PerHandleData->lastResp = GetTickCount();
 
 		// 패킷을 목표량만큼 전부 받지 못하면
 		if(BytesTransferred < PerIoData->bytesToRecv){
@@ -242,11 +271,63 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 			output("close %d\n", PerHandleData->n);
 			// 소켓 종료
 			Logout(PerHandleData);
+			Session s = {PerHandleData, PerIoData};
+			DeleteConn(s);
 			closesocket(PerHandleData->hClntSock);
 			free(PerHandleData);
 			free(PerIoData);
 			continue;
 		}
 	}
+	return 0;
+}
+
+unsigned int __stdcall PingThread(void* pComPort)
+{
+	HANDLE hSleepEvent;
+
+	hSleepEvent = CreateEventA(
+						NULL,false,false,
+						NULL);
+
+	while(1){
+		list<Session>::iterator itor;
+
+		for(itor=conn.begin();itor!=conn.end();){
+			// 마지막 응답 후 30초 이상 지연된 접속에만
+			if(itor->handle->pingtime == 0 &&
+				GetTickCount() - itor->handle->lastResp >= 3000){
+				NetPacket *p;
+				p = NetCreatePacket();
+				p->header.type = PING;
+				NetSendPacket(itor->handle,itor->io, p);
+				NetDisposePacket(p, true);
+
+				itor->handle->pingtime = GetTickCount();
+			}
+
+			// 핑 제한시간 지남
+			if(itor->handle->pingtime != 0 &&
+				GetTickCount() - itor->handle->pingtime >= 4000){
+
+				printf("close at %d (ping timeout)\n", itor->handle->n);
+
+				Logout(itor->handle);
+				Session s = {itor->handle,itor->io};
+				
+				closesocket(itor->handle->hClntSock);
+				free(itor->handle);
+				free(itor->io);
+
+				itor = DeleteConn(s);
+			}
+			else
+				++itor;
+		}
+
+		WaitForSingleObject(hSleepEvent,
+							3000);
+	}
+
 	return 0;
 }

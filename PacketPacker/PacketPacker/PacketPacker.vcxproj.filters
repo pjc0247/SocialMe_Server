@@ -67,6 +67,12 @@
     <Filter Include="note">
       <UniqueIdentifier>{b43b0a1c-7efd-4cc9-9b77-e3fd19570344}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Net\GCM">
+      <UniqueIdentifier>{4d04df51-d4d7-4015-9176-cb62d42de92d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Net\Packet">
+      <UniqueIdentifier>{c79d9ffa-857b-418a-8a63-8dbdfca18ec5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -80,15 +86,6 @@
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="NetPacket.h">
-      <Filter>소스 파일\Net</Filter>
-    </ClInclude>
-    <ClInclude Include="NetSocket_Bsd.h">
-      <Filter>소스 파일\Net</Filter>
-    </ClInclude>
-    <ClInclude Include="NetSocket_Windows.h">
-      <Filter>소스 파일\Net</Filter>
     </ClInclude>
     <ClInclude Include="log.h">
       <Filter>소스 파일\Util</Filter>
@@ -132,6 +129,15 @@
     <ClInclude Include="follow.h">
       <Filter>소스 파일\Interface\Following</Filter>
     </ClInclude>
+    <ClInclude Include="NetPacket.h">
+      <Filter>소스 파일\Net\Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="NetSocket_Bsd.h">
+      <Filter>소스 파일\Net\Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="NetSocket_Windows.h">
+      <Filter>소스 파일\Net\Packet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -139,9 +145,6 @@
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="PacketPacker.cpp">
-      <Filter>소스 파일\Net</Filter>
     </ClCompile>
     <ClCompile Include="log.cpp">
       <Filter>소스 파일\Util</Filter>
@@ -202,6 +205,9 @@
     </ClCompile>
     <ClCompile Include="FollowHandler.cpp">
       <Filter>소스 파일\Server\Handling\Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketPacker.cpp">
+      <Filter>소스 파일\Net\Packet</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
