@@ -58,7 +58,7 @@ bool DeletePhoto(char *id,int photo_id){
 	return ret;
 }
 
-int QueryPhotoList(char *id,PhotoPost *_list,int min, int max){
+PhotoPost *QueryPhotoList(char *id,int min, int max,int *cnt){
 	int ret = true;
 	int q, i;
 	char qm[256];
@@ -77,43 +77,47 @@ int QueryPhotoList(char *id,PhotoPost *_list,int min, int max){
 		goto CleanUp;
 	}
 	
+	PhotoPost *list;
+	list = (PhotoPost*)malloc(sizeof(PhotoPost) * (max-min+1));
 
-	//_list = (PhotoPost*)malloc(sizeof(PhotoPost) * (max-min+1));
+	if(list == NULL)
+		goto CleanUp;
 
 	for(i=0;;i++)
     {
-        if ( !DbCursor(q,1) )
+        if(!DbCursor(q,1))
             break;
         if(!DbFetch(q))
 			break;
 		
-       
-		PhotoPost *list;
-		list = &_list[i];
+		//PhotoPost *list;
+		//list = &_list[i];
 
-		SET(list->id, id);
+		SET(list[i].id, id);
 
 		len = DbGetNumber(q, PHOTO_INDEX_PHOTOID);
-		list->photo_id = len;
+		list[i].photo_id = len;
 
 		len = DbGetNumber(q, PHOTO_INDEX_TIME);
-		list->time = len;
+		list[i].time = len;
 
 		len = DbGetString(q, PHOTO_INDEX_PHOTO, &sp);
-		memcpy(list->photo, sp, len + 1);
+		strcpy(list[i].photo, sp);
 
 		len = DbGetNumber(q, PHOTO_INDEX_LAT);
-		list->lat = len;
+		list[i].lat = len;
 
 		len = DbGetNumber(q, PHOTO_INDEX_LON);
-		list->lon = len;
+		list[i].lon = len;
 		
 		len = DbGetString(q, PHOTO_INDEX_COMMENT, &sp);
-		memcpy(list->comment, sp, len + 1);
+		strcpy(list[i].comment, sp);
     }
 	count = i;
 
+	*cnt = count;
+
 CleanUp:
 	DbCloseQuery(q);
-	return count;
+	return list;
 }

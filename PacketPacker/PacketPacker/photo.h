@@ -22,6 +22,6 @@ enum PhotoColumnIndex{
 
 bool PushPhoto(char *id,PhotoPost *p);
 bool DeletePhoto(char *id,int photo_id);
-int QueryPhotoList(char *id,PhotoPost *list,int min, int max);
+PhotoPost *QueryPhotoList(char *id,int min, int max,int *cnt);
 
 #endif // PHOTO_H

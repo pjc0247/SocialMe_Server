@@ -70,12 +70,12 @@ bool PhotoQuery(PacketHandlerData d){
 
 	PhotoPost *plist;
 	NetPacket *pkt;
+	int len;
 
-	plist = (PhotoPost*)malloc(sizeof(PhotoPost*) * (max-min+2));
 	pkt = NetCreatePacket();
 
-	int len = QueryPhotoList(NetGetStringData(p, "id")
-							, plist, min, max);
+	plist = QueryPhotoList(NetGetStringData(p, "id")
+							, min, max, &len);
 
 
 	pkt->header.type = PHOTO_INFO;
@@ -83,6 +83,9 @@ bool PhotoQuery(PacketHandlerData d){
 	NetAddNumberData(pkt, "count", len);
 	for(int i=0;i<len;i++){
 		char msg[8];
+
+		printf("%s %d\n", plist[i].comment, plist[i].lat);
+
 		sprintf(msg,"i%d", i+1);
 		NetAddStringData(pkt, msg, plist[i].id);
 		sprintf(msg,"c%d", i+1);
@@ -102,7 +105,7 @@ bool PhotoQuery(PacketHandlerData d){
 	NetSendPacket(d.handle,d.io,pkt);
 	NetDisposePacket(pkt, true);
 
-	//free(plist);
+	free(plist);
 
 	return ret;
 }
