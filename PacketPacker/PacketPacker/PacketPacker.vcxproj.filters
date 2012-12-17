@@ -73,6 +73,9 @@
     <Filter Include="소스 파일\Net\Packet">
       <UniqueIdentifier>{c79d9ffa-857b-418a-8a63-8dbdfca18ec5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Interface\Photo">
+      <UniqueIdentifier>{22797e1b-bbe0-4e03-aefb-0070d9069090}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -137,6 +140,9 @@
     </ClInclude>
     <ClInclude Include="NetSocket_Windows.h">
       <Filter>소스 파일\Net\Packet</Filter>
+    </ClInclude>
+    <ClInclude Include="photo.h">
+      <Filter>소스 파일\Interface\Photo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +214,15 @@
     </ClCompile>
     <ClCompile Include="PacketPacker.cpp">
       <Filter>소스 파일\Net\Packet</Filter>
+    </ClCompile>
+    <ClCompile Include="gcm.cpp">
+      <Filter>소스 파일\Net\GCM</Filter>
+    </ClCompile>
+    <ClCompile Include="database_mysql.cpp">
+      <Filter>소스 파일\DataBase\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Photo.cpp">
+      <Filter>소스 파일\Interface\Photo</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -2,13 +2,14 @@
 
 #include "database.h"
 
-#ifdef DB_CUBRID
+#ifdef DB_MYSQL
 
 #include <Windows.h>
 #include <assert.h>
 
 #include "../../Cubrid/include/cas_cci.h"
 #pragma comment (lib,"../../Cubrid/lib/cascci")
+
 
 int nDB;
 T_CCI_ERROR cciErr;
@@ -122,6 +123,7 @@ float DbGetFloat(int qid,int col){
 }
 
 
+
 int CubTest(){
 	 int nColCount = 0, nLen = 0;
     int i = 0, nDB = 0, nRet = 0, nReq = 0; 
@@ -165,6 +167,6 @@ int CubTest(){
     return 0;
 
    
+}
 
-
-#endif // DB_CUBRID
+#endif // DB_MYSQL

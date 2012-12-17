@@ -91,6 +91,7 @@
     <ClInclude Include="NetSocket_Bsd.h" />
     <ClInclude Include="NetSocket_Windows.h" />
     <ClInclude Include="Payment.h" />
+    <ClInclude Include="photo.h" />
     <ClInclude Include="Protocol.h" />
     <ClInclude Include="reason.h" />
     <ClInclude Include="Server.h" />
@@ -107,8 +108,10 @@
     <ClCompile Include="ControlShell.cpp" />
     <ClCompile Include="database.cpp" />
     <ClCompile Include="database_cubrid.cpp" />
+    <ClCompile Include="database_mysql.cpp" />
     <ClCompile Include="follow.cpp" />
     <ClCompile Include="FollowHandler.cpp" />
+    <ClCompile Include="gcm.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="LoginHandler.cpp" />
     <ClCompile Include="main.cpp" />
@@ -118,6 +121,7 @@
     <ClCompile Include="PacketPacker.cpp" />
     <ClCompile Include="Payment.cpp" />
     <ClCompile Include="PaymentHandler.cpp" />
+    <ClCompile Include="Photo.cpp" />
     <ClCompile Include="RegistHandler.cpp" />
     <ClCompile Include="ServerHandler.cpp" />
     <ClCompile Include="ServerMain.cpp" />

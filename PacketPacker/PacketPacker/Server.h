@@ -35,6 +35,8 @@ typedef struct
 	int pingtime;
 	int lastResp;
 
+	int db;
+
 	User *user;
 
 	void *packet;

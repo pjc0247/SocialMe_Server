@@ -114,6 +114,7 @@ int RunServer(int port){
 		PerHandleData->disconnected = false;
 		PerHandleData->pingtime = 0;
 		PerHandleData->lastResp = 0;
+		PerHandleData->db = 0;
 		memcpy(&(PerHandleData->clntAddr), &clntAddr, addrLen);
 		memset(PerHandleData->packet,0,sizeof(NetPacket));
 
