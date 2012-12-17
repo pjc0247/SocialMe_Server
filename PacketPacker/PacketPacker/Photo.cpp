@@ -2,8 +2,6 @@
 
 #include "photo.h"
 #include "Protocol.h"
-#include "ServerHandler.h"
-
 #include "database.h"
 
 bool PushPhoto(char *id,PhotoPost *p){
