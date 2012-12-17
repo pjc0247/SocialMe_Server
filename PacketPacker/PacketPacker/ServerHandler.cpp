@@ -29,6 +29,13 @@ bool ProcessPacket(PacketHandlerData d){
 		UserQueryImage(d);
 		break;
 
+	case LOCATION_PUSH:
+		LocationPush(d);
+		break;
+	case LOCATION_QUERY:
+		LocationQuery(d);
+		break;
+
 	case FOLLOW_FOLLOW:
 		FollowFollow(d);
 		break;

@@ -26,6 +26,9 @@ bool UserUpdate(PacketHandlerData d);
 bool UserQuery(PacketHandlerData d);
 bool UserQueryImage(PacketHandlerData d);
 
+bool LocationPush(PacketHandlerData d);
+bool LocationQuery(PacketHandlerData d);
+
 bool FollowFollow(PacketHandlerData d);
 bool FollowUnfollow(PacketHandlerData d);
 bool FollowQueryFollowingCount(PacketHandlerData d);
