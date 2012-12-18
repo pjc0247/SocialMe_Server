@@ -84,6 +84,7 @@
     <ClInclude Include="blacklist.h" />
     <ClInclude Include="database.h" />
     <ClInclude Include="follow.h" />
+    <ClInclude Include="location.h" />
     <ClInclude Include="log.h" />
     <ClInclude Include="Message.h" />
     <ClInclude Include="monitor.h" />
@@ -94,6 +95,7 @@
     <ClInclude Include="photo.h" />
     <ClInclude Include="Protocol.h" />
     <ClInclude Include="reason.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="ServerController.h" />
     <ClInclude Include="ServerHandler.h" />
@@ -112,12 +114,15 @@
     <ClCompile Include="follow.cpp" />
     <ClCompile Include="FollowHandler.cpp" />
     <ClCompile Include="gcm.cpp" />
+    <ClCompile Include="location.cpp" />
+    <ClCompile Include="LocationHandler.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="LoginHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Message.cpp" />
     <ClCompile Include="MessageHandler.cpp" />
     <ClCompile Include="Monitor.cpp" />
+    <ClCompile Include="Monitor_Connection.cpp" />
     <ClCompile Include="PacketPacker.cpp" />
     <ClCompile Include="Payment.cpp" />
     <ClCompile Include="PaymentHandler.cpp" />
@@ -133,6 +138,9 @@
     </ClCompile>
     <ClCompile Include="User.cpp" />
     <ClCompile Include="UserHandler.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

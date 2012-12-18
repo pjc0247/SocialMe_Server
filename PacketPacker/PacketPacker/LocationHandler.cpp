@@ -12,6 +12,7 @@ bool LocationPush(PacketHandlerData d){
 	bool ret = true;
 
 	ret = PushLocation(
+			d.handle->user->id,
 			NetGetNumberData(p,"lat"),
 			NetGetNumberData(p,"lon"));
 

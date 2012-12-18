@@ -76,6 +76,9 @@
     <Filter Include="소스 파일\Interface\Photo">
       <UniqueIdentifier>{22797e1b-bbe0-4e03-aefb-0070d9069090}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Interface\Location">
+      <UniqueIdentifier>{f5cff129-32b4-4851-be0e-964d18c6ed0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -143,6 +146,12 @@
     </ClInclude>
     <ClInclude Include="photo.h">
       <Filter>소스 파일\Interface\Photo</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="location.h">
+      <Filter>소스 파일\Interface\Location</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -227,5 +236,19 @@
     <ClCompile Include="PhotoHandler.cpp">
       <Filter>소스 파일\Server\Handling\Handler</Filter>
     </ClCompile>
+    <ClCompile Include="Monitor_Connection.cpp">
+      <Filter>소스 파일\Monitor</Filter>
+    </ClCompile>
+    <ClCompile Include="location.cpp">
+      <Filter>소스 파일\Interface\Location</Filter>
+    </ClCompile>
+    <ClCompile Include="LocationHandler.cpp">
+      <Filter>소스 파일\Server\Handling\Handler</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
