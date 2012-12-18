@@ -21,8 +21,6 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	DbConnect();
 
-	
-
 	StartMonitoring();
 	RunServer(SERVER_PORT);
 	

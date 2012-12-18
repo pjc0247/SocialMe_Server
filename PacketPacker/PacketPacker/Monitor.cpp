@@ -13,9 +13,13 @@ HANDLE hSleepEvent;
 DWORD processID = GetCurrentProcessId();
 HANDLE hProcess;
 
+HWND hConsole;
+
 int MONITOR_INTERVAL = 1000;
 
 
+bool StartConnectionMonitoring();
+void EndConnectionMonitoring();
 
 void UpdateMemoryStatus(){
 
@@ -40,13 +44,26 @@ unsigned int __stdcall MonitorThread(void* pComPort){
 }
 
 void StartMonitoring(){
+
+	SetConsoleTitleA("SocialMe Server");
+ReFind:
+	hConsole = FindWindowA(NULL, "SocialMe Server");
+	if(hConsole == NULL)
+		goto ReFind;
+
+	output("console handle %x\n", hConsole);
+
 	hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, processID);
 	hSleepEvent = CreateEventA(NULL,false,false,"SoMeSleepingEvent");
 	hMonitorThread = _beginthreadex(
 		NULL,NULL,MonitorThread,NULL,NULL,NULL);
+
+	StartConnectionMonitoring();
 }
 void EndMonitoring(){
 	CloseHandle( hProcess );
 	CloseHandle(hSleepEvent);
 	_endthreadex(hMonitorThread);
+
+	EndConnectionMonitoring();
 }

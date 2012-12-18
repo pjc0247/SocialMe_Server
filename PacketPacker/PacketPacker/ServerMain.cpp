@@ -5,6 +5,7 @@
 
 #include "NetPacket.h"
 #include "ServerHandler.h"
+#include "monitor.h"
 
 #include "Protocol.h"
 
@@ -128,6 +129,8 @@ int RunServer(int port){
 		ses.handle = PerHandleData;
 		conn.push_back(ses);
 
+		PushConnection(PerHandleData->n, inet_ntoa(clntAddr.sin_addr));
+
 		NetRecvPacket(PerHandleData,PerIoData);
 	}while(++N);
 
@@ -169,6 +172,7 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 
 			Logout(PerHandleData);
 			Session s = {PerHandleData, PerIoData};
+			DeleteConnection(PerHandleData->n, inet_ntoa(PerHandleData->clntAddr.sin_addr));
 			DeleteConn(s);
 			closesocket(PerHandleData->hClntSock);
 			free(PerHandleData);
@@ -273,6 +277,7 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 			// 소켓 종료
 			Logout(PerHandleData);
 			Session s = {PerHandleData, PerIoData};
+			DeleteConnection(PerHandleData->n, inet_ntoa(PerHandleData->clntAddr.sin_addr));
 			DeleteConn(s);
 			closesocket(PerHandleData->hClntSock);
 			free(PerHandleData);
@@ -315,7 +320,7 @@ unsigned int __stdcall PingThread(void* pComPort)
 
 				Logout(itor->handle);
 				Session s = {itor->handle,itor->io};
-				
+				DeleteConnection(itor->handle->n, inet_ntoa(itor->handle->clntAddr.sin_addr));
 				closesocket(itor->handle->hClntSock);
 				free(itor->handle);
 				free(itor->io);
