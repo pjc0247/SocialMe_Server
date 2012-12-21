@@ -13,7 +13,7 @@ enum LocationColumnIndex{
 	LOCATION_INDEX_LONGITUDE
 };
 
-bool PushLocation(char *id,int lat,int lon);
-Location *QueryLocation(char *id, int min, int max, int *cnt);
+bool PushLocation(int db,char *id,int lat,int lon);
+Location *QueryLocation(int db,char *id, int min, int max, int *cnt);
 
 #endif // LOCATION_H

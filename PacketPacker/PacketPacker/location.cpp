@@ -5,7 +5,7 @@
 
 #include <time.h>
 
-bool PushLocation(char *id,int lat,int lon){
+bool PushLocation(int db,char *id,int lat,int lon){
 	bool ret = true;
 	int q;
 	char qm[512];
@@ -16,7 +16,7 @@ bool PushLocation(char *id,int lat,int lon){
 		"(\'%s\',%d,%d,%d);",
 		id, time(NULL),lat, lon);
 
-	q = DbPrepare(qm);
+	q = DbPrepare(db,qm);
 
 	ret = DbExecute(q);
 
@@ -27,7 +27,7 @@ bool PushLocation(char *id,int lat,int lon){
 	DbCloseQuery(q);
 	return ret;
 }
-Location *QueryLocation(char *id, int min, int max, int *cnt){
+Location *QueryLocation(int db,char *id, int min, int max, int *cnt){
 	int ret = true;
 	int q, i;
 	char qm[256];
@@ -37,7 +37,7 @@ Location *QueryLocation(char *id, int min, int max, int *cnt){
 	sprintf(qm,	"select * from \"location\" where \"id\" = \'%s\' "
 				"rownum between %d and %d;", id, min, max); 
 
-	q = DbPrepare(qm);
+	q = DbPrepare(db,qm);
 	
 	if(!DbExecute(q)){
 		printf("Execute failed\n");
@@ -46,7 +46,7 @@ Location *QueryLocation(char *id, int min, int max, int *cnt){
 		goto CleanUp;
 	}
 	
-	Location *list;
+	Location *list = NULL;
 	list = (Location*)malloc(sizeof(Location) * (max-min+1));
 
 	if(list == NULL)

@@ -5,7 +5,7 @@
 
 
 
-int QueryPayment(char *receiver,Payment *_p,int min, int max){
+int QueryPayment(int db,char *receiver,Payment *_p,int min, int max){
 	int ret = true;
 	int q, i;
 	char qm[512];
@@ -16,7 +16,7 @@ int QueryPayment(char *receiver,Payment *_p,int min, int max){
 				"rownum between %d and %d;", receiver, min, max); 
 	printf("%s\n", qm);
 
-	q = DbPrepare(qm);
+	q = DbPrepare(db,qm);
 	
 	if(!DbExecute(q)){
 		printf("Execute failed\n");
@@ -58,7 +58,7 @@ CleanUp:;
 
 	return i;
 }
-bool PushPayment(Payment *p){
+bool PushPayment(int db,Payment *p){
 	bool ret = true;
 	int q;
 	char qm[512];
@@ -69,7 +69,7 @@ bool PushPayment(Payment *p){
 		"(\'%s\',%d,\'%s\',%d);",
 		p->id, p->time, p->comment, p->value);
 
-	q = DbPrepare(qm);
+	q = DbPrepare(db,qm);
 
 	ret = DbExecute(q);
 

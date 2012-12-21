@@ -156,6 +156,9 @@
     <ClInclude Include="sysutil.h">
       <Filter>소스 파일\Util</Filter>
     </ClInclude>
+    <ClInclude Include="util.h">
+      <Filter>소스 파일\Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

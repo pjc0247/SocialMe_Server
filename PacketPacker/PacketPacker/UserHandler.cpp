@@ -28,7 +28,7 @@ bool UserQuery(PacketHandlerData d){
 			REASON_MEMORY_ERROR);
 		return false;
 	}
-	ret = QueryUser(NetGetStringData(p,"id"), user);
+	ret = QueryUser(DB(d),NetGetStringData(p,"id"), user);
 	if(!ret){
 		ret = false;
 		goto Cleanup;
@@ -59,7 +59,7 @@ bool UserQueryImage(PacketHandlerData d){
 			REASON_MEMORY_ERROR);
 		return false;
 	}
-	ret = QueryUser(NetGetStringData(p,"id"), user);
+	ret = QueryUser(DB(d),NetGetStringData(p,"id"), user);
 	if(!ret){
 		ret = false;
 		goto Cleanup;
@@ -92,7 +92,7 @@ bool UserUpdate(PacketHandlerData d){
 	SET(user->nick, NetGetStringData(d.pkt, "nick"));
 	user->age = NetGetNumberData(d.pkt, "age");
 
-	ret = UpdateUser(d.handle->user->id, user);
+	ret = UpdateUser(DB(d),d.handle->user->id, user);
 
 	NetPacket *pkt;
 	pkt = NetCreatePacket();

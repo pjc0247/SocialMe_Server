@@ -6,7 +6,7 @@
 
 
 
-bool IsFollowing(char *src,char *dst){
+bool IsFollowing(int db,char *src,char *dst){
 	int ret = true;
 	int q;
 	char qm[256];
@@ -14,7 +14,7 @@ bool IsFollowing(char *src,char *dst){
 
 	sprintf(qm,	"select * from \"follow\" where \"follower\" = \'%s\' and \"followed\" = \'%s\';", src,dst); 
 
-	q = DbPrepare(qm);
+	q = DbPrepare(db,qm);
 	
 	if(!DbExecute(q)){
 		printf("Execute failed\n");
@@ -30,7 +30,7 @@ CleanUp:
 	DbCloseQuery(q);
 	return len;
 }
-bool IsFollowed(char *src,char *dst){
+bool IsFollowed(int db,char *src,char *dst){
 	int ret = true;
 	int q;
 	char qm[256];
@@ -38,7 +38,7 @@ bool IsFollowed(char *src,char *dst){
 
 	sprintf(qm,	"select * from \"follow\" where \"follower\" = \'%s\' and \"followed\" = \'%s\'", dst,src); 
 
-	q = DbPrepare(qm);
+	q = DbPrepare(db,qm);
 	
 	if(!DbExecute(q)){
 		printf("Execute failed\n");
@@ -54,12 +54,12 @@ CleanUp:
 	return len-1;
 }
 
-bool Follow(char *src,char *dst){
+bool Follow(int db,char *src,char *dst){
 	bool ret = true;
 	int q;
 	char qm[128];
 
-	if(IsFollowing(src,dst))
+	if(IsFollowing(db,src,dst))
 		return false;
 
 	sprintf(qm,	"insert into \"follow\" "
@@ -68,7 +68,7 @@ bool Follow(char *src,char *dst){
 		"(\'%s\',\'%s\');",
 		src,dst);
 
-	q = DbPrepare(qm);
+	q = DbPrepare(db,qm);
 
 	ret = DbExecute(q);
 
@@ -81,17 +81,17 @@ CleanUp:
 
 	return ret;
 }
-bool Unfollow(char *src,char *dst){
+bool Unfollow(int db,char *src,char *dst){
 	bool ret = true;
 	int q;
 	char qm[128];
 
-	if(!IsFollowing(src,dst))
+	if(!IsFollowing(db,src,dst))
 		return false;
 
 	sprintf(qm, "delete from follow where \"follower\" = \'%s\' and \"followed\" = \'%s\'",
 			src, dst);
-	q = DbPrepare(qm);
+	q = DbPrepare(db,qm);
 	ret = DbExecute(q);
 	if(ret == false){
 		goto CleanUp;
@@ -102,7 +102,7 @@ CleanUp:
 
 	return ret;
 }
-int FollowingCount(char *id){
+int FollowingCount(int db,char *id){
 	int ret = true;
 	int q;
 	char qm[128];
@@ -110,7 +110,7 @@ int FollowingCount(char *id){
 
 	sprintf(qm,	"select * from \"follow\" where \"follower\" = \'%s\'", id); 
 
-	q = DbPrepare(qm);
+	q = DbPrepare(db,qm);
 	
 	if(!DbExecute(q)){
 		printf("Execute failed\n");
@@ -126,7 +126,7 @@ CleanUp:
 
 	return len;
 }
-int FollowedCount(char *id){
+int FollowedCount(int db,char *id){
 	int ret = true;
 	int q;
 	char qm[128];
@@ -134,7 +134,7 @@ int FollowedCount(char *id){
 
 sprintf(qm,	"select * from \"follow\" where \"followed\" = \'%s\'", id); 
 
-	q = DbPrepare(qm);
+	q = DbPrepare(db,qm);
 	
 	if(!DbExecute(q)){
 		printf("Execute failed\n");
@@ -152,7 +152,7 @@ CleanUp:
 
 }
 
-bool QueryFollowerList(char *id,FollowList *list,int min, int max){
+bool QueryFollowerList(int db,char *id,FollowList *list,int min, int max){
 	int ret = true;
 	int q, i;
 	char qm[256];
@@ -162,7 +162,7 @@ bool QueryFollowerList(char *id,FollowList *list,int min, int max){
 	sprintf(qm,	"select \"follower\" from \"follow\" where \"followed\" = \'%s\' and "
 				"rownum between %d and %d;", id, min, max); 
 
-	q = DbPrepare(qm);
+	q = DbPrepare(db,qm);
 	
 	if(!DbExecute(q)){
 		printf("Execute failed\n");
@@ -192,7 +192,7 @@ CleanUp:
 	return true;
 }
 
-bool QueryFollowingList(char *id,FollowList *list,int min, int max){
+bool QueryFollowingList(int db,char *id,FollowList *list,int min, int max){
 	int ret = true;
 	int q, i;
 	char qm[256];
@@ -202,7 +202,7 @@ bool QueryFollowingList(char *id,FollowList *list,int min, int max){
 	sprintf(qm,	"select \"followed\" from \"follow\" where \"follower\" = \'%s\' and "
 				"rownum between %d and %d;", id, min, max); 
 
-	q = DbPrepare(qm);
+	q = DbPrepare(db,qm);
 	
 	if(!DbExecute(q)){
 		printf("Execute failed\n");

@@ -24,9 +24,9 @@ enum UserColumnIndex{
 User *CreateUser();
 void DisposeUser(User *u);
 
-bool RegistUser(char *id,User *u);
-bool QueryUser(char *id,User *u);
-bool UpdateUser(char *id,User *u);
+bool RegistUser(int db,char *id,User *u);
+bool QueryUser(int db,char *id,User *u);
+bool UpdateUser(int db,char *id,User *u);
 
 /*
  * Session API

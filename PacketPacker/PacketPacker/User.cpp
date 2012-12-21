@@ -18,7 +18,7 @@ void DisposeUser(User *u){
 }
 
 
-bool RegistUser(char *id,User *u){
+bool RegistUser(int db,char *id,User *u){
 	int q;
 	char qm[512];
 	char *sp = NULL;
@@ -31,7 +31,7 @@ bool RegistUser(char *id,User *u){
 		"(\'%s\',\'%s\',\'%s\',%d);",
 		id,u->pw,u->nick,u->age);
 
-	q = DbPrepare(qm);
+	q = DbPrepare(db,qm);
 
 	if(!DbExecute(q)){
 		ret = false;
@@ -41,7 +41,7 @@ bool RegistUser(char *id,User *u){
 	DbCloseQuery(q);
 	return ret;
 }
-bool QueryUser(char *id,User *u){
+bool QueryUser(int db,char *id,User *u){
 	int q;
 	char qm[64];
 	char *sp = NULL;
@@ -49,7 +49,7 @@ bool QueryUser(char *id,User *u){
 	bool ret = true;
 	
 	sprintf(qm,"select * from \"account\" where id = \'%s\';", id);
-	q = DbPrepare(qm);
+	q = DbPrepare(db,qm);
 	
 	if(!DbExecute(q)){
 		printf("Execute failed\n");
@@ -87,7 +87,7 @@ CleanUp:;
 
 	return ret;
 }
-bool UpdateUser(char *id,User *u){
+bool UpdateUser(int db,char *id,User *u){
 	bool ret = true;
 	int q;
 	char qm[128];
@@ -116,7 +116,7 @@ bool UpdateUser(char *id,User *u){
 	sprintf(qm,	"update \"account\" set %s where \"id\"=\'%s\';",
 				updateItem, id);
 
-	q = DbPrepare(qm);
+	q = DbPrepare(db,qm);
 
 	if(!DbExecute(q)){
 		ret = false;

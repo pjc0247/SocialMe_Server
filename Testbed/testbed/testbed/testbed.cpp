@@ -10,7 +10,7 @@
 
 #pragma comment (lib, "ws2_32")
 
-#define SERVER_ADDR "127.0.0.1"
+#define SERVER_ADDR "222.236.44.23"
 #define SERVER_PORT 9919
 	
 SOCKET hSocket;
@@ -92,20 +92,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	p = NetCreatePacket();
 	p->header.type = LOGIN_TRY;
 	NetAddStringData(p,"id", "pjc0247");
-	NetAddStringData(p,"pw", "040404");
+	NetAddStringData(p,"pw", "1234");
 	NetSendPacket(hSocket,p);
 	NetDisposePacket(p,true);
 
-//	while(1){
-
-	p = NetCreatePacket();
-	p->header.type = PHOTO_QUERY;
-	NetAddStringData(p,"id", "pjc0247");
-	NetAddNumberData(p, "min", 1);
-	NetAddNumberData(p, "max", 5);
-	NetSendPacket(hSocket,p);
-	NetDisposePacket(p,true);
-	//}
 	
 	NetPacket *pkt;
 

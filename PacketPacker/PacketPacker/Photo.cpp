@@ -4,7 +4,7 @@
 #include "Protocol.h"
 #include "database.h"
 
-bool PushPhoto(char *id,PhotoPost *p){
+bool PushPhoto(int db,char *id,PhotoPost *p){
 	bool ret = true;
 	int q;
 	char qm[512];
@@ -15,7 +15,7 @@ bool PushPhoto(char *id,PhotoPost *p){
 		"(\'%s\',%d,\'%s\',%d,%d,\'%s\');",
 		id, p->time, p->photo, p->lat, p->lon, p->comment);
 
-	q = DbPrepare(qm);
+	q = DbPrepare(db,qm);
 
 	ret = DbExecute(q);
 
@@ -26,7 +26,7 @@ bool PushPhoto(char *id,PhotoPost *p){
 	DbCloseQuery(q);
 
 	sprintf(qm, "select LAST_INSERT_ID();");
-	q = DbPrepare(qm);
+	q = DbPrepare(db,qm);
 
 	ret = DbExecute(q);
 
@@ -37,7 +37,7 @@ bool PushPhoto(char *id,PhotoPost *p){
 	return ret;
 }
 
-bool DeletePhoto(char *id,int photo_id){
+bool DeletePhoto(int db,char *id,int photo_id){
 	bool ret = true;
 	int q;
 	char qm[512];
@@ -46,7 +46,7 @@ bool DeletePhoto(char *id,int photo_id){
 	sprintf(qm,	"delete from photo where \"photo_id\" = %d and \"id\" = \'%s\';",
 		photo_id, id);
 
-	q = DbPrepare(qm);
+	q = DbPrepare(db,qm);
 
 	ret = DbExecute(q);
 
@@ -58,7 +58,7 @@ bool DeletePhoto(char *id,int photo_id){
 	return ret;
 }
 
-PhotoPost *QueryPhotoList(char *id,int min, int max,int *cnt){
+PhotoPost *QueryPhotoList(int db,char *id,int min, int max,int *cnt){
 	int ret = true;
 	int q, i;
 	char qm[256];
@@ -68,7 +68,7 @@ PhotoPost *QueryPhotoList(char *id,int min, int max,int *cnt){
 	sprintf(qm,	"select * from \"photo\" where \"id\" = \'%s\' and "
 				"rownum between %d and %d;", id, min, max); 
 
-	q = DbPrepare(qm);
+	q = DbPrepare(db,qm);
 	
 	if(!DbExecute(q)){
 		printf("Execute failed\n");
@@ -77,7 +77,7 @@ PhotoPost *QueryPhotoList(char *id,int min, int max,int *cnt){
 		goto CleanUp;
 	}
 	
-	PhotoPost *list;
+	PhotoPost *list = NULL;
 	list = (PhotoPost*)malloc(sizeof(PhotoPost) * (max-min+1));
 
 	if(list == NULL)

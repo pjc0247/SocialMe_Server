@@ -6,7 +6,7 @@
 #include "Message.h"
 
 
-int QueryMessage(char *receiver,Message *m){
+int QueryMessage(int db,char *receiver,Message *m){
 	int ret = RESULT_NEXT;
 	int q;
 	char qm[512];
@@ -15,7 +15,7 @@ int QueryMessage(char *receiver,Message *m){
 
 	sprintf(qm,"select * from \"message\" where receiver_id = \'%s\';", receiver)                       ; 
 
-	q = DbPrepare(qm);
+	q = DbPrepare(db,qm);
 	
 	if(!DbExecute(q)){
 		printf("Execute failed\n");
@@ -59,7 +59,7 @@ int QueryMessage(char *receiver,Message *m){
 
 	sprintf(qm, "delete from message where \"message_id\" = %d",
 			m->id);
-	q = DbPrepare(qm);
+	q = DbPrepare(db,qm);
 	ret = DbExecute(q);
 	
 
@@ -70,14 +70,14 @@ CleanUp:;
 	return ret;
 }
 
-bool DeleteMessage(char *id,int mid){
+bool DeleteMessage(int db,char *id,int mid){
 	int q;
 	char qm[256];
 	bool ret;
 
 	sprintf(qm, "delete from message where \"message_id\" = %d and \"receiver\" = \'%s\'",
 			mid,id);
-	q = DbPrepare(qm);
+	q = DbPrepare(db,qm);
 	ret = DbExecute(q);
 
 	DbCloseQuery(q);
@@ -85,7 +85,7 @@ bool DeleteMessage(char *id,int mid){
 	return ret;
 }
 #include "../../Cubrid/include/cas_cci.h"
-bool PushMessage(Message *msg){
+bool PushMessage(int db,Message *msg){
 	bool ret = true;
 	int q;
 	char qm[512];
@@ -97,7 +97,7 @@ bool PushMessage(Message *msg){
 		msg->time, msg->sender, msg->receiver,
 		msg->type, msg->msg);
 
-	q = DbPrepare(qm);
+	q = DbPrepare(db,qm);
 
 	ret = DbExecute(q);
 
@@ -108,7 +108,7 @@ bool PushMessage(Message *msg){
 	DbCloseQuery(q);
 
 	sprintf(qm, "select LAST_INSERT_ID();");
-	q = DbPrepare(qm);
+	q = DbPrepare(db,qm);
 
 	ret = DbExecute(q);
 

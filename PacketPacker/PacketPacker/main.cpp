@@ -19,14 +19,10 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	LoadBlacklist();
 
-	DbConnect();
-
 	StartMonitoring();
 	RunServer(SERVER_PORT);
 	
 	EndMonitoring();
-
-	DbDisconnect();
 
 	return 0;
 }

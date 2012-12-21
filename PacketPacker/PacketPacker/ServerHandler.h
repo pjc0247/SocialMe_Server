@@ -17,6 +17,9 @@ struct PacketHandlerData{
 	PER_HANDLE_DATA *handle;
 };
 
+bool OnConnected(PacketHandlerData d);
+bool OnDisconnected(PacketHandlerData d);
+
 bool RegistTry(PacketHandlerData d);
 
 bool LoginTry(PacketHandlerData d);

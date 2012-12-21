@@ -20,8 +20,8 @@ enum PhotoColumnIndex{
 	PHOTO_INDEX_COMMENT
 };
 
-bool PushPhoto(char *id,PhotoPost *p);
-bool DeletePhoto(char *id,int photo_id);
-PhotoPost *QueryPhotoList(char *id,int min, int max,int *cnt);
+bool PushPhoto(int db,char *id,PhotoPost *p);
+bool DeletePhoto(int db,char *id,int photo_id);
+PhotoPost *QueryPhotoList(int db,char *id,int min, int max,int *cnt);
 
 #endif // PHOTO_H

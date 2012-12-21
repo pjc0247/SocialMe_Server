@@ -104,6 +104,7 @@
     <ClInclude Include="sysutil.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="User.h" />
+    <ClInclude Include="util.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="blacklist.cpp" />

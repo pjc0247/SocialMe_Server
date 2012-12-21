@@ -124,10 +124,11 @@ int RunServer(int port){
 		PerIoData = (LPPER_IO_DATA)malloc(sizeof(PER_IO_DATA));
 		memset(&(PerIoData->overlapped), 0, sizeof(OVERLAPPED));           
 
-		Session ses;
-		ses.io = PerIoData;
-		ses.handle = PerHandleData;
-		conn.push_back(ses);
+		PacketHandlerData d;
+		//bool ret;
+		d.handle = PerHandleData;
+		d.io = PerIoData;
+		ret = OnConnected(d);
 
 		PushConnection(PerHandleData->n, inet_ntoa(clntAddr.sin_addr));
 
@@ -169,6 +170,11 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 		{
 			output("close a %d\n", PerHandleData->n);
 			// 家南 辆丰
+
+			PacketHandlerData d;
+			d.handle = PerHandleData;
+			d.io = PerIoData;
+			OnDisconnected(d);
 
 			Logout(PerHandleData);
 			Session s = {PerHandleData, PerIoData};
@@ -275,6 +281,11 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 		if(PerHandleData->disconnected){
 			output("close %d\n", PerHandleData->n);
 			// 家南 辆丰
+			PacketHandlerData d;
+			d.handle = PerHandleData;
+			d.io = PerIoData;
+			OnDisconnected(d);
+
 			Logout(PerHandleData);
 			Session s = {PerHandleData, PerIoData};
 			DeleteConnection(PerHandleData->n, inet_ntoa(PerHandleData->clntAddr.sin_addr));
@@ -317,6 +328,11 @@ unsigned int __stdcall PingThread(void* pComPort)
 				GetTickCount() - itor->handle->pingtime >= 4000){
 
 				printf("close at %d (ping timeout)\n", itor->handle->n);
+
+				PacketHandlerData d;
+				d.handle = itor->handle;
+				d.io = itor->io;
+				OnDisconnected(d);
 
 				Logout(itor->handle);
 				Session s = {itor->handle,itor->io};
