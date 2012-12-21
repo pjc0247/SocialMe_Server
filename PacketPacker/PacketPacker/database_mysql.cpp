@@ -10,11 +10,10 @@
 #include "../../Cubrid/include/cas_cci.h"
 #pragma comment (lib,"../../Cubrid/lib/cascci")
 
-
-int nDB;
 T_CCI_ERROR cciErr;
 
-bool DbConnect(){	
+int DbConnect(){	
+	int nDB;
 	nDB = cci_connect(DB_SERVER, DB_PORT, DB_NAME, DB_USER_ID, DB_USER_PW);
 	if(nDB >= 0){
 		output("DB Connected\n");
@@ -24,7 +23,7 @@ bool DbConnect(){
 
 		output("DB Version : Cubrid %s\n", buf);
 
-		return true;
+		return nDB;
 	}
 	else{
 		output("DB Connect failed (%d)\n", nDB);
@@ -33,14 +32,14 @@ bool DbConnect(){
 		cci_get_error_msg(nDB,NULL,msg,256);
 		output(msg);
 
-		return false;
+		return -1;
 	}
 }
-void DbDisconnect(){
+void DbDisconnect(int nDB){
 	cci_disconnect(nDB, NULL);
 }
 
-int DbPrepare(char *query){
+int DbPrepare(int nDB,char *query){
 	int qid;
 	qid = cci_prepare(nDB, query, 0, &cciErr);
 	return qid;

@@ -13,12 +13,12 @@ using namespace std;
 
 #define DB_NAME "demodb"
 #define DB_USER_ID "sma"
-#define DB_USER_PW "040404"
+#define DB_USER_PW ""
 
-bool DbConnect();
-void DbDisconnect();
+int DbConnect();
+void DbDisconnect(int db);
 
-int DbPrepare(char *query);
+int DbPrepare(int db,char *query);
 void DbCloseQuery(int qid);
 bool DbExecute(int qid);
 int DbResultCount(int qid);
