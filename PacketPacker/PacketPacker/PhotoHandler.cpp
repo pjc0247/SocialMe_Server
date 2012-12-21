@@ -19,7 +19,7 @@ bool PhotoPush(PacketHandlerData d){
 	SET(post.photo, NetGetStringData(p, "photo"));
 	SET(post.comment, NetGetStringData(p, "comment"));
 
-	ret = PushPhoto(d.handle->user->id, &post);
+	ret = PushPhoto(DB(d),d.handle->user->id, &post);
 
 	NetPacket *pkt;
 	pkt = NetCreatePacket();
@@ -41,7 +41,7 @@ bool PhotoDelete(PacketHandlerData d){
 
 	bool ret = true;
 
-	ret = DeletePhoto(d.handle->user->id, NetGetNumberData(p, "photo_id"));
+	ret = DeletePhoto(DB(d),d.handle->user->id, NetGetNumberData(p, "photo_id"));
 
 	NetPacket *pkt;
 	pkt = NetCreatePacket();
@@ -74,7 +74,7 @@ bool PhotoQuery(PacketHandlerData d){
 
 	pkt = NetCreatePacket();
 
-	plist = QueryPhotoList(NetGetStringData(p, "id")
+	plist = QueryPhotoList(DB(d),NetGetStringData(p, "id")
 							, min, max, &len);
 
 	if(plist == NULL){

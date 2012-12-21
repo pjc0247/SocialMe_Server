@@ -41,7 +41,7 @@ bool PaymentQuery(PacketHandlerData d){
 		return false;
 	}
 
-	int len = QueryPayment(d.handle->user->id, pay, min, max);
+	int len = QueryPayment(DB(d),d.handle->user->id, pay, min, max);
 
 	NetPacket *pkt;
 	pkt = NetCreatePacket();
@@ -88,7 +88,7 @@ bool PaymentPush(PacketHandlerData d){
 	SET(pay.id, d.handle->user->id);
 	SET(pay.comment, NetGetStringData(p,"comment"));
 	pay.value = NetGetNumberData(p, "value");
-	ret = PushPayment(&pay);
+	ret = PushPayment(DB(d),&pay);
 
 	NetPacket *pkt;
 	pkt = NetCreatePacket();

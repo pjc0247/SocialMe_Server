@@ -16,7 +16,7 @@ bool LoginTry(PacketHandlerData d){
 
 	SET(user->id, NetGetStringData(p,"id"));
 
-	exist = QueryUser(user->id, user);
+	exist = QueryUser(DB(d),user->id, user);
 
 	NetPacket *pkt;
 	pkt = NetCreatePacket();

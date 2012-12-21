@@ -11,7 +11,7 @@ bool LocationPush(PacketHandlerData d){
 
 	bool ret = true;
 
-	ret = PushLocation(
+	ret = PushLocation(DB(d),
 			d.handle->user->id,
 			NetGetNumberData(p,"lat"),
 			NetGetNumberData(p,"lon"));
@@ -43,7 +43,7 @@ bool LocationQuery(PacketHandlerData d){
 
 	pkt = NetCreatePacket();
 
-	plist = QueryLocation(NetGetStringData(p, "id")
+	plist = QueryLocation(DB(d),NetGetStringData(p, "id")
 							, min, max, &len);
 
 

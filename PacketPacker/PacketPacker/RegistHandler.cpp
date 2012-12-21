@@ -18,7 +18,7 @@ bool RegistTry(PacketHandlerData d){
 	SET(user->nick, NetGetStringData(p,"nick"));
 	user->age = NetGetNumberData(p,"age");
 
-	exist = QueryUser(user->id, NULL);
+	exist = QueryUser(DB(d),user->id, NULL);
 
 	NetPacket *pkt;
 	pkt = NetCreatePacket();
@@ -30,7 +30,7 @@ bool RegistTry(PacketHandlerData d){
 	}
 	else{
 		bool ret;
-		ret = RegistUser(NetGetStringData(p,"id"),
+		ret = RegistUser(DB(d),NetGetStringData(p,"id"),
 					user);
 
 		if(ret){

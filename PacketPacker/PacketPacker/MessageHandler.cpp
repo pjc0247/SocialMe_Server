@@ -21,7 +21,7 @@ bool MessageQuery(PacketHandlerData d){
 
 	while(true){
 		Message m;
-		if(QueryMessage(d.handle->user->id, &m) == RESULT_FAILED)
+		if(QueryMessage(DB(d),d.handle->user->id, &m) == RESULT_FAILED)
 			break;
 
 		NetPacket *p;
@@ -45,7 +45,7 @@ bool MessageNotifyOk(PacketHandlerData d){
 	bool ret;
 	int mid = NetGetNumberData(p, "id");
 
-	ret = DeleteMessage(d.handle->user->id, mid);
+	ret = DeleteMessage(DB(d),d.handle->user->id, mid);
 
 	return true;
 }
@@ -71,7 +71,7 @@ bool MessagePush(PacketHandlerData d){
 	SET(m.receiver, NetGetStringData(p,"id"));
 	SET(m.msg, NetGetStringData(p,"msg"));
 	m.type = NetGetNumberData(p,"type");
-	ret = PushMessage(&m);
+	ret = PushMessage(DB(d),&m);
 
 	NetPacket *pkt;
 	pkt = NetCreatePacket();

@@ -21,7 +21,7 @@ bool FollowFollow(PacketHandlerData d){
 		goto CleanUp;
 	}
 
-	ret = Follow(
+	ret = Follow(DB(d),
 		d.handle->user->id,
 		NetGetStringData(p, "followed"));
 
@@ -54,7 +54,7 @@ bool FollowUnfollow(PacketHandlerData d){
 		goto CleanUp;
 	}
 
-	ret = Unfollow(
+	ret = Unfollow(DB(d),
 		d.handle->user->id,
 		NetGetStringData(p, "followed"));
 
@@ -89,7 +89,7 @@ bool FollowQueryFollowingCount(PacketHandlerData d){
 		goto CleanUp;
 	}
 
-	count = FollowingCount(
+	count = FollowingCount(DB(d),
 		NetGetStringData(p, "id"));
 
 	if(ret == false){
@@ -123,7 +123,7 @@ bool FollowQueryFollowedCount(PacketHandlerData d){
 		goto CleanUp;
 	}
 
-	count = FollowedCount(
+	count = FollowedCount(DB(d),
 		NetGetStringData(p, "id"));
 
 	if(ret == false){
@@ -158,7 +158,7 @@ bool FollowQueryFollowingList(PacketHandlerData d){
 
 	FollowList list;
 	
-	ret = QueryFollowingList(
+	ret = QueryFollowingList(DB(d),
 		NetGetStringData(p, "id"),
 		&list,
 		NetGetNumberData(p, "min"), NetGetNumberData(p, "max"));
@@ -203,7 +203,7 @@ bool FollowQueryFollowedList(PacketHandlerData d){
 
 	FollowList list;
 	
-	ret = QueryFollowerList(
+	ret = QueryFollowerList(DB(d),
 		NetGetStringData(p, "id"),
 		&list,
 		NetGetNumberData(p, "min"), NetGetNumberData(p, "max"));
