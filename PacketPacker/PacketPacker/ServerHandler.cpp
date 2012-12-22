@@ -28,6 +28,12 @@ bool ProcessPacket(PacketHandlerData d){
 	case USER_QUERY_IMG:
 		UserQueryImage(d);
 		break;
+	case USER_QUERY_COMMENT:
+		UserQueryComment(d);
+		break;
+	case USER_UPDATE_COMMENT:
+		UserUpdateComment(d);
+		break;
 
 	case LOCATION_PUSH:
 		LocationPush(d);

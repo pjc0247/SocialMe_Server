@@ -28,6 +28,8 @@ bool LogoutTry(PacketHandlerData d);
 bool UserUpdate(PacketHandlerData d);
 bool UserQuery(PacketHandlerData d);
 bool UserQueryImage(PacketHandlerData d);
+bool UserUpdateComment(PacketHandlerData d);
+bool UserQueryComment(PacketHandlerData d);
 
 bool LocationPush(PacketHandlerData d);
 bool LocationQuery(PacketHandlerData d);

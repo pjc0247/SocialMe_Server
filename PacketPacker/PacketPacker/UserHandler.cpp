@@ -110,3 +110,67 @@ Cleanup:
 	DisposeUser(user);
 	return ret;
 }
+bool UserUpdateComment(PacketHandlerData d){
+	NetPacket *p;
+	bool ret = true;
+
+	p = d.pkt;
+
+	if(!IsLoggedIn(d.handle)){
+		UserDeny(d, USER_UPDATE_FAILED,
+			REASON_NOT_LOGGED_IN);
+		return false;
+	}
+
+	ret = UpdateUserComment(
+		DB(d),
+		d.handle->user->id,
+		NetGetStringData(p,"comment"));
+
+	NetPacket *pkt;
+	pkt = NetCreatePacket();
+	if(ret == true){
+		pkt->header.type = USER_UPDATE_OK;
+	}
+	else{
+		pkt->header.type = USER_UPDATE_FAILED;
+		NetAddStringData(pkt, "reason", NetGetStringData(p,"id"));
+	}
+	NetSendPacket(d.handle,d.io,pkt);
+	NetDisposePacket(pkt,true);
+Cleanup:
+	return ret;
+}
+bool UserQueryComment(PacketHandlerData d){
+	NetPacket *p;
+	bool ret = true;
+
+	p = d.pkt;
+
+	if(!IsLoggedIn(d.handle)){
+		UserDeny(d, USER_QUERY_FAILED,
+			REASON_NOT_LOGGED_IN);
+		return false;
+	}
+
+	char comment[281];
+	ret = QueryUserComment(
+		DB(d),
+		NetGetStringData(p, "id"),
+		comment);
+
+	NetPacket *pkt;
+	pkt = NetCreatePacket();
+	if(ret == true){
+		pkt->header.type = USER_INFO_COMMENT;
+		NetAddStringData(pkt, "comment", comment);
+	}
+	else{
+		pkt->header.type = USER_QUERY_FAILED;
+		NetAddStringData(pkt, "reason", NetGetStringData(p,"id"));
+	}
+	NetSendPacket(d.handle,d.io,pkt);
+	NetDisposePacket(pkt,true);
+Cleanup:
+	return ret;
+}

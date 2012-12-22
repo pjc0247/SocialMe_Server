@@ -97,8 +97,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	NetDisposePacket(p,true);
 
 	p = NetCreatePacket();
-	p->header.type = FOLLOW_FOLLOW;
-	NetAddStringData(p,"followed", "pjc0247");
+	p->header.type = USER_QUERY_COMMENT;
+	NetAddStringData(p,"id", "pjc0247");
 	NetSendPacket(hSocket,p);
 	NetDisposePacket(p,true);
 
@@ -109,7 +109,6 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	NetRecvPacket(hSocket,pkt);
 	NetRecvPacket(hSocket,pkt);
-
 	printf("%d\n", pkt->header.type);
 
 	while(1){

@@ -90,6 +90,11 @@ bool NetRecvPacketData(SOCKET hSocket,NetPacketData *data){
 		"size : %d\n\n",
 		data->name, data->size);
 
+
+	if(!strcmp(data->name, "comment")){
+		printf("%s\n", data->data);
+	}
+
 	return true;
 }
 bool NetRecvPacket(SOCKET hSocket,NetPacket *packet){
