@@ -97,9 +97,11 @@ int _tmain(int argc, _TCHAR* argv[])
 	NetDisposePacket(p,true);
 
 	p = NetCreatePacket();
-	p->header.type = LOCATION_PUSH;
+	p->header.type = PHOTO_PUSH;
 	NetAddNumberData(p,"lat", 1234);
 	NetAddNumberData(p,"lon", 5678);
+	NetAddStringData(p,"photo", "ADF");
+	NetAddStringData(p,"comment", "ASDF");
 	NetSendPacket(hSocket,p);
 	NetDisposePacket(p,true);
 

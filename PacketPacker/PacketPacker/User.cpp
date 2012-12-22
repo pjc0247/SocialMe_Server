@@ -122,6 +122,17 @@ bool UpdateUser(int db,char *id,User *u){
 		strcat(updateItem, "\"lon\"=");
 		strcat(updateItem, v);
 	}
+	// post
+	if(u->post != 0){
+		char v[16];
+
+		strcat(updateItem, "\"post\"=\"post\"");
+		if(u->post >= 1)
+			sprintf(v, "+%d", u->post);
+		else
+			sprintf(v, "%d", u->post);
+		strcat(updateItem,v);
+	}
 
 	if(strlen(updateItem) != 0){
 		updateItem[strlen(updateItem)-1] = '\0';

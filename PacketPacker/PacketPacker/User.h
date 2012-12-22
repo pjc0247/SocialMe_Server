@@ -14,6 +14,7 @@ struct User{
 	char hobby[64];
 
 	int lat,lon;
+	int post;
 };
 
 enum UserColumnIndex{
