@@ -9,15 +9,56 @@ db_pw		 040404
 # Database Table
 #
 account		계정 정보를 담고 있는 테이블
-
+		
+	id		계정 아이디 (16글자 이내의 텍스트)
+	pw 		계정 비밀번호 (sha-1 해쉬값)
+	nick		닉네임 (16글자 이내의 텍스트)
+	age		나이
+	lat		최근 위치 (경도)
+	lon		최근 위치 (위도)
+	
 follow		팔로우 정보를 담고 있는 테이블
+	
+	follower 	팔로우 한 사람
+	followed	팔로우 된 사람
 
 location	위치 푸시 정보를 담고 잇는 테이블
+	
+	id		대상 아이디
+	time		푸시된 시각
+	lat		경도
+	lon		위도
 
 message		채팅 정보를 담고 잇는 테이블
 
+	message_id	메세지 식별값
+	time		메세지 전송 시각
+	sender		전송자
+	receiver	수신자
+	type		메세지 타입
+	contetn 	메세지 내용
+
 payment		결제 기록 정보를 담고 있는 테이블
+
+	id		대상 아이디
+	time		결제 시각
+	comment		결제 내용 (128글자 이내)
+	value		결제량
 
 photo		사진 포스트 정보를 담고 잇는 테이블
 
-photo_comment	사진 덧글 정보를 담고 있는 테이블
+	photo_id	사진 식별값
+	id		올린사람 아이디
+	time		올린 시각
+	lat		찍은 경도
+	lon		찍은 위도
+	comment		사진과 함께 남긴 메세지 (280글자 이내)
+	like		좋아요 횟수
+
+photo_comment	사진 댓글 정보를 담고 있는 테이블
+
+	comment_id	댓글 식별값
+	photo_id	대상 사진 식별값
+	id		작성자 아이디
+	time		작성 시각
+	comment 	댓글 내용(280글자 이내)
