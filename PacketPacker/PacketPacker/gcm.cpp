@@ -55,7 +55,7 @@ void GCM_Testbed(){
 	sprintf_s(szSendData, 1000,
 		"collapse_key=msg&"
 		"time_to_live=108&"
-		"delay_while_idle=1&"
+		"delay_while_idle=1&" 
 		"%s&"
 		"registration_id=%s",
 		"data.test=asdf", "APA91bEWxTv1F_zBmBm6NYOqxiB1jQaoTDlSh1JqKOpGGqgvxK5p6b3kOgYO2ZsZQsQmdiEAHLER0TULIxPOi54H-EQvCHHq91evWSC4DakvKkyVPx5Rnozxw1gAq_3N8aAavlfAsHssyv2SrPqJrogZW-k_YoxHfA");

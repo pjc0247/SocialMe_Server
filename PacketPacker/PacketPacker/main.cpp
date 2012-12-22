@@ -19,7 +19,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		_tsetlocale(LC_ALL, _T("korean"));
 	#endif
 
-		GCM_Testbed();
+	//	GCM_Testbed();
 
 	LoadBlacklist();
 
