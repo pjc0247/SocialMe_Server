@@ -100,6 +100,10 @@ bool QueryUser(int db,char *id,User *u){
 		// JOB
 		len = DbGetString(q, USER_INDEX_JOB, &sp);
 		memcpy(u->job,sp,len + 1);
+
+		// COMMENT
+		len = DbGetString(q, USER_INDEX_COMMENT, &sp);
+		memcpy(u->comment,sp,len + 1);
 	}
 
 CleanUp:;
@@ -218,4 +222,55 @@ CleanUp:
 	DbCloseQuery(q);
 
 	return len;
+}
+
+bool QueryUserComment(int db,char *id,char *comment){
+	int ret = true;
+	int q;
+	char qm[128];
+	int len;
+	char *sp;
+
+	sprintf(qm,	"select \"comment\" from \"account\" where \"id\"=\'%s\'", id); 
+
+	q = DbPrepare(db,qm);
+	
+	if(!DbExecute(q)){
+		printf("Execute failed\n");
+
+		ret = false;
+		len = -1;
+		goto CleanUp;
+	}
+
+	len = DbGetString(q, 1, &sp);
+	memcpy(comment,sp,len + 1);
+
+CleanUp:
+	DbCloseQuery(q);
+	return ret;
+}
+bool UpdateUserComment(int db,char *id,char *comment){
+	int ret = true;
+	int q;
+	char qm[512];
+	int len;
+	char *sp;
+
+	sprintf(qm,	"update \"account\" set \"comment\"=\'%s\' where \"id\"=\'%s\'",
+			comment,id); 
+
+	q = DbPrepare(db,qm);
+	
+	if(!DbExecute(q)){
+		printf("Execute failed\n");
+
+		ret = false;
+		len = -1;
+		goto CleanUp;
+	}
+
+CleanUp:
+	DbCloseQuery(q);
+	return ret;
 }

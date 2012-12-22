@@ -28,6 +28,7 @@ enum UserColumnIndex{
 	USER_INDEX_SEX,
 	USER_INDEX_BIRTHDAY,
 	USER_INDEX_JOB,
+	USER_INDEX_COMMENT,
 	USER_INDEX_POST,
 	USER_INDEX_FOLLOWED,
 	USER_INDEX_FRIENDS
@@ -40,6 +41,9 @@ bool RegistUser(int db,char *id,User *u);
 bool QueryUser(int db,char *id,User *u);
 bool UpdateUser(int db,char *id,User *u);
 int QueryUserPost(int db,char *id);
+
+bool QueryUserComment(int db,char *id,char *comment);
+bool UpdateUserComment(int db,char *id,char *comment);
 
 /*
  * Session API
