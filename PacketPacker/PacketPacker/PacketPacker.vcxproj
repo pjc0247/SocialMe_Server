@@ -84,6 +84,7 @@
     <ClInclude Include="blacklist.h" />
     <ClInclude Include="database.h" />
     <ClInclude Include="follow.h" />
+    <ClInclude Include="friend.h" />
     <ClInclude Include="location.h" />
     <ClInclude Include="log.h" />
     <ClInclude Include="Message.h" />
@@ -115,6 +116,7 @@
     <ClCompile Include="database_mysql.cpp" />
     <ClCompile Include="follow.cpp" />
     <ClCompile Include="FollowHandler.cpp" />
+    <ClCompile Include="friend.cpp" />
     <ClCompile Include="gcm.cpp" />
     <ClCompile Include="location.cpp" />
     <ClCompile Include="LocationHandler.cpp" />

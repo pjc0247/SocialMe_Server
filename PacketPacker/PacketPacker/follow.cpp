@@ -24,7 +24,6 @@ bool IsFollowing(int db,char *src,char *dst){
 	}
 
 	len = DbResultCount(q);
-	printf("%d\n", len);
 
 CleanUp:
 	DbCloseQuery(q);
@@ -107,7 +106,7 @@ bool Unfollow(int db,char *src,char *dst){
 
 	DbCloseQuery(q);
 
-	sprintf(qm, "update \"account\" set \"followed\"=\"followed\"-1 where \"id\"=dst",
+	sprintf(qm, "update \"account\" set \"followed\"=\"followed\"-1 where \"id\"=\'%s\'",
 			src, dst);
 	q = DbPrepare(db,qm);
 	ret = DbExecute(q);

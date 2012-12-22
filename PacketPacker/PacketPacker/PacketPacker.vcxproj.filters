@@ -79,6 +79,9 @@
     <Filter Include="소스 파일\Interface\Location">
       <UniqueIdentifier>{f5cff129-32b4-4851-be0e-964d18c6ed0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Interface\Friend">
+      <UniqueIdentifier>{20ef0706-be30-4f13-962c-ce3721fcbe8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -158,6 +161,9 @@
     </ClInclude>
     <ClInclude Include="util.h">
       <Filter>소스 파일\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="friend.h">
+      <Filter>소스 파일\Interface\Friend</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -253,6 +259,9 @@
     </ClCompile>
     <ClCompile Include="PostHandler.cpp">
       <Filter>소스 파일\Server\Handling\Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="friend.cpp">
+      <Filter>소스 파일\Interface\Friend</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
