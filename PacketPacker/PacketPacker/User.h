@@ -12,6 +12,8 @@ struct User{
 	char location[128];
 	char job[32];
 	char hobby[64];
+
+	int lat,lon;
 };
 
 enum UserColumnIndex{

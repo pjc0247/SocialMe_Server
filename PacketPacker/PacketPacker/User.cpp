@@ -108,6 +108,20 @@ bool UpdateUser(int db,char *id,User *u){
 		strcat(updateItem, "\"age\"=");
 		strcat(updateItem, v);
 	}
+	// lat
+	if(u->age != 0){
+		char v[16];
+		sprintf(v,"%d,", u->lat);
+		strcat(updateItem, "\"lat\"=");
+		strcat(updateItem, v);
+	}
+	// lon
+	if(u->age != 0){
+		char v[16];
+		sprintf(v,"%d,", u->lon);
+		strcat(updateItem, "\"lon\"=");
+		strcat(updateItem, v);
+	}
 
 	if(strlen(updateItem) != 0){
 		updateItem[strlen(updateItem)-1] = '\0';
