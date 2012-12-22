@@ -10,7 +10,7 @@
 
 #pragma comment (lib, "ws2_32")
 
-#define SERVER_ADDR "127.0.0.1"
+#define SERVER_ADDR "localhost"
 #define SERVER_PORT 9919
 	
 SOCKET hSocket;
@@ -97,11 +97,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	NetDisposePacket(p,true);
 
 	p = NetCreatePacket();
-	p->header.type = PHOTO_PUSH;
-	NetAddNumberData(p,"lat", 1234);
-	NetAddNumberData(p,"lon", 5678);
-	NetAddStringData(p,"photo", "ADF");
-	NetAddStringData(p,"comment", "ASDF");
+	p->header.type = FOLLOW_FOLLOW;
+	NetAddStringData(p,"followed", "pjc0247");
 	NetSendPacket(hSocket,p);
 	NetDisposePacket(p,true);
 
