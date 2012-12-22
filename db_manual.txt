@@ -1,0 +1,23 @@
+# Database Connection 
+#
+db_server 	 facebook.wo.tc
+db_port 	 33000
+db_id 		 sma
+db_pw		 040404
+
+
+# Database Table
+#
+account		계정 정보를 담고 있는 테이블
+
+follow		팔로우 정보를 담고 있는 테이블
+
+location	위치 푸시 정보를 담고 잇는 테이블
+
+message		채팅 정보를 담고 잇는 테이블
+
+payment		결제 기록 정보를 담고 있는 테이블
+
+photo		사진 포스트 정보를 담고 잇는 테이블
+
+photo_comment	사진 덧글 정보를 담고 있는 테이블
