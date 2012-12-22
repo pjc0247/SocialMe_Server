@@ -47,6 +47,10 @@ bool PhotoPush(PacketHandlerData d);
 bool PhotoDelete(PacketHandlerData d);
 bool PhotoQuery(PacketHandlerData d);
 
+bool PostIncrease(PacketHandlerData d);
+bool PostDecrease(PacketHandlerData d);
+bool PostQuery(PacketHandlerData d);
+
 bool PaymentQuery(PacketHandlerData d);
 bool PaymentPush(PacketHandlerData d);
 

@@ -75,6 +75,16 @@ bool ProcessPacket(PacketHandlerData d){
 		PhotoQuery(d);
 		break;
 
+	case POST_INC:
+		PostIncrease(d);
+		break;
+	case POST_DEC:
+		PostDecrease(d);
+		break;
+	case POST_QUERY_COUNT:
+		PostQuery(d);
+		break;
+
 	case PAYMENT_QUERY:
 		PaymentQuery(d);
 		break;

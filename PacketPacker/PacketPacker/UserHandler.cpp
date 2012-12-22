@@ -69,10 +69,6 @@ Cleanup:
 	DisposeUser(user);
 	return ret;
 }
-bool UserQueryFollowed(PacketHandlerData d){
-}
-bool UserQueryFriends(PacketHandlerData d){
-}
 bool UserUpdate(PacketHandlerData d){
 	NetPacket *p;
 	User *user;

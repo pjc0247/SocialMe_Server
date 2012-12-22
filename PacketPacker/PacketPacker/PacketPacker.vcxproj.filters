@@ -251,6 +251,9 @@
     <ClCompile Include="LocationHandler.cpp">
       <Filter>소스 파일\Server\Handling\Handler</Filter>
     </ClCompile>
+    <ClCompile Include="PostHandler.cpp">
+      <Filter>소스 파일\Server\Handling\Handler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">

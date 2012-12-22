@@ -194,14 +194,13 @@ bool UpdateUser(int db,char *id,User *u){
 
 	return ret;
 }
-
-int QueryUserFriends(int db,char *id){
+int QueryUserPost(int db,char *id){
 	int ret = true;
 	int q;
 	char qm[128];
 	int len;
 
-	sprintf(qm,	"select \"friends\" from \"account\" where \"id\"=\'%s\'", id); 
+	sprintf(qm,	"select \"post\" from \"account\" where \"id\"=\'%s\'", id); 
 
 	q = DbPrepare(db,qm);
 	
@@ -209,30 +208,7 @@ int QueryUserFriends(int db,char *id){
 		printf("Execute failed\n");
 
 		ret = false;
-		goto CleanUp;
-	}
-
-	len = DbGetNumber(q, 1);
-
-CleanUp:
-	DbCloseQuery(q);
-
-	return len;
-}
-int QueryUserFollowed(int db,char *id){
-	int ret = true;
-	int q;
-	char qm[128];
-	int len;
-
-	sprintf(qm,	"select \"followed\" from \"account\" where \"id\"=\'%s\'", id); 
-
-	q = DbPrepare(db,qm);
-	
-	if(!DbExecute(q)){
-		printf("Execute failed\n");
-
-		ret = false;
+		len = -1;
 		goto CleanUp;
 	}
 

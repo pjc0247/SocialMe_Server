@@ -39,6 +39,7 @@ void DisposeUser(User *u);
 bool RegistUser(int db,char *id,User *u);
 bool QueryUser(int db,char *id,User *u);
 bool UpdateUser(int db,char *id,User *u);
+int QueryUserPost(int db,char *id);
 
 /*
  * Session API
