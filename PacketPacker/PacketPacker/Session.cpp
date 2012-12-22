@@ -8,14 +8,28 @@
 using namespace std;
 
 map<string,Session> session;
+CRITICAL_SECTION csSession;
 
+class SessionIniter{
+public:
+	SessionIniter(){
+		__INIT(&csSession);
+	}
+	~SessionIniter(){
+		__DELETE(&csSession);
+	}
+}_sessionIniter;
 
 bool PushSession(void *_handle, void *_io){
 	PER_HANDLE_DATA* handle = (PER_HANDLE_DATA*)_handle;
 	Session s;
 	s.handle = handle;
 	s.io = (PER_IO_DATA*)_io;
+
+	__ENTER(&csSession);
 	session[string(handle->user->id)] = s;
+	__LEAVE(&csSession);
+
 	return true;
 }
 bool IsLoggedIn(void *_handle){
@@ -30,8 +44,11 @@ bool Logout(void *_handle){
 	if(IsLoggedIn(handle)){
 		map<string,Session>::iterator itor;
 
+		__ENTER(&csSession);
 		itor = session.find(string(handle->user->id));
-		session.erase(itor);
+		if(itor != session.end())
+			session.erase(itor);
+		__LEAVE(&csSession);
 
 		DisposeUser(handle->user);
 		return true;
