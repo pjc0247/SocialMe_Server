@@ -26,10 +26,11 @@ bool RegistUser(int db,char *id,User *u){
 
 
 	sprintf(qm,	"insert into \"account\" "
-		"(\"id\",\"pw\",\"nick\",\"age\") "
+		"(\"id\",\"pw\",\"nick\",\"age\",\"sex\",\"birthday\",\"job\") "
 		"values "
-		"(\'%s\',\'%s\',\'%s\',%d);",
-		id,u->pw,u->nick,u->age);
+		"(\'%s\',\'%s\',\'%s\',%d,%d,%d,\'%s\');",
+		id,u->pw,u->nick,u->age,
+		u->sex, u->birthday, u->job);
 
 	q = DbPrepare(db,qm);
 
@@ -79,6 +80,26 @@ bool QueryUser(int db,char *id,User *u){
 		// AGE
 		len = DbGetNumber(q, USER_INDEX_AGE);
 		u->age = len;
+
+		// LAT
+		len = DbGetNumber(q, USER_INDEX_LATITUDE);
+		u->lat = len;
+
+		// LON
+		len = DbGetNumber(q, USER_INDEX_LONGITUDE);
+		u->lon = len;
+
+		// SEX
+		len = DbGetNumber(q, USER_INDEX_SEX);
+		u->sex = len;
+
+		// BIRTH
+		len = DbGetNumber(q, USER_INDEX_BIRTHDAY);
+		u->birthday = len;
+
+		// JOB
+		len = DbGetString(q, USER_INDEX_JOB, &sp);
+		memcpy(u->job,sp,len + 1);
 	}
 
 CleanUp:;
@@ -90,7 +111,7 @@ CleanUp:;
 bool UpdateUser(int db,char *id,User *u){
 	bool ret = true;
 	int q;
-	char qm[128];
+	char qm[512];
 	char *sp = NULL;
 
 	char updateItem[128] = {'\0'};
@@ -120,6 +141,27 @@ bool UpdateUser(int db,char *id,User *u){
 		char v[16];
 		sprintf(v,"%d,", u->lon);
 		strcat(updateItem, "\"lon\"=");
+		strcat(updateItem, v);
+	}
+	// sex
+	if(u->sex != 0){
+		char v[16];
+		sprintf(v,"%d,", u->sex);
+		strcat(updateItem, "\"sex\"=");
+		strcat(updateItem, v);
+	}
+	// birth
+	if(u->birthday != 0){
+		char v[16];
+		sprintf(v,"%d,", u->birthday);
+		strcat(updateItem, "\"birthday\"=");
+		strcat(updateItem, v);
+	}
+	// job
+	if(u->job != NULL){
+		char v[35];
+		sprintf(v,"%s,", u->job);
+		strcat(updateItem, "\"job\"=");
 		strcat(updateItem, v);
 	}
 	// post

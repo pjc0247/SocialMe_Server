@@ -12,6 +12,7 @@ struct User{
 	char location[128];
 	char job[32];
 	char hobby[64];
+	int birthday;
 
 	int lat,lon;
 	int post;
@@ -21,7 +22,13 @@ enum UserColumnIndex{
 	USER_INDEX_ID = 1,
 	USER_INDEX_PW,
 	USER_INDEX_NICK,
-	USER_INDEX_AGE
+	USER_INDEX_AGE,
+	USER_INDEX_LATITUDE,
+	USER_INDEX_LONGITUDE,
+	USER_INDEX_POST,
+	USER_INDEX_SEX,
+	USER_INDEX_BIRTHDAY,
+	USER_INDEX_JOB
 };
 
 User *CreateUser();
