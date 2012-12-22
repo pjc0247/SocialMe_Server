@@ -9,8 +9,8 @@ struct FriendList{
 bool IsFriended(int db,char *src,char *dst);
 bool Friend(int db,char *src,char *dst);
 bool Unfriend(int db,char *src,char *dst);
-int FriendCount(int db,char *id);
 
+int QueryFriendCount(int db,char *id);
 bool QueryFriendList(int db,char *id,FriendList *list,int min, int max);
 
 #endif //FRIEND_H

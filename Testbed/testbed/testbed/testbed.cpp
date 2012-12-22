@@ -97,8 +97,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	NetDisposePacket(p,true);
 
 	p = NetCreatePacket();
-	p->header.type = USER_QUERY_COMMENT;
-	NetAddStringData(p,"id", "pjc0247");
+	p->header.type = FRIEND_QUERY_FRIEND;
+	NetAddStringData(p,"id1", "pjc0247");
+	NetAddStringData(p,"id2", "anz4sadf176");
 	NetSendPacket(hSocket,p);
 	NetDisposePacket(p,true);
 

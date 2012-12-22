@@ -263,6 +263,9 @@
     <ClCompile Include="friend.cpp">
       <Filter>소스 파일\Interface\Friend</Filter>
     </ClCompile>
+    <ClCompile Include="FriendHandler.cpp">
+      <Filter>소스 파일\Server\Handling\Handler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">

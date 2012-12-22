@@ -94,6 +94,9 @@ bool NetRecvPacketData(SOCKET hSocket,NetPacketData *data){
 	if(!strcmp(data->name, "comment")){
 		printf("%s\n", data->data);
 	}
+	if(!strcmp(data->name, "result")){
+		printf("%d\n", *(int*)data->data);
+	}
 
 	return true;
 }

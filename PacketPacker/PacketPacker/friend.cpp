@@ -116,7 +116,7 @@ CleanUp:
 
 	return ret;
 }
-int FriendCount(int db,char *id){
+int QueryFriendCount(int db,char *id){
 	int ret = true;
 	int q;
 	char qm[128];

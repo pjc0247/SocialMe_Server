@@ -73,6 +73,48 @@ CleanUp:
 	return ret;
 }
 
+bool FollowQueryFollowing(PacketHandlerData d){
+	NetPacket *p;
+	p = d.pkt;
+
+	bool ret;
+
+	ret = IsFollowing(DB(d),
+		NetGetStringData(p, "id1"),
+		NetGetStringData(p, "id2"));
+
+	NetPacket *pkt;
+	pkt = NetCreatePacket();
+
+	pkt->header.type = FOLLOW_INFO_FOLLOWING;
+	NetAddNumberData(pkt, "result", ret);
+
+	NetSendPacket(d.handle,d.io,pkt);
+	NetDisposePacket(pkt, true);
+
+	return ret;
+}
+bool FollowQueryFollowed(PacketHandlerData d){
+	NetPacket *p;
+	p = d.pkt;
+
+	bool ret;
+
+	ret = IsFollowed(DB(d),
+		NetGetStringData(p, "id1"),
+		NetGetStringData(p, "id2"));
+
+	NetPacket *pkt;
+	pkt = NetCreatePacket();
+
+	pkt->header.type = FOLLOW_INFO_FOLLOWED;
+	NetAddNumberData(pkt, "result", ret);
+
+	NetSendPacket(d.handle,d.io,pkt);
+	NetDisposePacket(pkt, true);
+
+	return ret;
+}
 bool FollowQueryFollowingCount(PacketHandlerData d){
 	NetPacket *p;
 	p = d.pkt;

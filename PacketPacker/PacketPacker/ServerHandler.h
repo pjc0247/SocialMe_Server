@@ -40,6 +40,14 @@ bool FollowQueryFollowingCount(PacketHandlerData d);
 bool FollowQueryFollowedCount(PacketHandlerData d);
 bool FollowQueryFollowingList(PacketHandlerData d);
 bool FollowQueryFollowedList(PacketHandlerData d);
+bool FollowQueryFollowing(PacketHandlerData d);
+bool FollowQueryFollowed(PacketHandlerData d);
+
+bool FriendFriend(PacketHandlerData d);
+bool FriendUnfriend(PacketHandlerData d);
+bool FriendQueryFriend(PacketHandlerData d);
+bool FriendQueryCount(PacketHandlerData d);
+bool FriendQueryList(PacketHandlerData d);
 
 bool MessageQuery(PacketHandlerData d);
 bool MessagePush(PacketHandlerData d);

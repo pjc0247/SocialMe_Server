@@ -60,6 +60,28 @@ bool ProcessPacket(PacketHandlerData d){
 	case FOLLOW_QUERY_FOLLOWING_LIST:
 		FollowQueryFollowingList(d);
 		break;
+	case FOLLOW_QUERY_FOLLOWING:
+		FollowQueryFollowing(d);
+		break;
+	case FOLLOW_QUERY_FOLLOWED:
+		FollowQueryFollowed(d);
+		break;
+
+	case FRIEND_ADD:
+		FriendFriend(d);
+		break;
+	case FRIEND_DELETE:
+		FriendUnfriend(d);
+		break;
+	case FRIEND_QUERY_FRIEND:
+		FriendQueryFriend(d);
+		break;
+	case FRIEND_QUERY_COUNT:
+		FriendQueryCount(d);
+		break;
+	case FRIEND_QUERY_LIST:
+		FriendQueryList(d);
+		break;
 
 	case MESSAGE_PUSH:
 		MessagePush(d);
