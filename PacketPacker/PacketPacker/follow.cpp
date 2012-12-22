@@ -69,9 +69,17 @@ bool Follow(int db,char *src,char *dst){
 		src,dst);
 
 	q = DbPrepare(db,qm);
-
 	ret = DbExecute(q);
+	if(ret == false){
+		goto CleanUp;
+	}
 
+	DbCloseQuery(q);
+
+	sprintf(qm, "update \"account\" set \"followed\"=\"followed\"+1 where \"id\"=dst",
+			src, dst);
+	q = DbPrepare(db,qm);
+	ret = DbExecute(q);
 	if(ret == false){
 		goto CleanUp;
 	}
@@ -90,6 +98,16 @@ bool Unfollow(int db,char *src,char *dst){
 		return false;
 
 	sprintf(qm, "delete from follow where \"follower\" = \'%s\' and \"followed\" = \'%s\'",
+			src, dst);
+	q = DbPrepare(db,qm);
+	ret = DbExecute(q);
+	if(ret == false){
+		goto CleanUp;
+	}
+
+	DbCloseQuery(q);
+
+	sprintf(qm, "update \"account\" set \"followed\"=\"followed\"-1 where \"id\"=dst",
 			src, dst);
 	q = DbPrepare(db,qm);
 	ret = DbExecute(q);
@@ -132,7 +150,7 @@ int FollowedCount(int db,char *id){
 	char qm[128];
 	int len;
 
-sprintf(qm,	"select * from \"follow\" where \"followed\" = \'%s\'", id); 
+	sprintf(qm,	"select \"followed\" from \"account\" where \"id\"=\'%s\'", id); 
 
 	q = DbPrepare(db,qm);
 	
@@ -143,7 +161,7 @@ sprintf(qm,	"select * from \"follow\" where \"followed\" = \'%s\'", id);
 		goto CleanUp;
 	}
 
-	len = DbResultCount(q);
+	len = DbGetNumber(q, 1);
 
 CleanUp:
 	DbCloseQuery(q);
