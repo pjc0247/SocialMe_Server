@@ -26,6 +26,7 @@ bool MessageQuery(PacketHandlerData d){
 
 		NetPacket *p;
 		p = NetCreatePacket();
+		p->header.type = MESSAGE_INFO;
 		NetAddStringData(p, "sender", m.sender);
 		NetAddStringData(p, "receiver", m.sender);
 		NetAddStringData(p, "msg", m.msg);

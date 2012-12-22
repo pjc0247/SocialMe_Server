@@ -4,7 +4,7 @@
 
 #include "User.h"
 #include "Message.h"
-
+#include <time.h>
 
 int QueryMessage(int db,char *receiver,Message *m){
 	int ret = RESULT_NEXT;
@@ -94,7 +94,7 @@ bool PushMessage(int db,Message *msg){
 		"(\"time\",\"sender_id\",\"receiver_id\",\"type\",\"content\") "
 		"values "
 		"(%d,\'%s\',\'%s\',%d,\'%s\');",
-		msg->time, msg->sender, msg->receiver,
+		(long)time(NULL), msg->sender, msg->receiver,
 		msg->type, msg->msg);
 
 	q = DbPrepare(db,qm);

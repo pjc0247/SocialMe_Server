@@ -10,7 +10,7 @@ using namespace std;
 
 #pragma comment (lib,"wininet")
 
-/*void GCM_Testbed(){
+void GCM_Testbed(){
 	HANDLE hConnect = InternetOpenA("GCM", INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0);
 	if(hConnect == NULL)
 	{
@@ -44,20 +44,21 @@ using namespace std;
 	char szHead[8192];
 	int nLen;
 	va_list va;
-	va_start(va, strHeader.c_str());
-	nLen=_vsnprintf_s(szHead, 8190, pHeader, va);
-	va_end(va);
-	HttpAddRequestHeadersA(hReq , szHead, nLen, HTTP_ADDREQ_FLAG_REPLACE|HTTP_ADDREQ_FLAG_ADD);
+	//va_start(va, strHeader.c_str());
+	//nLen=_vsnprintf_s(szHead, 8190, strHeader.c_str(), va);
+	//va_end(va);
+	sprintf(szHead, strHeader.c_str());
+	HttpAddRequestHeadersA(hReq , szHead, strlen(szHead), HTTP_ADDREQ_FLAG_REPLACE|HTTP_ADDREQ_FLAG_ADD);
 
 	char szSendData[1000];
 	memset(szSendData, 0, 1000);
 	sprintf_s(szSendData, 1000,
-		"collapse_key=score_update&"
+		"collapse_key=msg&"
 		"time_to_live=108&"
 		"delay_while_idle=1&"
-		"%s&data.score=1&"
+		"%s&"
 		"registration_id=%s",
-		strMsg, Registration ID);
+		"data.test=asdf", Registration ID);
 
 	HttpSendRequest(hReq , NULL,  0, (LPVOID)szSendData, strlen(szSendData));
 
@@ -68,9 +69,9 @@ using namespace std;
 		HTTP_QUERY_STATUS_CODE|HTTP_QUERY_FLAG_NUMBER,
 		&dwStatusCode, &dwStatusCodeLen, NULL);
 
-	while (::InternetReadFile (hHandle, szBuffer, 1024, &dwRead) && dwRead > 0)
+	/*while (::InternetReadFile (hHandle, szBuffer, 1024, &dwRead) && dwRead > 0)
 	{
 		szBuffer [dwRead] = 0;
 		strResult += szBuffer;
-	}
-}*/
+	}*/
+}
