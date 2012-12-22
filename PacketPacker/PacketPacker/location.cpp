@@ -11,10 +11,10 @@ bool PushLocation(int db,char *id,int lat,int lon){
 	char qm[512];
 
 	sprintf(qm,	"insert into \"location\" "
-		"(\"id\",\"time\",\"lat\",\"long\") "
+		"(\"id\",\"time\",\"lat\",\"lon\") "
 		"values "
 		"(\'%s\',%d,%d,%d);",
-		id, time(NULL),lat, lon);
+		id, (long)time(NULL),lat, lon);
 
 	q = DbPrepare(db,qm);
 

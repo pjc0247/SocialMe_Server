@@ -13,7 +13,7 @@ using namespace std;
 
 #define DB_NAME "demodb"
 #define DB_USER_ID "sma"
-#define DB_USER_PW ""
+#define DB_USER_PW "040404"
 
 int DbConnect();
 void DbDisconnect(int db);

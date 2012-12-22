@@ -10,7 +10,7 @@
 
 #pragma comment (lib, "ws2_32")
 
-#define SERVER_ADDR "222.236.44.23"
+#define SERVER_ADDR "127.0.0.1"
 #define SERVER_PORT 9919
 	
 SOCKET hSocket;
@@ -92,7 +92,14 @@ int _tmain(int argc, _TCHAR* argv[])
 	p = NetCreatePacket();
 	p->header.type = LOGIN_TRY;
 	NetAddStringData(p,"id", "pjc0247");
-	NetAddStringData(p,"pw", "1234");
+	NetAddStringData(p,"pw", "040404");
+	NetSendPacket(hSocket,p);
+	NetDisposePacket(p,true);
+
+	p = NetCreatePacket();
+	p->header.type = LOCATION_PUSH;
+	NetAddNumberData(p,"lat", 1234);
+	NetAddNumberData(p,"lon", 5678);
 	NetSendPacket(hSocket,p);
 	NetDisposePacket(p,true);
 
