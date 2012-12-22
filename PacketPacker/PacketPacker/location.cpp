@@ -34,6 +34,8 @@ Location *QueryLocation(int db,char *id, int min, int max, int *cnt){
 	int len = 0, count =0;
 	char *sp;
 
+	//SELECT * FROM follow f,location l WHERE f.followed=l.id AND f.follower='anz4176';
+
 	sprintf(qm,	"select * from \"location\" where \"id\" = \'%s\' "
 				"rownum between %d and %d;", id, min, max); 
 
