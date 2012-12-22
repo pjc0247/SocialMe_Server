@@ -3,6 +3,7 @@
 #include "photo.h"
 #include "Protocol.h"
 #include "database.h"
+#include <time.h>
 
 bool PushPhoto(int db,char *id,PhotoPost *p){
 	bool ret = true;
@@ -13,7 +14,7 @@ bool PushPhoto(int db,char *id,PhotoPost *p){
 		"(\"id\",\"time\",\"photo\",\"lat\",\"lon\",\"comment\") "
 		"values "
 		"(\'%s\',%d,\'%s\',%d,%d,\'%s\');",
-		id, p->time, p->photo, p->lat, p->lon, p->comment);
+		id, (long)time(NULL), p->photo, p->lat, p->lon, p->comment);
 
 	q = DbPrepare(db,qm);
 

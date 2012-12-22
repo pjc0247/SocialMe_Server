@@ -15,7 +15,6 @@ bool PhotoPush(PacketHandlerData d){
 	
 	post.lat = NetGetNumberData(p, "lat");
 	post.lon = NetGetNumberData(p, "lon");
-	post.time = p->header.timestamp;
 	SET(post.photo, NetGetStringData(p, "photo"));
 	SET(post.comment, NetGetStringData(p, "comment"));
 
