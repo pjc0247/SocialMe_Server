@@ -97,11 +97,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	NetDisposePacket(p,true);
 
 	p = NetCreatePacket();
-	p->header.type = USER_UPDATE;
-	NetAddStringData(p,		"nick", "aASDF");
-	NetAddStringData(p,		"job", "anz");
-	NetAddNumberData(p,"birthday", 1234);
-	NetAddNumberData(p,"age", 1234);
+	p->header.type = LOCATION_PUSH;
+	NetAddNumberData(p,"lat", 1234);
+	NetAddNumberData(p,"lon", 1234);
 	NetSendPacket(hSocket,p);
 	NetDisposePacket(p,true);
 

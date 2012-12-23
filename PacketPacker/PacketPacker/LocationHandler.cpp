@@ -11,8 +11,6 @@ bool LocationPush(PacketHandlerData d){
 
 	bool ret = true;
 
-	printf("push loca\n %d %d\n",NetGetNumberData(p,"lat"),NetGetNumberData(p,"lon"));
-
 	ret = PushLocation(DB(d),
 			d.handle->user->id,
 			NetGetNumberData(p,"lat"),
