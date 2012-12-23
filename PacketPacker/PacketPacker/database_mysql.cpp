@@ -70,7 +70,7 @@ int DbResultCount(int qid){
 		len ++;
 	}
 
-	cci_cursor(qid, 1, CCI_CURSOR_FIRST, &cciErr);
+	cci_cursor(qid, -len, CCI_CURSOR_CURRENT, &cciErr);
 
 	return len-1;
 }

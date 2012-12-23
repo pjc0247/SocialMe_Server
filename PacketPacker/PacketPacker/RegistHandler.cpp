@@ -16,7 +16,10 @@ bool RegistTry(PacketHandlerData d){
 	SET(user->id, NetGetStringData(p,"id"));
 	SET(user->pw, NetGetStringData(p,"pw"));
 	SET(user->nick, NetGetStringData(p,"nick"));
+	SET(user->job, NetGetStringData(p, "job"));
 	user->age = NetGetNumberData(p,"age");
+	user->sex = NetGetNumberData(p, "sex");
+	user->birthday = NetGetNumberData(p, "birthday");
 
 	exist = QueryUser(DB(d),user->id, NULL);
 

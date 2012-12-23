@@ -27,7 +27,7 @@ bool PushLocation(int db,char *id,int lat,int lon){
 	DbCloseQuery(q);
 	return ret;
 }
-Location *QueryLocation(int db,char *id, int min, int max, int *cnt){
+Location *QueryLocation(int db,int *cnt){
 	int ret = true;
 	int q, i;
 	char qm[256];
@@ -36,8 +36,8 @@ Location *QueryLocation(int db,char *id, int min, int max, int *cnt){
 
 	//SELECT * FROM follow f,location l WHERE f.followed=l.id AND f.follower='anz4176';
 
-	sprintf(qm,	"select * from \"location\" where \"id\" = \'%s\' "
-				"rownum between %d and %d;", id, min, max); 
+	sprintf(qm,	"select \"id\",\"lat\",\"lon\" from \"account\""
+				""); 
 
 	q = DbPrepare(db,qm);
 	
@@ -47,9 +47,14 @@ Location *QueryLocation(int db,char *id, int min, int max, int *cnt){
 		ret = false;
 		goto CleanUp;
 	}
-	
+
+	//count = DbResultCount(q);
+
+	count = 100;
+	printf("%d\n", count);
+
 	Location *list = NULL;
-	list = (Location*)malloc(sizeof(Location) * (max-min+1));
+	list = (Location*)malloc(sizeof(Location) * (count));
 
 	if(list == NULL)
 		goto CleanUp;
@@ -66,14 +71,16 @@ Location *QueryLocation(int db,char *id, int min, int max, int *cnt){
 
 		int len;
 
-		len = DbGetNumber(q, LOCATION_INDEX_TIME);
-		list[i].time = len;
+		len = DbGetString(q, 1, &sp);
+		memcpy((void*)list[i].id,sp,len + 1);
 
-		len = DbGetNumber(q, LOCATION_INDEX_LATITUDE);
+		len = DbGetNumber(q, 2);
 		list[i].lat = len;
 
-		len = DbGetNumber(q, LOCATION_INDEX_LONGITUDE);
+		len = DbGetNumber(q, 3);
 		list[i].lon = len;
+		
+		count ++;
     }
 	count = i;
 

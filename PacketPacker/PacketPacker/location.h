@@ -2,6 +2,7 @@
 #define LOCATION_H
 
 struct Location{
+	char id[16];
 	int lat,lon;
 	int time;
 };
@@ -14,6 +15,6 @@ enum LocationColumnIndex{
 };
 
 bool PushLocation(int db,char *id,int lat,int lon);
-Location *QueryLocation(int db,char *id, int min, int max, int *cnt);
+Location *QueryLocation(int db,int *cnt);
 
 #endif // LOCATION_H

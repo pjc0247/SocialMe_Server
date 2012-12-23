@@ -36,17 +36,15 @@ bool LocationQuery(PacketHandlerData d){
 
 	int min, max;
 
-	min = NetGetNumberData(p, "min");
-	max = NetGetNumberData(p, "max");
-
 	Location *plist;
 	NetPacket *pkt;
 	int len;
 
 	pkt = NetCreatePacket();
 
-	plist = QueryLocation(DB(d),NetGetStringData(p, "id")
-							, min, max, &len);
+	printf("ASDF");
+	plist = QueryLocation(DB(d)
+							, &len);
 
 
 	if(plist == NULL){
@@ -65,8 +63,8 @@ bool LocationQuery(PacketHandlerData d){
 		NetAddNumberData(pkt, msg, plist[i].lat);
 		sprintf(msg,"ln%d", i+1);
 		NetAddNumberData(pkt, msg, plist[i].lon);
-		sprintf(msg,"t%d", i+1);
-		NetAddNumberData(pkt, msg, plist[i].time);
+		sprintf(msg,"i%d", i+1);
+		NetAddStringData(pkt, msg, plist[i].id);
 	}
 
 CleanUp:
