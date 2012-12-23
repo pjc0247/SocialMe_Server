@@ -115,7 +115,7 @@ CleanUp:;
 bool UpdateUser(int db,char *id,User *u){
 	bool ret = true;
 	int q;
-	char qm[512];
+	char qm[512] = {'\0'};
 	char *sp = NULL;
 
 	char updateItem[128] = {'\0'};
@@ -134,14 +134,14 @@ bool UpdateUser(int db,char *id,User *u){
 		strcat(updateItem, v);
 	}
 	// lat
-	if(u->age != 0){
+	if(u->lat != 0){
 		char v[16];
 		sprintf(v,"%d,", u->lat);
 		strcat(updateItem, "\"lat\"=");
 		strcat(updateItem, v);
 	}
 	// lon
-	if(u->age != 0){
+	if(u->lon != 0){
 		char v[16];
 		sprintf(v,"%d,", u->lon);
 		strcat(updateItem, "\"lon\"=");
@@ -164,7 +164,7 @@ bool UpdateUser(int db,char *id,User *u){
 	// job
 	if(u->job != NULL){
 		char v[35];
-		sprintf(v,"%s,", u->job);
+		sprintf(v,"\'%s\',", u->job);
 		strcat(updateItem, "\"job\"=");
 		strcat(updateItem, v);
 	}
@@ -186,6 +186,8 @@ bool UpdateUser(int db,char *id,User *u){
 
 	sprintf(qm,	"update \"account\" set %s where \"id\"=\'%s\';",
 				updateItem, id);
+
+	printf("%s\n", qm);
 
 	q = DbPrepare(db,qm);
 

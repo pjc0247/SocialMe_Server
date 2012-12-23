@@ -90,7 +90,9 @@ bool UserUpdate(PacketHandlerData d){
 	}
 
 	SET(user->nick, NetGetStringData(d.pkt, "nick"));
+	SET(user->job, NetGetStringData(d.pkt, "job"));
 	user->age = NetGetNumberData(d.pkt, "age");
+	user->birthday = NetGetNumberData(d.pkt, "birthday");
 
 	ret = UpdateUser(DB(d),d.handle->user->id, user);
 
@@ -98,11 +100,10 @@ bool UserUpdate(PacketHandlerData d){
 	pkt = NetCreatePacket();
 	if(ret == true){
 		pkt->header.type = USER_UPDATE_OK;
-		NetAddStringData(pkt, "id", NetGetStringData(p,"id"));	
 	}
 	else{
 		pkt->header.type = USER_UPDATE_FAILED;
-		NetAddStringData(pkt, "id", NetGetStringData(p,"id"));
+		NetAddStringData(pkt, "reason", REASON_UNKNOWN);
 	}
 	NetSendPacket(d.handle,d.io,pkt);
 	NetDisposePacket(pkt,true);

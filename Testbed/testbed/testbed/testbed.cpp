@@ -97,9 +97,11 @@ int _tmain(int argc, _TCHAR* argv[])
 	NetDisposePacket(p,true);
 
 	p = NetCreatePacket();
-	p->header.type = FRIEND_QUERY_FRIEND;
-	NetAddStringData(p,"id1", "pjc0247");
-	NetAddStringData(p,"id2", "anz4sadf176");
+	p->header.type = USER_UPDATE;
+	NetAddStringData(p,		"nick", "aASDF");
+	NetAddStringData(p,		"job", "anz");
+	NetAddNumberData(p,"birthday", 1234);
+	NetAddNumberData(p,"age", 1234);
 	NetSendPacket(hSocket,p);
 	NetDisposePacket(p,true);
 
