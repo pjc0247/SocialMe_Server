@@ -39,7 +39,10 @@ bool UserQuery(PacketHandlerData d){
 	pkt->header.type = USER_INFO;
 	NetAddStringData(pkt, "id", NetGetStringData(p,"id"));
 	NetAddStringData(pkt, "nick", user->nick);
+	NetAddStringData(pkt, "job", user->job);
 	NetAddNumberData(pkt, "age", user->age);
+	NetAddNumberData(pkt, "birthday", user->birthday);
+	NetAddNumberData(pkt, "sex", user->sex);
 	NetSendPacket(d.handle,d.io,pkt);
 	NetDisposePacket(pkt,true);
 Cleanup:
