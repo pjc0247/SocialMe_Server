@@ -97,8 +97,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	NetDisposePacket(p,true);
 
 	p = NetCreatePacket();
-	p->header.type = USER_QUERY;
-	NetAddStringData(p,"id", "pjc0247");
+	p->header.type = USER_UPDATE_FACEBOOK;
+	NetAddStringData(p,"facebook", "pjc0247@naver.com");
 	NetAddNumberData(p,"lon", 1234);
 	NetSendPacket(hSocket,p);
 	NetDisposePacket(p,true);

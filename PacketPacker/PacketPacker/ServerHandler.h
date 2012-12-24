@@ -30,6 +30,10 @@ bool UserQuery(PacketHandlerData d);
 bool UserQueryImage(PacketHandlerData d);
 bool UserUpdateComment(PacketHandlerData d);
 bool UserQueryComment(PacketHandlerData d);
+bool UserUpdateFacebook(PacketHandlerData d);
+bool UserQueryFacebook(PacketHandlerData d);
+bool UserUpdateNateon(PacketHandlerData d);
+bool UserQueryNateon(PacketHandlerData d);
 
 bool LocationPush(PacketHandlerData d);
 bool LocationQuery(PacketHandlerData d);

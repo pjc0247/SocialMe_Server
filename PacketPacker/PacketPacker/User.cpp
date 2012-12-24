@@ -40,6 +40,22 @@ bool RegistUser(int db,char *id,User *u){
 	}
 	
 	DbCloseQuery(q);
+
+	sprintf(qm,	"insert into \"account2\" "
+		"(\"id\",\"android_id\",\"facebook_id\",\"nateon_id\") "
+		"values "
+		"(\'%s\',\'%s\',\'%s\',\'%s\');",
+		id,"","","");
+
+	q = DbPrepare(db,qm);
+
+	if(!DbExecute(q)){
+		ret = false;
+		return false;
+	}
+	
+	DbCloseQuery(q);
+
 	return ret;
 }
 bool QueryUser(int db,char *id,User *u){
@@ -273,6 +289,110 @@ bool UpdateUserComment(int db,char *id,char *comment){
 	}
 
 CleanUp:
+	DbCloseQuery(q);
+	return ret;
+}
+
+bool QueryUserFacebook(int db,char *id,char *fb){
+	int q;
+	char qm[256];
+	char *sp = NULL;
+	int len;
+	bool ret = true;
+	
+	sprintf(qm,"select \"facebook_id\" from \"account2\" where id=\'%s\';", id);
+	q = DbPrepare(db,qm);
+	
+	if(!DbExecute(q)){
+		printf("Execute failed\n");
+
+		ret = false;
+		goto CleanUp;
+	}
+
+	if(!DbNext(q)){
+		ret = false;
+		goto CleanUp;
+	}
+
+	// FACEBOOK
+	len = DbGetString(q, 1, &sp);
+	memcpy(fb,sp,len + 1);
+
+CleanUp:;
+	DbCloseQuery(q);
+	return ret;
+}
+bool QueryUserNateon(int db,char *id,char *nt){
+	int q;
+	char qm[256];
+	char *sp = NULL;
+	int len;
+	bool ret = true;
+	
+	sprintf(qm,"select \"nateon_id\" from \"account2\" where id=\'%s\';", id);
+	q = DbPrepare(db,qm);
+	
+	if(!DbExecute(q)){
+		printf("Execute failed\n");
+
+		ret = false;
+		goto CleanUp;
+	}
+
+	if(!DbNext(q)){
+		ret = false;
+		goto CleanUp;
+	}
+
+	// NATEON
+	len = DbGetString(q, 1, &sp);
+	memcpy(nt,sp,len + 1);
+
+CleanUp:;
+	DbCloseQuery(q);
+	return ret;
+}
+
+bool UpdateUserFacebook(int db,char *id,char *fb){
+	int q;
+	char qm[256];
+	char *sp = NULL;
+	int len;
+	bool ret = true;
+	
+	sprintf(qm,"update \"account2\" set \"facebook_id\"=\'%s\' where id=\'%s\';",fb,id);
+	q = DbPrepare(db,qm);
+	
+	if(!DbExecute(q)){
+		printf("Execute failed\n");
+
+		ret = false;
+		goto CleanUp;
+	}
+
+CleanUp:;
+	DbCloseQuery(q);
+	return ret;
+}
+bool UpdateUserNateon(int db,char *id,char *nt){
+	int q;
+	char qm[256];
+	char *sp = NULL;
+	int len;
+	bool ret = true;
+	
+	sprintf(qm,"update \"account2\" set \"nateon_id\"=\'%s\' where id=\'%s\';",nt,id);
+	q = DbPrepare(db,qm);
+	
+	if(!DbExecute(q)){
+		printf("Execute failed\n");
+
+		ret = false;
+		goto CleanUp;
+	}
+
+CleanUp:;
 	DbCloseQuery(q);
 	return ret;
 }

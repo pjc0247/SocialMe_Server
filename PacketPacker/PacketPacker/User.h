@@ -34,6 +34,13 @@ enum UserColumnIndex{
 	USER_INDEX_FRIENDS
 };
 
+enum User2ColumnIndex{
+	USER2_INDEX_ID=1,
+	USER2_INDEX_ANDROID,
+	USER2_INDEX_FACEBOOK,
+	USER2_INDEX_NATEON
+};
+
 User *CreateUser();
 void DisposeUser(User *u);
 
@@ -45,6 +52,10 @@ int QueryUserPost(int db,char *id);
 bool QueryUserComment(int db,char *id,char *comment);
 bool UpdateUserComment(int db,char *id,char *comment);
 
+bool QueryUserFacebook(int db,char *id,char *fb);
+bool QueryUserNateon(int db,char *id,char *nt);
+bool UpdateUserFacebook(int db,char *id,char *fb);
+bool UpdateUserNateon(int db,char *id,char *nt);
 /*
  * Session API
  */

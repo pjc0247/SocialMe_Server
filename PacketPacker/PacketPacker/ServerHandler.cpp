@@ -34,6 +34,18 @@ bool ProcessPacket(PacketHandlerData d){
 	case USER_UPDATE_COMMENT:
 		UserUpdateComment(d);
 		break;
+	case USER_QUERY_FACEBOOK:
+		UserQueryFacebook(d);
+		break;
+	case USER_UPDATE_FACEBOOK:
+		UserUpdateFacebook(d);
+		break;
+	case USER_QUERY_NATEON:
+		UserQueryNateon(d);
+		break;
+	case USER_UPDATE_NATEON:
+		UserUpdateNateon(d);
+		break;
 
 	case LOCATION_PUSH:
 		LocationPush(d);

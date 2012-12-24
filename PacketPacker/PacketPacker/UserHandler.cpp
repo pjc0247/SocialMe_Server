@@ -178,3 +178,133 @@ bool UserQueryComment(PacketHandlerData d){
 Cleanup:
 	return ret;
 }
+
+bool UserUpdateFacebook(PacketHandlerData d){
+	NetPacket *p;
+	bool ret = true;
+
+	p = d.pkt;
+
+	if(!IsLoggedIn(d.handle)){
+		UserDeny(d, USER_UPDATE_FAILED,
+			REASON_NOT_LOGGED_IN);
+		return false;
+	}
+
+	ret = UpdateUserFacebook(
+		DB(d),
+		d.handle->user->id,
+		NetGetStringData(p,"facebook"));
+
+	NetPacket *pkt;
+	pkt = NetCreatePacket();
+	if(ret == true){
+		pkt->header.type = USER_UPDATE_OK;
+	}
+	else{
+		pkt->header.type = USER_UPDATE_FAILED;
+		NetAddStringData(pkt, "reason", NetGetStringData(p,"id"));
+	}
+	NetSendPacket(d.handle,d.io,pkt);
+	NetDisposePacket(pkt,true);
+Cleanup:
+	return ret;
+}
+bool UserQueryFacebook(PacketHandlerData d){
+	NetPacket *p;
+	bool ret = true;
+
+	p = d.pkt;
+
+	if(!IsLoggedIn(d.handle)){
+		UserDeny(d, USER_QUERY_FAILED,
+			REASON_NOT_LOGGED_IN);
+		return false;
+	}
+
+	char fb[281];
+	ret = QueryUserFacebook(
+		DB(d),
+		NetGetStringData(p, "id"),
+		fb);
+
+	NetPacket *pkt;
+	pkt = NetCreatePacket();
+	if(ret == true){
+		pkt->header.type = USER_INFO_FACEBOOK;
+		NetAddStringData(pkt, "facebook", fb);
+	}
+	else{
+		pkt->header.type = USER_QUERY_FAILED;
+		NetAddStringData(pkt, "reason", NetGetStringData(p,"id"));
+	}
+	NetSendPacket(d.handle,d.io,pkt);
+	NetDisposePacket(pkt,true);
+Cleanup:
+	return ret;
+}
+
+bool UserUpdateNateon(PacketHandlerData d){
+	NetPacket *p;
+	bool ret = true;
+
+	p = d.pkt;
+
+	if(!IsLoggedIn(d.handle)){
+		UserDeny(d, USER_UPDATE_FAILED,
+			REASON_NOT_LOGGED_IN);
+		return false;
+	}
+
+	ret = UpdateUserNateon(
+		DB(d),
+		d.handle->user->id,
+		NetGetStringData(p,"nateon"));
+
+	NetPacket *pkt;
+	pkt = NetCreatePacket();
+	if(ret == true){
+		pkt->header.type = USER_UPDATE_OK;
+	}
+	else{
+		pkt->header.type = USER_UPDATE_FAILED;
+		NetAddStringData(pkt, "reason", NetGetStringData(p,"id"));
+	}
+	NetSendPacket(d.handle,d.io,pkt);
+	NetDisposePacket(pkt,true);
+Cleanup:
+	return ret;
+}
+bool UserQueryNateon(PacketHandlerData d){
+	NetPacket *p;
+	bool ret = true;
+
+	p = d.pkt;
+
+	if(!IsLoggedIn(d.handle)){
+		UserDeny(d, USER_QUERY_FAILED,
+			REASON_NOT_LOGGED_IN);
+		return false;
+	}
+
+	char nt[281];
+	ret = QueryUserNateon(
+		DB(d),
+		NetGetStringData(p, "id"),
+		nt);
+
+	NetPacket *pkt;
+	pkt = NetCreatePacket();
+	if(ret == true){
+		pkt->header.type = USER_INFO_NATEON;
+		NetAddStringData(pkt, "nateon", nt);
+	}
+	else{
+		pkt->header.type = USER_QUERY_FAILED;
+		NetAddStringData(pkt, "reason", NetGetStringData(p,"id"));
+	}
+	NetSendPacket(d.handle,d.io,pkt);
+	NetDisposePacket(pkt,true);
+Cleanup:
+	return ret;
+}
