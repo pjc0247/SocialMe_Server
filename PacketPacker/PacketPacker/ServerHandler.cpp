@@ -143,9 +143,5 @@ bool ProcessPacket(PER_HANDLE_DATA *handle,PER_IO_DATA*io,NetPacket *pkt){
 		break;
 	}
 
-	NetDisposePacket(pkt, true);
-	pkt = NetCreatePacket();
-	NetRecvPacket(handle,io);
-
 	return true;
 }

@@ -218,6 +218,7 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 
 		NetPacket *p = (NetPacket *)PerHandleData->packet;
 		switch(PerIoData->recvState){
+			// 패킷의 헤더를 수신한다
 			case NET_RECV_HEADER:
 				memcpy(&p->header,PerIoData->buffer,PerIoData->size);
 
@@ -240,11 +241,15 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 					NetRecv(PerHandleData,PerIoData, MAX_NAME_LENGTH);
 				}
 				break;
+
+			// 패킷 데이터의 이름을 수신한다
 			case NET_RECV_DATANAME:
 				memcpy(&p->data[PerIoData->dataIndex].name,PerIoData->buffer,MAX_NAME_LENGTH);
 				PerIoData->recvState = NET_RECV_DATASIZE;
 				NetRecv(PerHandleData,PerIoData, sizeof(int));
 				break;
+
+			// 패킷 데이터의 사이즈를 수신한다
 			case NET_RECV_DATASIZE:
 				memcpy(&p->data[PerIoData->dataIndex].size,PerIoData->buffer,sizeof(int));
 				
@@ -253,6 +258,8 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 				PerIoData->recvState = NET_RECV_DATA;
 				NetRecv(PerHandleData,PerIoData, p->data[PerIoData->dataIndex].size);
 				break;
+
+			// 패킷 데이터 내용을 수신한다
 			case NET_RECV_DATA:
 				
 				memcpy(p->data[PerIoData->dataIndex].data,PerIoData->buffer,PerIoData->size);
