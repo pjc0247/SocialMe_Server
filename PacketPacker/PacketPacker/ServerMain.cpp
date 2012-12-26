@@ -228,8 +228,17 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 					output("malloc failed\n");
 				}
 
-				PerIoData->recvState = NET_RECV_DATANAME;
-				NetRecv(PerHandleData,PerIoData, MAX_NAME_LENGTH);
+				if(p->header.count == 0){
+					ProcessPacket(PerHandleData,PerIoData,p);
+
+					NetDisposePacket(p, true);
+					p = NetCreatePacket();
+					NetRecvPacket(PerHandleData,PerIoData);
+				}
+				else{
+					PerIoData->recvState = NET_RECV_DATANAME;
+					NetRecv(PerHandleData,PerIoData, MAX_NAME_LENGTH);
+				}
 				break;
 			case NET_RECV_DATANAME:
 				memcpy(&p->data[PerIoData->dataIndex].name,PerIoData->buffer,MAX_NAME_LENGTH);
@@ -252,14 +261,9 @@ unsigned int __stdcall CompletionThread(void* pComPort)
 
 				// Recieve Complete
 				if(PerIoData->dataIndex >= p->header.count){
-					PacketHandlerData d;
-					d.handle = PerHandleData;
-					d.io = PerIoData;
-					d.pkt = p;
-					ProcessPacket(d);
+					ProcessPacket(PerHandleData,PerIoData,p);
 
-					// fix : memory leak
-					NetDisposePacket(p,false);
+					NetDisposePacket(p, true);
 					p = NetCreatePacket();
 					NetRecvPacket(PerHandleData,PerIoData);
 				}

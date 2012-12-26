@@ -68,6 +68,7 @@ bool PostQuery(PacketHandlerData d);
 bool PaymentQuery(PacketHandlerData d);
 bool PaymentPush(PacketHandlerData d);
 
-bool ProcessPacket(PacketHandlerData d);
+
+bool ProcessPacket(PER_HANDLE_DATA *handle,PER_IO_DATA*io,NetPacket *pkt);
 
 #endif //HANDLER_H

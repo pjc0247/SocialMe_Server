@@ -4,7 +4,13 @@
 
 #include "Protocol.h"
 
-bool ProcessPacket(PacketHandlerData d){
+bool ProcessPacket(PER_HANDLE_DATA *handle,PER_IO_DATA*io,NetPacket *pkt){
+
+	PacketHandlerData d;
+	
+	d.handle = handle;
+	d.io = io;
+	d.pkt = pkt;
 
 	switch(d.pkt->header.type){
 		
@@ -136,6 +142,10 @@ bool ProcessPacket(PacketHandlerData d){
 		output("unknown packet\n");
 		break;
 	}
+
+	NetDisposePacket(pkt, true);
+	pkt = NetCreatePacket();
+	NetRecvPacket(handle,io);
 
 	return true;
 }
