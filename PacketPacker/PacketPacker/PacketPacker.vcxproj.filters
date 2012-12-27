@@ -82,6 +82,12 @@
     <Filter Include="소스 파일\Interface\Friend">
       <UniqueIdentifier>{20ef0706-be30-4f13-962c-ce3721fcbe8f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\DataBase\Redis">
+      <UniqueIdentifier>{d7522761-8724-41d3-a6eb-7ee0a911a909}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\DataBase\Redis\redis-client">
+      <UniqueIdentifier>{d26ef69b-8dc7-4002-a897-9b799e6e9d9e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -164,6 +170,12 @@
     </ClInclude>
     <ClInclude Include="friend.h">
       <Filter>소스 파일\Interface\Friend</Filter>
+    </ClInclude>
+    <ClInclude Include="redis.h">
+      <Filter>소스 파일\DataBase\Redis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Redis\include\redispp.h">
+      <Filter>소스 파일\DataBase\Redis\redis-client</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -265,6 +277,12 @@
     </ClCompile>
     <ClCompile Include="FriendHandler.cpp">
       <Filter>소스 파일\Server\Handling\Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="redis.cpp">
+      <Filter>소스 파일\DataBase\Redis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Redis\include\redispp.cpp">
+      <Filter>소스 파일\DataBase\Redis\redis-client</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
