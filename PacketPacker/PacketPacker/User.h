@@ -7,6 +7,8 @@ struct User{
 	char nick[16];
 	char comment[128];
 
+	char android[256];
+
 	int age;
 	int sex;
 	char location[128];
@@ -56,6 +58,8 @@ bool QueryUserFacebook(int db,char *id,char *fb);
 bool QueryUserNateon(int db,char *id,char *nt);
 bool UpdateUserFacebook(int db,char *id,char *fb);
 bool UpdateUserNateon(int db,char *id,char *nt);
+bool QueryUserAndroid(int db,char *id,char *ad);
+
 /*
  * Session API
  */

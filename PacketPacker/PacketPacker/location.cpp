@@ -49,7 +49,6 @@ Location *QueryLocation(int db,int *cnt){
 	//count = DbResultCount(q);
 
 	count = 100;
-	printf("%d\n", count);
 
 	Location *list = NULL;
 	list = (Location*)malloc(sizeof(Location) * (count));

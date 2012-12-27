@@ -396,3 +396,33 @@ CleanUp:;
 	DbCloseQuery(q);
 	return ret;
 }
+bool QueryUserAndroid(int db,char *id,char *ad){
+	int q;
+	char qm[256];
+	char *sp = NULL;
+	int len;
+	bool ret = true;
+	
+	sprintf(qm,"select \"android_id\" from \"account2\" where id=\'%s\';", id);
+	q = DbPrepare(db,qm);
+	
+	if(!DbExecute(q)){
+		printf("Execute failed\n");
+
+		ret = false;
+		goto CleanUp;
+	}
+
+	if(!DbNext(q)){
+		ret = false;
+		goto CleanUp;
+	}
+
+	// ANDROID
+	len = DbGetString(q, 1, &sp);
+	memcpy(ad,sp,len + 1);
+
+CleanUp:;
+	DbCloseQuery(q);
+	return ret;
+}
