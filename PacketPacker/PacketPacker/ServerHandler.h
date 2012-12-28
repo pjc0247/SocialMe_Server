@@ -20,6 +20,8 @@ struct PacketHandlerData{
 bool OnConnected(PacketHandlerData d);
 bool OnDisconnected(PacketHandlerData d);
 
+bool VersionCheck(PacketHandlerData d);
+
 bool RegistTry(PacketHandlerData d);
 
 bool LoginTry(PacketHandlerData d);

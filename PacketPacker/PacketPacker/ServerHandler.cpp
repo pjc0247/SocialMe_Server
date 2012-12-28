@@ -14,6 +14,10 @@ bool ProcessPacket(PER_HANDLE_DATA *handle,PER_IO_DATA*io,NetPacket *pkt){
 
 	switch(d.pkt->header.type){
 		
+	case VERSION_CHECK:
+		VersionCheck(d);
+		break;
+
 	case REGIST_TRY:
 		RegistTry(d);
 		break;
