@@ -71,7 +71,7 @@ int RunServer(int port){
 		return 1;
 	}
 
-	if(listen(hServSock, 5) == SOCKET_ERROR) {
+	if(listen(hServSock, SERVER_LISTEN_QUEUE) == SOCKET_ERROR) {
 		output("listen error\n");
 		return 1;
 	}
