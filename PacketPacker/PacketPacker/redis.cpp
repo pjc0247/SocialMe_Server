@@ -29,3 +29,6 @@ void RedisGet(char *name,char *v){
 void RedisDelete(char *name){
 	redis->del(string(name));
 }
+bool RedisExist(char *name){
+	return (bool)redis->exists(string(name));
+}

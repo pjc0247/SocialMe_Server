@@ -11,5 +11,6 @@ void RedisDisconnect();
 void RedisSet(char *name, char *value);
 void RedisGet(char *name, char *value);
 void RedisDelete(char *name);
+bool RedisExist(char *name);
 
 #endif //REDIS_H

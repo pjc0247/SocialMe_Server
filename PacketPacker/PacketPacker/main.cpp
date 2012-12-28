@@ -28,14 +28,6 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	RedisConnect(REDIS_SERVER,REDIS_PORT);
 
-	while(1){
-		RedisSet("asdfb", "SDF");
-		RedisSet("asdfc", "SDFa");
-
-		char v[128];
-		RedisGet("asdf", v);
-	}
-
 	//	GCM_Testbed();
 
 	LoadBlacklist();
