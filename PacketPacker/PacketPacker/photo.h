@@ -24,4 +24,8 @@ bool PushPhoto(int db,char *id,PhotoPost *p);
 bool DeletePhoto(int db,char *id,int photo_id);
 PhotoPost *QueryPhotoList(int db,char *id,int min, int max,int *cnt);
 
+bool QueryLikePhoto(int db,char *id,int photo_id);
+bool LikePhoto(int db,char *id,int photo_id);
+bool DislikePhoto(int db,char *id,int photo_id);
+
 #endif // PHOTO_H

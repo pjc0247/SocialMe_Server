@@ -124,6 +124,12 @@ bool ProcessPacket(PER_HANDLE_DATA *handle,PER_IO_DATA*io,NetPacket *pkt){
 	case PHOTO_QUERY:
 		PhotoQuery(d);
 		break;
+	case PHOTO_LIKE:
+		PhotoLike(d);
+		break;
+	case PHOTO_DISLIKE:
+		PhotoDislike(d);
+		break;
 
 	case POST_INC:
 		PostIncrease(d);

@@ -62,6 +62,8 @@ bool MessageNotifyOk(PacketHandlerData d);
 bool PhotoPush(PacketHandlerData d);
 bool PhotoDelete(PacketHandlerData d);
 bool PhotoQuery(PacketHandlerData d);
+bool PhotoLike(PacketHandlerData d);
+bool PhotoDislike(PacketHandlerData d);
 
 bool PostIncrease(PacketHandlerData d);
 bool PostDecrease(PacketHandlerData d);

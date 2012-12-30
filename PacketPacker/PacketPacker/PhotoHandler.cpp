@@ -23,10 +23,10 @@ bool PhotoPush(PacketHandlerData d){
 	NetPacket *pkt;
 	pkt = NetCreatePacket();
 	if(ret){
-		pkt->header.type = PHOTO_PUSH_OK;
+		pkt->header.type = PHOTO_OK;
 	}
 	else{
-		pkt->header.type = PHOTO_PUSH_FAILED;
+		pkt->header.type = PHOTO_FAILED;
 		NetAddStringData(pkt, "reason", REASON_UNKNOWN);
 	}
 	NetSendPacket(d.handle,d.io,pkt);
@@ -45,10 +45,10 @@ bool PhotoDelete(PacketHandlerData d){
 	NetPacket *pkt;
 	pkt = NetCreatePacket();
 	if(ret){
-		pkt->header.type = PHOTO_DELETE_OK;
+		pkt->header.type = PHOTO_OK;
 	}
 	else{
-		pkt->header.type = PHOTO_DELETE_FAILED;
+		pkt->header.type = PHOTO_FAILED;
 		NetAddStringData(pkt, "reason", REASON_UNKNOWN);
 	}
 	NetSendPacket(d.handle,d.io,pkt);
@@ -111,6 +111,55 @@ CleanUp:
 	NetDisposePacket(pkt, true);
 
 	free(plist);
+
+	return ret;
+}
+
+bool PhotoLike(PacketHandlerData d){
+	NetPacket *p;
+	p = d.pkt;
+
+	bool ret;
+
+	ret = LikePhoto(DB(d), d.handle->user->id, NetGetNumberData(p, "photo_id"));
+
+	NetPacket *pkt;
+	pkt = NetCreatePacket();
+
+	if(ret == true){
+		pkt->header.type = PHOTO_OK;
+	}
+	else{
+		pkt->header.type = PHOTO_FAILED;
+		NetAddStringData(pkt, "reason", REASON_UNKNOWN);
+	}
+
+	NetSendPacket(d.handle,d.io,pkt);
+	NetDisposePacket(pkt, true);
+
+	return ret;
+}
+bool PhotoDislike(PacketHandlerData d){
+	NetPacket *p;
+	p = d.pkt;
+
+	bool ret;
+
+	ret = DislikePhoto(DB(d), d.handle->user->id, NetGetNumberData(p, "photo_id"));
+
+	NetPacket *pkt;
+	pkt = NetCreatePacket();
+
+	if(ret == true){
+		pkt->header.type = PHOTO_OK;
+	}
+	else{
+		pkt->header.type = PHOTO_FAILED;
+		NetAddStringData(pkt, "reason", REASON_UNKNOWN);
+	}
+
+	NetSendPacket(d.handle,d.io,pkt);
+	NetDisposePacket(pkt, true);
 
 	return ret;
 }

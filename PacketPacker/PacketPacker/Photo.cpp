@@ -122,3 +122,87 @@ CleanUp:
 	DbCloseQuery(q);
 	return list;
 }
+
+bool QueryLikePhoto(int db,char *id, int photo_id){
+	bool ret = true;
+	int q, len;
+	char qm[512];
+
+	sprintf(qm,	"select * from photo_like where \"id\"=\'%s\' and \"photo_id\"=\'%s\';",
+		photo_id,id);
+
+	q = DbPrepare(db,qm);
+	ret = DbExecute(q);
+	if(ret == false){
+		return false;
+	}
+
+	len = DbResultCount(q);
+
+	if(len == 0)ret = false;
+	else ret = true;
+
+	DbCloseQuery(q);
+
+	return ret;
+}
+bool LikePhoto(int db,char *id,int photo_id){
+	bool ret = true;
+	int q;
+	char qm[512];
+
+	if(QueryLikePhoto(db, id, photo_id) == true)
+		return false;
+
+	sprintf(qm,	"update photo set \"like\" = \"like\"+1 where \"photo_id\" = \'%d\';",
+		photo_id);
+
+	q = DbPrepare(db,qm);
+	ret = DbExecute(q);
+	if(ret == false){
+		return false;
+	}
+	DbCloseQuery(q);
+
+	sprintf(qm,	"insert into photo_like (\"id\",\"photo_id\") value (\'%s\',%d);",
+		id,photo_id);
+
+	q = DbPrepare(db,qm);
+	ret = DbExecute(q);
+	if(ret == false){
+		return false;
+	}
+	DbCloseQuery(q);
+
+	return ret;
+}
+bool DislikePhoto(int db,char *id,int photo_id){
+	bool ret = true;
+	int q;
+	char qm[512];
+
+	if(QueryLikePhoto(db, id, photo_id) == false)
+		return false;
+
+	sprintf(qm,	"update photo set \"like\" = \"like\"-1 where \"photo_id\"=\'%d\';",
+		photo_id);
+
+	q = DbPrepare(db,qm);
+	ret = DbExecute(q);
+	if(ret == false){
+		return false;
+	}
+	DbCloseQuery(q);
+
+	sprintf(qm,	"delete from photo_like where \"id\"=\'%s\' and \"photo_id\"=\'%d\';",
+		id,photo_id);
+
+	q = DbPrepare(db,qm);
+	ret = DbExecute(q);
+	if(ret == false){
+		return false;
+	}
+	DbCloseQuery(q);
+
+	return ret;
+}
