@@ -396,6 +396,27 @@ CleanUp:;
 	DbCloseQuery(q);
 	return ret;
 }
+bool UpdateUserAndroid(int db,char *id,char *ad){
+	int q;
+	char qm[512];
+	char *sp = NULL;
+	int len;
+	bool ret = true;
+	
+	sprintf(qm,"update \"account2\" set \"android_id\"=\'%s\' where id=\'%s\';",ad,id);
+	q = DbPrepare(db,qm);
+	
+	if(!DbExecute(q)){
+		printf("Execute failed\n");
+
+		ret = false;
+		goto CleanUp;
+	}
+
+CleanUp:;
+	DbCloseQuery(q);
+	return ret;
+}
 bool QueryUserAndroid(int db,char *id,char *ad){
 	int q;
 	char qm[256];

@@ -101,6 +101,7 @@
     <ClInclude Include="redis.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Server.h" />
+    <ClInclude Include="ServerConfig.h" />
     <ClInclude Include="ServerController.h" />
     <ClInclude Include="ServerHandler.h" />
     <ClInclude Include="stdafx.h" />
@@ -151,6 +152,7 @@
     </ClCompile>
     <ClCompile Include="User.cpp" />
     <ClCompile Include="UserHandler.cpp" />
+    <ClCompile Include="VersionHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />

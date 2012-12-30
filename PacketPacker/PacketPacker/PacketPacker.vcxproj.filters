@@ -177,6 +177,9 @@
     <ClInclude Include="..\..\Redis\include\redispp.h">
       <Filter>소스 파일\DataBase\Redis\redis-client</Filter>
     </ClInclude>
+    <ClInclude Include="ServerConfig.h">
+      <Filter>소스 파일\Server</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -248,9 +251,6 @@
     <ClCompile Include="PacketPacker.cpp">
       <Filter>소스 파일\Net\Packet</Filter>
     </ClCompile>
-    <ClCompile Include="gcm.cpp">
-      <Filter>소스 파일\Net\GCM</Filter>
-    </ClCompile>
     <ClCompile Include="database_mysql.cpp">
       <Filter>소스 파일\DataBase\Common</Filter>
     </ClCompile>
@@ -283,6 +283,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Redis\include\redispp.cpp">
       <Filter>소스 파일\DataBase\Redis\redis-client</Filter>
+    </ClCompile>
+    <ClCompile Include="VersionHandler.cpp">
+      <Filter>소스 파일\Server\Handling\Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="gcm.cpp">
+      <Filter>소스 파일\Net\GCM</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

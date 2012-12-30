@@ -58,6 +58,7 @@ bool QueryUserFacebook(int db,char *id,char *fb);
 bool QueryUserNateon(int db,char *id,char *nt);
 bool UpdateUserFacebook(int db,char *id,char *fb);
 bool UpdateUserNateon(int db,char *id,char *nt);
+bool UpdateUserAndroid(int db,char *id,char *ad);
 bool QueryUserAndroid(int db,char *id,char *ad);
 
 /*

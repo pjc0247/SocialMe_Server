@@ -38,8 +38,8 @@ void GCM_Testbed(){
 	strHeader += "Content-Type:application/x-www-form-urlencoded;charset=UTF-8";
 	strHeader += "\r\n";
 	strHeader += "Authorization:key=";
-	strHeader += "AIzaSyBnEaX8e6hwBme6tLY6aQQ7znUzF3vzYLA";
-	strHeader += "\r\n\r\n";
+	strHeader += "AIzaSyBCTUloSfh-ft1pIWX5_pbhPs5lAuOr2TE";
+	strHeader += "\r\n\r\n"; 
 
 	char szHead[8192];
 	int nLen;
@@ -58,7 +58,7 @@ void GCM_Testbed(){
 		"delay_while_idle=1&" 
 		"%s&"
 		"registration_id=%s",
-		"data.test=asdf", "APA91bEWxTv1F_zBmBm6NYOqxiB1jQaoTDlSh1JqKOpGGqgvxK5p6b3kOgYO2ZsZQsQmdiEAHLER0TULIxPOi54H-EQvCHHq91evWSC4DakvKkyVPx5Rnozxw1gAq_3N8aAavlfAsHssyv2SrPqJrogZW-k_YoxHfA");
+		"data.test=asdf", "APA91bHEFA_KV77apmwfNf8lSzsbcfVa1iTW4E1OrRMcoHofkKij5AUg1Cth8Xg_gXdXNsI9FCi7nc_zQUE-G9quPEDGjoGtkG_ZEEyQBFrVnPZ1oFycTz68bhMdv4GZ6Iu9poLqlWLY7L8YhGTBVCUwpTMdzPxqRQ");
 
 	HttpSendRequest(hReq , NULL,  0, (LPVOID)szSendData, strlen(szSendData));
 
