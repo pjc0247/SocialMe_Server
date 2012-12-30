@@ -12,6 +12,7 @@ bool PhotoPush(PacketHandlerData d){
 	bool ret = true;
 
 	PhotoPost post;
+
 	
 	post.lat = NetGetNumberData(p, "lat");
 	post.lon = NetGetNumberData(p, "lon");
@@ -24,6 +25,7 @@ bool PhotoPush(PacketHandlerData d){
 	pkt = NetCreatePacket();
 	if(ret){
 		pkt->header.type = PHOTO_OK;
+		NetAddNumberData(pkt, "photo_id", post.photo_id);	
 	}
 	else{
 		pkt->header.type = PHOTO_FAILED;

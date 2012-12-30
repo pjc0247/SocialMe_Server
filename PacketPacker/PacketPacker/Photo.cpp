@@ -128,8 +128,8 @@ bool QueryLikePhoto(int db,char *id, int photo_id){
 	int q, len;
 	char qm[512];
 
-	sprintf(qm,	"select * from photo_like where \"id\"=\'%s\' and \"photo_id\"=\'%s\';",
-		photo_id,id);
+	sprintf(qm,	"select * from photo_like where \"id\"=\'%s\' and \"photo_id\"=%d;",
+		id,photo_id);
 
 	q = DbPrepare(db,qm);
 	ret = DbExecute(q);
