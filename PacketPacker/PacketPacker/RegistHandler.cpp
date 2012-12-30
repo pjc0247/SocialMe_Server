@@ -35,9 +35,9 @@ bool RegistTry(PacketHandlerData d){
 		bool ret;
 		ret = RegistUser(DB(d),NetGetStringData(p,"id"),
 					user);
-
 		ret &= UpdateUserAndroid(DB(d), NetGetStringData(p,"id"),
 					NetGetStringData(p,"android"));
+
 
 		if(ret){
 			pkt->header.type = REGIST_OK;

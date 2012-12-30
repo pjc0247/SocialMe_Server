@@ -38,8 +38,8 @@ void GCM_Testbed(){
 	strHeader += "Content-Type:application/x-www-form-urlencoded;charset=UTF-8";
 	strHeader += "\r\n";
 	strHeader += "Authorization:key=";
-	strHeader += "AIzaSyBCTUloSfh-ft1pIWX5_pbhPs5lAuOr2TE";
-	strHeader += "\r\n\r\n"; 
+	strHeader += "AIzaSyBnEaX8e6hwBme6tLY6aQQ7znUzF3vzYLA";
+	strHeader += "\r\n\r\n";
 
 	char szHead[8192];
 	int nLen;

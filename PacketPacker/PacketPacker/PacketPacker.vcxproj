@@ -42,7 +42,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\boost_1_52_0\boost_1_52_0\boost;D:\boost_1_52_0\boost_1_52_0;$(IncludePath)</IncludePath>
+    <IncludePath>F:\boost_1_52_0\boost_1_52_0;D:\boost_1_52_0\boost_1_52_0;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -101,7 +101,6 @@
     <ClInclude Include="redis.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Server.h" />
-    <ClInclude Include="ServerConfig.h" />
     <ClInclude Include="ServerController.h" />
     <ClInclude Include="ServerHandler.h" />
     <ClInclude Include="stdafx.h" />

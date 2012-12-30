@@ -21,14 +21,14 @@ int _tmain(int argc, _TCHAR* argv[])
 		_tsetlocale(LC_ALL, _T("korean"));
 	#endif
 
-	/*WSADATA wsaData;
+	/*	WSADATA wsaData;
     WORD version;
     version = MAKEWORD( 2, 0 );
     WSAStartup( version, &wsaData );
 
 	RedisConnect(REDIS_SERVER,REDIS_PORT);
 	*/
-	//GCM_Testbed();
+	//	GCM_Testbed();
 
 	LoadBlacklist();
 
