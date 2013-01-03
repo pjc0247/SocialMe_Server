@@ -29,6 +29,7 @@ typedef struct OVERLAPPEDEX : OVERLAPPED
 typedef struct
 {
 	SOCKET      hClntSock;
+	SOCKET		hMsgSock;
 	SOCKADDR_IN clntAddr;
 	int n;
 	bool disconnected;

@@ -53,6 +53,7 @@ void NetQuit();
 
 int NetRecv(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData,int size);
 int NetSend(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData,void *data,int size);
+int NetSendMsg(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData,void *data,int size);
 
 unsigned long NetGetTimestamp();
 
@@ -62,6 +63,7 @@ bool NetRecvPacket(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData);
 
 bool NetSendPacketData(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData,NetPacketData *data);
 bool NetSendPacket(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData, NetPacket *packet);
+bool NetSendMsgPacket(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData, NetPacket *packet);
 
 NetPacket *NetCreatePacket();
 

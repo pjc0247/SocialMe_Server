@@ -97,6 +97,8 @@ bool PushMessage(int db,Message *msg){
 		(long)time(NULL), msg->sender, msg->receiver,
 		msg->type, msg->msg);
 
+	printf("%s\n", qm);
+
 	q = DbPrepare(db,qm);
 
 	ret = DbExecute(q);

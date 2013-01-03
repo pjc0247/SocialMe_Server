@@ -89,16 +89,18 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	NetPacket *p;
 
-	p = NetCreatePacket();
+	/*p = NetCreatePacket();
 	p->header.type = LOGIN_TRY;
 	NetAddStringData(p,"id", "pjc0247");
 	NetAddStringData(p,"pw", "040404");
 	NetSendPacket(hSocket,p);
-	NetDisposePacket(p,true);
+	NetDisposePacket(p,true);*/
 
 	p = NetCreatePacket();
-	p->header.type = PHOTO_LIKE;
-	NetAddNumberData(p,"photo_id", 2);
+	p->header.type = MESSAGE_PUSH;
+	NetAddStringData(p,"id","pjc");
+	NetAddStringData(p,"msg","pjc");
+	NetAddNumberData(p,"type", 2);
 	NetSendPacket(hSocket,p);
 	NetDisposePacket(p,true);
 

@@ -101,7 +101,7 @@ bool MessagePush(PacketHandlerData d){
 		NetAddStringData(pkt, "msg", m.msg);
 		NetAddNumberData(pkt, "type", m.type);
 		NetAddNumberData(pkt, "id", m.id);
-		NetSendPacket(s->handle,s->io,pkt);
+		NetSendMsgPacket(s->handle,s->io,pkt);
 		NetDisposePacket(pkt, true);	
 	}
 

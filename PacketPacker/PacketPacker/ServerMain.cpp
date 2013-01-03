@@ -16,12 +16,23 @@ using namespace std;
 
 unsigned long uptime_st;
 list<Session> conn;
+map<char *,SOCKET> msockMap;
 
 unsigned int __stdcall CompletionThread(void* pComPort);
+unsigned int __stdcall MessageThread(void* pComPort);
 unsigned int __stdcall PingThread(void* pComPort);
 
 list<Session>::iterator DeleteConn(Session s){
 	list<Session>::iterator itor;
+
+	{
+		map<char *,SOCKET>::iterator itor;
+		itor = msockMap.find(inet_ntoa(s.handle->clntAddr.sin_addr));
+		if(itor != msockMap.end()){
+			closesocket(msockMap[inet_ntoa(s.handle->clntAddr.sin_addr)]);
+			msockMap.erase(itor);
+		}
+	}
 
 	for(itor=conn.begin();itor!=conn.end();++itor){
 		if(itor->handle == s.handle){
@@ -50,6 +61,7 @@ int RunServer(int port){
 		output("startup error\n");
 
 	_beginthreadex(NULL, 0, PingThread, NULL, 0, NULL);
+	_beginthreadex(NULL, 0, MessageThread, NULL, 0, NULL);
 
 	DWORD dwProcessor;
 	GetSystemInfo(&SystemInfo);
@@ -141,6 +153,62 @@ int RunServer(int port){
 	return 0;
 }
 
+unsigned int __stdcall MessageThread(void* pComPort)
+{
+	WSADATA wsaData;
+	HANDLE hCompletionPort;      
+	SYSTEM_INFO SystemInfo;
+	SOCKADDR_IN servAddr;
+	LPPER_IO_DATA PerIoData;
+	LPPER_HANDLE_DATA PerHandleData;
+
+	SOCKET hServSock;
+	int i;
+
+	hServSock = WSASocket(AF_INET, SOCK_STREAM, 0, NULL, 0, WSA_FLAG_OVERLAPPED);
+	servAddr.sin_family=AF_INET;
+	servAddr.sin_addr.s_addr=htonl(INADDR_ANY);
+	servAddr.sin_port=htons(SERVER_PORT+1);
+
+	if(bind(hServSock, (SOCKADDR*)&servAddr, sizeof(servAddr)) == SOCKET_ERROR) {
+		output("bind error\n");
+		return 1;
+	}
+
+	if(listen(hServSock, SERVER_LISTEN_QUEUE) == SOCKET_ERROR) {
+		output("listen error\n");
+		return 1;
+	}
+
+	output("message server ready\n");
+
+	int N = 0;
+	do
+	{      
+		SOCKET hClntSock;
+		SOCKADDR_IN clntAddr;        
+		int addrLen=sizeof(clntAddr);
+		bool ret;
+
+		// 새 클라이언트 연결을 수립한다.
+		hClntSock=accept(hServSock, (SOCKADDR*)&clntAddr, &addrLen);  
+		
+		//char t = TRUE;
+		//setsockopt(hClntSock, IPPROTO_TCP, TCP_NODELAY, &t, sizeof(t));
+
+		// 블랙리스트에서 접속된 아이피를 조회한다.
+		ret = isBlockedIP(inet_ntoa(clntAddr.sin_addr));
+		if(ret == true){
+			// 연결 거부됨
+			output("connection FAILED\n");
+			continue;
+		}
+
+		msockMap[inet_ntoa(clntAddr.sin_addr)] = hClntSock;
+	}while(++N);
+
+	return 0;
+}
 unsigned int __stdcall CompletionThread(void* pComPort)
 {
 	HANDLE hCompletionPort =(HANDLE)pComPort;

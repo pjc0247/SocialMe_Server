@@ -9,7 +9,10 @@
 
 #include "NetPacket.h"
 
+#include <map>
+using namespace std;
 
+extern map<char *,SOCKET> msockMap;
 
 int NetIntialize(){
 	return 0;
@@ -67,6 +70,24 @@ int NetSend(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData,void *data,int
 	//printf("%d \n", buf.len);
 
 	WSASend(PerHandleData->hClntSock,
+		&buf, 1,&written,
+		Flags,
+		NULL,SendCallback);
+	//written = send();
+	return written;
+}
+int NetSendMsg(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData,void *data,int size){
+	DWORD written = 0;
+	DWORD Flags = 0;
+	WSABUF buf;
+
+	buf.buf = (char *)data;
+	buf.len = size;
+	PerIoData->overlapped.flag = ASYNC_SEND;
+
+	//printf("%d \n", buf.len);
+
+	WSASend(msockMap[inet_ntoa(PerHandleData->clntAddr.sin_addr)],
 		&buf, 1,&written,
 		Flags,
 		NULL,SendCallback);
@@ -159,6 +180,42 @@ bool NetSendPacket(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData, NetPac
 	// 헤더 정보 전송
 	bool headerRet = true;
 	if(NetSend(PerHandleData,PerIoData,(void *)&packet->header,sizeof(NetPacketHeader)) != 
+		sizeof(NetPacketHeader)){
+			headerRet = false;
+
+			return false;
+	}
+
+	// 서브 데이터 전송
+	bool dataRet = true;
+	for(int i=0;i<packet->header.count;i++){
+		dataRet = dataRet &
+					NetSendPacketData(PerHandleData,PerIoData,&packet->data[i]);
+
+		if(dataRet == false)
+			return false;
+	}
+
+	//return headerRet & dataRet;
+	return true;
+}
+
+bool NetSendMsgPacketData(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData,NetPacketData *data){
+
+	NetSendMsg(PerHandleData,PerIoData,(void *)data->name, MAX_NAME_LENGTH);
+	NetSendMsg(PerHandleData,PerIoData,(void *)&data->size, sizeof(int));
+
+	NetSendMsg(PerHandleData,PerIoData,data->data, data->size);
+
+	return true;
+}
+bool NetSendMsgPacket(PER_HANDLE_DATA *PerHandleData,PER_IO_DATA *PerIoData, NetPacket *packet){
+	// 타임 스탬프 기입
+	packet->header.timestamp = NetGetTimestamp();
+
+	// 헤더 정보 전송
+	bool headerRet = true;
+	if(NetSendMsg(PerHandleData,PerIoData,(void *)&packet->header,sizeof(NetPacketHeader)) != 
 		sizeof(NetPacketHeader)){
 			headerRet = false;
 
