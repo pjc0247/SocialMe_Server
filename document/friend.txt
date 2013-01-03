@@ -1,0 +1,40 @@
+FRIEND_ADD
+FRIEND_DELETE
+	id : 친구 추가/삭제할 대상 아이디
+
+	반환값
+	FRIEND_OK
+	FRIEND_FAILED	
+		reason : 실패사유
+
+FRIEND_QUERY_FRIEND
+	id1, id2 : 친구 관계 조사할 두명의 아이디
+
+	반환값
+	FRIEND_INFO_FRIEND
+		result : true or false
+
+	FRIEND_QUERY_FAILED
+		reason : 사유
+
+FRIEND_QUERY_COUNT
+	id : 친구 명 수를 조사할 아이디
+
+	반환값
+	FRIEND_INFO_COUNT
+		count : 명 수
+	
+	FRIEND_QUERY_FAILED
+		reason : 사유
+
+FRIEND_QUERY_LIST
+	id : 친구 목록을 조사할 아이디
+	min : 조사 범위 최소
+	max : 조사 범위 최대
+
+	반환값
+	FRIEND_INFO_LIST
+		iN : N번째 친구 아이디 (N은숫자)
+	
+	FRIEND_QUERY_FAILED
+		reason : 사유
