@@ -65,6 +65,10 @@ bool PhotoQuery(PacketHandlerData d);
 bool PhotoLike(PacketHandlerData d);
 bool PhotoDislike(PacketHandlerData d);
 
+bool PhotoCommentPush(PacketHandlerData d);
+bool PhotoCommentDelete(PacketHandlerData d);
+bool PhotoCommentQuery(PacketHandlerData d);;
+
 bool PostIncrease(PacketHandlerData d);
 bool PostDecrease(PacketHandlerData d);
 bool PostQuery(PacketHandlerData d);

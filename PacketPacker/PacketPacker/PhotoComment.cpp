@@ -96,8 +96,8 @@ PhotoComment *QueryPhotoCommentList(int db,int photo_id,int min, int max,int *cn
 
 		list[i].photo_id = photo_id;
 
-		len = DbGetNumber(q, PHOTO_COMMENT_INDEX_PHOTOID);
-		list[i].photo_id = len;
+		len = DbGetNumber(q, PHOTO_COMMENT_INDEX_COMMENTID);
+		list[i].comment_id = len;
 
 		len = DbGetString(q, PHOTO_COMMENT_INDEX_ID, &sp);
 		strcpy(list[i].id, sp);

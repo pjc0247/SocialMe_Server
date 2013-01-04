@@ -131,6 +131,16 @@ bool ProcessPacket(PER_HANDLE_DATA *handle,PER_IO_DATA*io,NetPacket *pkt){
 		PhotoDislike(d);
 		break;
 
+	case PHOTO_COMMENT_PUSH:
+		PhotoCommentPush(d);
+		break;
+	case PHOTO_COMMENT_DELETE:
+		PhotoCommentDelete(d);
+		break;
+	case PHOTO_COMMENT_QUERY:
+		PhotoCommentQuery(d);
+		break;
+
 	case POST_INC:
 		PostIncrease(d);
 		break;

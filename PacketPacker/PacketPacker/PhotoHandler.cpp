@@ -167,3 +167,108 @@ bool PhotoDislike(PacketHandlerData d){
 
 	return ret;
 }
+
+
+bool PhotoCommentPush(PacketHandlerData d){
+	NetPacket *p;
+	p = d.pkt;
+
+	bool ret = true;
+
+	PhotoComment com;
+
+	com.photo_id = NetGetNumberData(p, "photo_id");
+	SET(com.comment, NetGetStringData(p, "comment"));
+
+	ret = PushPhotoComment(DB(d),d.handle->user->id, &com);
+
+	NetPacket *pkt;
+	pkt = NetCreatePacket();
+	if(ret){
+		pkt->header.type = PHOTO_COMMENT_OK;
+		NetAddNumberData(pkt, "comment_id", com.photo_id);	
+	}
+	else{
+		pkt->header.type = PHOTO_COMMENT_FAILED;
+		NetAddStringData(pkt, "reason", REASON_UNKNOWN);
+	}
+	NetSendPacket(d.handle,d.io,pkt);
+	NetDisposePacket(pkt, true);
+
+	return ret;
+}
+bool PhotoCommentDelete(PacketHandlerData d){
+	NetPacket *p;
+	p = d.pkt;
+
+	bool ret = true;
+
+	ret = DeletePhotoComment(
+			DB(d),
+			d.handle->user->id,
+			NetGetNumberData(p, "comment_id"));
+
+	NetPacket *pkt;
+	pkt = NetCreatePacket();
+	if(ret){
+		pkt->header.type = PHOTO_COMMENT_OK;
+	}
+	else{
+		pkt->header.type = PHOTO_COMMENT_FAILED;
+		NetAddStringData(pkt, "reason", REASON_UNKNOWN);
+	}
+	NetSendPacket(d.handle,d.io,pkt);
+	NetDisposePacket(pkt, true);
+
+	return ret;
+}
+bool PhotoCommentQuery(PacketHandlerData d){
+	NetPacket *p;
+	p = d.pkt;
+
+	bool ret = true;
+
+	int min, max;
+
+	min = NetGetNumberData(p, "min");
+	max = NetGetNumberData(p, "max");
+
+	PhotoComment *plist;
+	NetPacket *pkt;
+	int len;
+
+	pkt = NetCreatePacket();
+
+	plist = QueryPhotoCommentList(DB(d),NetGetNumberData(p, "photo_id")
+							, min, max, &len);
+
+	if(plist == NULL){
+		pkt->header.type = PHOTO_COMMENT_QUERY_FAILED;
+		NetAddStringData(pkt, "reason", REASON_MEMORY_ERROR);
+		goto CleanUp;
+	}
+	else
+		pkt->header.type = PHOTO_COMMENT_INFO;
+
+	NetAddNumberData(pkt, "count", len);
+	for(int i=0;i<len;i++){
+		char msg[8];
+
+		sprintf(msg,"i%d", i+1);
+		NetAddStringData(pkt, msg, plist[i].id);
+		sprintf(msg,"c%d", i+1);
+		NetAddStringData(pkt, msg, plist[i].comment);
+		sprintf(msg,"pi%d", i+1);
+		NetAddNumberData(pkt, msg, plist[i].photo_id);
+		sprintf(msg,"t%d", i+1);
+		NetAddNumberData(pkt, msg, plist[i].time);
+	}
+
+CleanUp:
+	NetSendPacket(d.handle,d.io,pkt);
+	NetDisposePacket(pkt, true);
+
+	free(plist);
+
+	return ret;
+}
