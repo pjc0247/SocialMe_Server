@@ -8,6 +8,13 @@ struct PhotoPost{
 	char photo[16];
 	int lat,lon;
 	char comment[281];
+	int like;
+};
+struct PhotoComment{
+	int photo_id;
+	char id[16];
+	int time;
+	char comment[281];
 };
 
 enum PhotoColumnIndex{

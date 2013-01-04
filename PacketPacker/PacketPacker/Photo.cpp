@@ -113,6 +113,9 @@ PhotoPost *QueryPhotoList(int db,char *id,int min, int max,int *cnt){
 		
 		len = DbGetString(q, PHOTO_INDEX_COMMENT, &sp);
 		strcpy(list[i].comment, sp);
+
+		len = DbGetNumber(q, PHOTO_INDEX_LIKE);
+		list[i].like = len;
     }
 	count = i;
 

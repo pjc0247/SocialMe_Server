@@ -106,6 +106,8 @@ bool PhotoQuery(PacketHandlerData d){
 		NetAddNumberData(pkt, msg, plist[i].lat);
 		sprintf(msg,"ln%d", i+1);
 		NetAddNumberData(pkt, msg, plist[i].lon);
+		sprintf(msg,"l%d", i+1);
+		NetAddNumberData(pkt, msg, plist[i].like);
 	}
 
 CleanUp:
