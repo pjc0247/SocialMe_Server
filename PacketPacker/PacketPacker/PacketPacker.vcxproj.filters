@@ -287,6 +287,9 @@
     <ClCompile Include="VersionHandler.cpp">
       <Filter>소스 파일\Server\Handling\Handler</Filter>
     </ClCompile>
+    <ClCompile Include="PhotoComment.cpp">
+      <Filter>소스 파일\Interface\Photo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">

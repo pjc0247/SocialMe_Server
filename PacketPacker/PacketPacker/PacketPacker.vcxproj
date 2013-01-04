@@ -138,6 +138,7 @@
     <ClCompile Include="Payment.cpp" />
     <ClCompile Include="PaymentHandler.cpp" />
     <ClCompile Include="Photo.cpp" />
+    <ClCompile Include="PhotoComment.cpp" />
     <ClCompile Include="PhotoHandler.cpp" />
     <ClCompile Include="PostHandler.cpp" />
     <ClCompile Include="redis.cpp" />
